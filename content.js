@@ -65,5 +65,38 @@ export const tips = [
   'Type "help" in the Terminal to see every command.',
   'HackHCC Ctrl Z runs for 24 hours. Date and venue: TBA.',
   'Stay still for 45 seconds and see what happens.',
+  'Side challenge: can it run Doom? Open the Challenge app.',
   'Students from any school can join.',
 ];
+
+// "Can it run Doom?" side challenge. Rules and prizes are a draft until organizers confirm.
+export const challenge = {
+  pitch: 'Get Doom running somewhere it has no business running. The stranger the host, the bigger the bragging rights.',
+  // Famous attempts by other people, as inspiration. Keep descriptions short and accurate.
+  doneBefore: [
+    { where: 'A graphing calculator', kind: 'hardware' },
+    { where: 'A home printer’s tiny screen', kind: 'hardware' },
+    { where: 'A tractor’s dashboard display', kind: 'hardware' },
+    { where: 'A screen built into a single toy brick', kind: 'hardware' },
+    { where: 'Inside a PDF file', kind: 'software' },
+    { where: 'Inside a programming language’s type system', kind: 'software' },
+  ],
+  // The idea roller mixes a target with a twist.
+  targets: [
+    'a Spotify song', 'a Discord bot', 'a smartwatch', 'a QR code', 'a Google Sheet', 'an e-ink price tag',
+    'a microwave keypad', 'a CSS-only web page', 'an LED matrix', 'a Minecraft-style redstone computer', 'a Raspberry Pi Pico',
+    'a car stereo', 'a thermostat', 'a slideshow deck', 'a browser tab title', 'a terminal using only ASCII',
+    'a mechanical keyboard’s RGB lights', 'an Arduino with a 1-inch screen', 'a PDF form', 'a smart light bulb',
+  ],
+  twists: [
+    'at any frame rate', 'controlled by voice', 'controlled by a dance pad', 'in under 64 KB', 'with two players',
+    'in black and white', 'without touching a keyboard', 'powered by a potato battery',
+  ],
+  rules: [
+    'Use Doom or Freedoom running on a free engine. Bring the source.',
+    'Only use hardware and accounts you own or have permission to use.',
+    'Show it boot and reach the first level live at demos.',
+    'Judged on weirdness, how much of the game works, and frames per second.',
+    'Prize: TBA.',
+  ],
+};

@@ -72,6 +72,11 @@ const MAPS = {
     'kssssssssssssssk', '....kkkkkkkk....',
   ],
   heart: ['.rr.rr.', 'rrrrrrr', 'rrrrrrr', '.rrrrr.', '..rrr..', '...r...'],
+  challenge: [
+    '................', '..kkkkkkkkkkkk..', 'kkkyyyyyyyyyykkk', 'kyykyyyyyyyykyyk', 'kyykyyywyyyykyyk',
+    '.kykyyywyyyykyk.', '..kkyyyyyyyykk..', '...kyyyyyyyyk...', '....kyyyyyyk....', '.....kkyykk.....',
+    '......kook......', '.....kooook.....', '....kkkkkkkk....', '....kbbbbbbk....', '....kkkkkkkk....',
+  ],
   spade: ['...k...', '..kkk..', '.kkkkk.', 'kkkkkkk', 'kkkkkkk', '.k.k.k.', '...k...', '..kkk..'],
   diamond: ['...r...', '..rrr..', '.rrrrr.', 'rrrrrrr', '.rrrrr.', '..rrr..', '...r...'],
   club: ['..kkk..', '..kkk..', 'kk.k.kk', 'kkkkkkk', 'kk.k.kk', '...k...', '..kkk..'],

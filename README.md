@@ -51,7 +51,8 @@ Other things you can edit in the same file:
 1. **`schedule`:** rows as hours after kickoff (`hour: 2` shows as `H+2`). The current rows are a **sample**, not the real schedule.
 2. **`faq` and `rules`:** questions, answers and rules for the Help window.
 3. **`sponsors` and `team`:** add `{ name, url, logo }` or `{ name, role }`. Put logo files in `public/`.
-4. **`tips`, `stickyNote`, `watermark`:** desktop extras.
+4. **`challenge`:** the "Can it run Doom?" pitch, idea-roller lists and draft rules.
+5. **`tips`, `stickyNote`, `watermark`:** desktop extras.
 
 ---
 
@@ -91,8 +92,9 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 **Games**
 - **Bug Hunt:** squash bugs in 30 seconds, with a saved best score.
 - **Ping Pong:** first to 5 against the computer.
-- **Solitaire:** click a card and it moves to its best spot.
-- **Freedoom:** a free first-person shooter in a DOS emulator.
+- **Solitaire:** drag cards, or click one to send it to its best spot.
+- **Freedoom:** a free first-person shooter in a DOS emulator. Move with WASD, turn with the arrow keys, fire with Ctrl.
+- **Challenge:** the "Can it run Doom?" side challenge, with an idea roller and draft rules.
 
 **Extras**
 - **Terminal:** type `help` to list the commands.
@@ -153,7 +155,7 @@ Freedoom runs through three pieces, all free to redistribute:
 | MBF 2.03 | The DOS game engine ([source](https://www.doomworld.com/idgames/source/mbfsrc)) | GPL-2.0 |
 | [js-dos](https://js-dos.com/) | The DOS emulator in the browser | GPL-2.0 |
 
-The bundle is `public/doom/freedoom.jsdos`, a zip file. It contains no files from the original commercial Doom. The game runs inside `public/doom/index.html` in an iframe, so the emulator's styles don't leak into the site.
+The bundle is `public/doom/freedoom.jsdos`, a zip file. `MBF.CFG` inside it sets the WASD keys. It contains no files from the original commercial Doom. The game runs inside `public/doom/index.html` in an iframe, so the emulator's styles don't leak into the site.
 
 This repo is licensed under GPL-3.0 (see `LICENSE`).
 

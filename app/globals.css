@@ -367,6 +367,24 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .term-line input:focus-visible { outline: none; box-shadow: none; }
 .term ::selection { background: var(--yellow); color: #000; }
 
+.challenge { padding: 14px 16px 16px; display: grid; gap: 14px; }
+.challenge h3 { font-size: 30px; margin: 0; }
+.challenge h4 { margin: 0 0 6px; font: 400 21px var(--f-pixel), sans-serif; color: var(--navy); display: flex; gap: 8px; align-items: center; }
+.ch-head p { margin: 4px 0 0; }
+.ch-roller { background: var(--navy); color: var(--white); padding: 14px 16px; box-shadow: var(--sunken); }
+.ch-roller h4 { color: var(--sky); }
+.ch-idea { margin: 0 0 12px; font: 400 clamp(22px, 3vw, 28px)/1.15 var(--f-pixel), sans-serif; text-wrap: balance; animation: idea-in 0.35s var(--ease-out); }
+.ch-idea strong { color: var(--yellow); font-weight: 400; }
+.ch-idea em { font-style: normal; color: var(--sky); }
+@keyframes idea-in { from { opacity: 0; translate: 0 6px; filter: blur(2px); } }
+.ch-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.ch-note { margin: 0 0 8px; font-size: 14px; color: var(--ink-soft); }
+.ch-done { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px; }
+.ch-done li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: var(--white); box-shadow: var(--sunken); font-size: 15px; }
+.ch-tag { flex: none; font: 400 13px/1 var(--f-pixel), sans-serif; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 6px; color: var(--white); }
+.ch-hardware { background: var(--royal); }
+.ch-software { background: var(--red); }
+
 /* ---------- Games ---------- */
 .game { padding: 8px; }
 .solitaire { container-type: inline-size; }
@@ -400,6 +418,9 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .card-corner { position: absolute; left: 6px; top: 4px; display: grid; justify-items: center; font: 400 24px/1 var(--f-pixel), sans-serif; }
 .card:not(.card-back):not(.card-slot):hover { box-shadow: 0 0 0 2px var(--yellow), 2px 2px 0 rgb(0 0 0 / 0.25); }
 .card-pip { position: absolute; right: 8px; bottom: 8px; }
+.card { touch-action: none; user-select: none; }
+.card.is-dragging { z-index: 60; pointer-events: none; cursor: grabbing; box-shadow: 0 0 0 1px var(--ink), 6px 10px 16px -4px rgb(0 0 0 / 0.5); }
+.sol-col.is-over, .sol-found.is-over { outline: 3px dashed var(--yellow); outline-offset: 3px; }
 .card.is-selected { outline: 3px solid var(--yellow); outline-offset: 0; z-index: 2; }
 .card-back {
   background: repeating-conic-gradient(var(--royal) 0 25%, var(--navy) 0 50%) 0 0 / 6px 6px;

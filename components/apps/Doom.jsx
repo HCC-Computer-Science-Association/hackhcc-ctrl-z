@@ -36,7 +36,7 @@ export default function Doom() {
       </div>
       <div className="doom-bar">
         <p className="doom-keys">
-          <kbd>Arrows</kbd> move · <kbd>Ctrl</kbd> fire · <kbd>Space</kbd> open · <kbd>1</kbd>–<kbd>7</kbd> weapons · <kbd>Esc</kbd> menu
+          <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move · <kbd>←</kbd><kbd>→</kbd> turn · <kbd>Ctrl</kbd> fire · <kbd>Space</kbd> open · <kbd>1</kbd>–<kbd>7</kbd> weapons · <kbd>Esc</kbd> menu
         </p>
         <button type="button" className="btn" disabled={!play} onClick={() => frame.current?.requestFullscreen?.().then(() => frame.current.focus()).catch(() => {})}>
           Fullscreen

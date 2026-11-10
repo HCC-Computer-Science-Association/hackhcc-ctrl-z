@@ -2,13 +2,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { event, schedule, faq } from '../../content';
 
-const OPENERS = { about: 'about', schedule: 'schedule', faq: 'faq', sponsors: 'sponsors', bughunt: 'bughunt', pong: 'pong', solitaire: 'solitaire', doom: 'doom', freedoom: 'doom' };
+const OPENERS = { about: 'about', schedule: 'schedule', faq: 'faq', sponsors: 'sponsors', bughunt: 'bughunt', pong: 'pong', solitaire: 'solitaire', doom: 'doom', freedoom: 'doom', challenge: 'challenge' };
 const TBA = (v) => v || 'TBA';
 
 const HELP = [
   'Commands:',
   '  about  schedule  faq  sponsors   open a window',
   '  bughunt  pong  solitaire  doom   play a game',
+  '  challenge         can it run Doom?',
   '  register          how to sign up',
   '  info              event facts',
   '  date  ver  whoami  echo <text>',
