@@ -54,7 +54,7 @@ export const sponsors = []; // { name, url, logo } — logo path under /public
 export const team = []; // { name, role }
 
 // Desktop extras
-export const watermark = { title: 'Activate Ctrl Z OS', line: 'Go to Register to activate Ctrl Z OS.' };
+export const watermark = { title: 'Activate Windows', line: 'Go to Settings to activate Windows.' };
 
 export const stickyNote = ['Register for HackHCC', 'Find a team (or don’t)', 'Close a window, press Ctrl+Z', 'Beat the high score in Bug Hunt'];
 

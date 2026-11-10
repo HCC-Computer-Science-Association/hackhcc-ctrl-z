@@ -71,6 +71,7 @@ The current build is a **mockup**. Undecided facts must render as clearly marked
   - a green progress bar
   - three red pixel hearts
 - **Look:** a retro, Windows-95-era desktop is the user's pinned direction. It is *inspired by*, never a copy: no Microsoft logos, no "Windows" wordmark, no Bliss wallpaper, no startup sound.
+- **One exception, chosen by the user on 2026-11-10:** the bottom-right watermark reads the "Activate Windows / Go to Settings to activate Windows." meme as a joke. Keep it as plain text only, with no logo.
 
 ## Evidence on Hand
 
