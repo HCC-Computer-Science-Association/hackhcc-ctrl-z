@@ -155,7 +155,7 @@ Freedoom runs through three pieces, all free to redistribute:
 | MBF 2.03 | The DOS game engine ([source](https://www.doomworld.com/idgames/source/mbfsrc)) | GPL-2.0 |
 | [js-dos](https://js-dos.com/) | The DOS emulator in the browser | GPL-2.0 |
 
-The bundle is `public/doom/freedoom.jsdos`, a zip file. `MBF.CFG` inside it sets the WASD keys. It contains no files from the original commercial Doom. The game runs inside `public/doom/index.html` in an iframe, so the emulator's styles don't leak into the site.
+The bundle is `public/doom/freedoom-v2.jsdos`, a zip file. Bump the version in its name (and in `public/doom/index.html`) whenever you change it, or browsers keep the old copy. `MBF.CFG` inside it sets the WASD keys. It contains no files from the original commercial Doom. The game runs inside `public/doom/index.html` in an iframe, so the emulator's styles don't leak into the site.
 
 This repo is licensed under GPL-3.0 (see `LICENSE`).
 
