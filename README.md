@@ -155,10 +155,12 @@ Freedoom runs through three pieces, all free to redistribute:
 | MBF 2.03 | The DOS game engine ([source](https://www.doomworld.com/idgames/source/mbfsrc)) | GPL-2.0 |
 | [js-dos](https://js-dos.com/) | The DOS emulator in the browser | GPL-2.0 |
 
-The bundle is `public/doom/freedoom-v3.jsdos`, a zip file. Bump the version in its name (and in `public/doom/index.html`) whenever you change it, or browsers keep the old copy.
+The bundle is `public/doom/freedoom-v4.jsdos`, a zip file. It contains no files from the original commercial Doom. Bump the version in its name (and in `public/doom/index.html`) whenever you change it, or browsers keep the old copy.
 
-- **WASD:** `public/doom/index.html` translates W/A/S/D into the engine's own movement keys.
-- **Mouse:** `MBF.CFG` inside the bundle sets the mouse to aim and fire only (no forward/back). It contains no files from the original commercial Doom. The game runs inside `public/doom/index.html` in an iframe, so the emulator's styles don't leak into the site.
+The game runs inside `public/doom/index.html` in an iframe, so the emulator's styles don't leak into the site. That page also handles the controls:
+
+- **WASD:** translated into the engine's own movement keys.
+- **Mouse:** captured on the first click. Sideways motion turns you through the engine's turn keys; left click fires, right click opens doors. The emulated DOS mouse is switched off (`use_mouse 0` in `MBF.CFG`, `autolock=false` in the bundle's `dosbox.conf`) because it drifts and stalls when you reverse direction.
 
 This repo is licensed under GPL-3.0 (see `LICENSE`).
 

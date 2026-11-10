@@ -10,17 +10,31 @@
 <style>
   html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
   #dos { width: 100%; height: 100%; }
+  /* Our own mouse layer sits above js-dos, so only our handler drives the mouse. */
+  #aim { position: absolute; inset: 0; z-index: 1000; cursor: crosshair; display: none; }
+  #aim.on { display: block; }
+  #aim.locked { cursor: none; }
+  #aim-hint {
+    position: absolute; left: 50%; top: 14px; translate: -50% 0; padding: 6px 14px;
+    background: rgb(0 0 103 / 0.85); color: #ffe600; font: 16px/1.3 monospace; border: 1px solid #ffe600;
+    pointer-events: none; white-space: nowrap;
+  }
+  #aim.locked #aim-hint { display: none; }
   .err { color: #c8c8c8; font: 18px monospace; padding: 24px; }
 </style>
 </head>
 <body>
 <div id="dos"></div>
+<div id="aim"><span id="aim-hint">Click to aim with the mouse</span></div>
 <script>
 (() => { // own scope: js-dos already defines globals such as `ci`
-  // WASD: translated here into the keys the engine already uses (arrows move, , and . strafe),
-  // so it works without touching the engine's own key config. Codes are js-dos (GLFW) key codes.
-  const WASD = { KeyW: 265, KeyS: 264, KeyA: 44, KeyD: 46 };
   let dosCI = null;
+  const aim = document.getElementById('aim');
+  const hint = document.getElementById('aim-hint');
+
+  // WASD: translated into the keys the engine already uses (arrows move, , and . strafe).
+  // Codes are js-dos (GLFW) key codes.
+  const WASD = { KeyW: 265, KeyS: 264, KeyA: 44, KeyD: 46 };
   const held = new Set();
   const onKey = (e) => {
     const code = WASD[e.code];
@@ -34,17 +48,68 @@
   };
   window.addEventListener('keydown', onKey, true);
   window.addEventListener('keyup', onKey, true);
-  // Release held keys if focus leaves the game, or the player keeps walking.
-  window.addEventListener('blur', () => { held.forEach((c) => dosCI && dosCI.sendKeyEvent(c, false)); held.clear(); });
+
+  // Mouse: the emulated DOS mouse drifts and stalls when reversing direction, so sideways
+  // motion is turned into the turn keys the engine handles reliably (arrows).
+  // More motion = a longer press; reversing swaps keys at once. Clicks become fire (Ctrl) and use (Space).
+  const LEFT = 263, RIGHT = 262, FIRE = 341, USE = 32;
+  const PX_PER_FRAME = 7; // mouse pixels consumed per frame of turn-key hold (lower = faster turning)
+  let acc = 0, turning = 0;
+  const locked = () => document.pointerLockElement === aim;
+  const setTurn = (key) => {
+    if (key === turning || !dosCI) return;
+    if (turning) dosCI.sendKeyEvent(turning, false);
+    if (key) dosCI.sendKeyEvent(key, true);
+    turning = key;
+  };
+  const look = (dx) => { acc = Math.max(-600, Math.min(600, acc + dx)); };
+  window.freedoomLook = look; // used by the automated test
+  const frame = () => {
+    if (Math.abs(acc) >= 1) {
+      setTurn(acc > 0 ? RIGHT : LEFT);
+      acc -= Math.sign(acc) * Math.min(Math.abs(acc), PX_PER_FRAME);
+    } else setTurn(0);
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+  const capture = async () => {
+    try { await aim.requestPointerLock(); }
+    catch { hint.textContent = 'Click again to aim (the browser needs a second)'; }
+  };
+  const button = (e, down) => { if (dosCI) dosCI.sendKeyEvent(e.button === 2 ? USE : FIRE, down); };
+  aim.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    if (!locked()) return capture(); // this click only captures; it does not fire
+    button(e, true);
+  });
+  aim.addEventListener('mouseup', (e) => { if (locked()) button(e, false); });
+  aim.addEventListener('contextmenu', (e) => e.preventDefault());
+  document.addEventListener('mousemove', (e) => { if (locked() && e.movementX) look(e.movementX); });
+  document.addEventListener('pointerlockchange', () => {
+    aim.classList.toggle('locked', locked());
+    if (!locked()) { hint.textContent = 'Click to aim with the mouse'; acc = 0; setTurn(0); }
+  });
+
+  // Release held keys and buttons if focus leaves the game, or the player keeps walking or firing.
+  window.addEventListener('blur', () => {
+    if (!dosCI) return;
+    held.forEach((c) => dosCI.sendKeyEvent(c, false)); held.clear();
+    acc = 0; setTurn(0); dosCI.sendKeyEvent(FIRE, false); dosCI.sendKeyEvent(USE, false);
+  });
 
   try {
     Dos(document.getElementById('dos'), {
-      url: 'freedoom-v3.jsdos', // bump the name whenever the bundle changes, so browsers can't serve a stale copy
+      url: 'freedoom-v4.jsdos', // bump the name whenever the bundle changes, so browsers can't serve a stale copy
       pathPrefix: 'https://cdn.jsdelivr.net/npm/js-dos@8.5.3/dist/emulators/',
       autoStart: true,
       kiosk: true,
       noCloud: true,
-      onEvent: (event, arg) => { if (event === 'ci-ready') { dosCI = arg; document.body.dataset.ready = '1'; } },
+      onEvent: (event, arg) => {
+        if (event !== 'ci-ready') return;
+        dosCI = arg;
+        aim.classList.add('on');
+        document.body.dataset.ready = '1';
+      },
     });
   } catch (e) {
     document.body.innerHTML = '<p class="err">Freedoom could not start. Reload the window to try again.</p>';
