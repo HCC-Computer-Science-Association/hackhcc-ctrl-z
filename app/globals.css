@@ -60,7 +60,7 @@ kbd {
 ::-webkit-scrollbar-thumb { background: var(--silver); box-shadow: var(--raised); }
 
 /* ---------- Desktop ---------- */
-.desktop { position: fixed; inset: 0; display: grid; grid-template-rows: 1fr var(--taskbar-h); }
+.desktop { position: fixed; inset: 0; display: grid; grid-template-rows: 1fr var(--taskbar-h); grid-template-columns: minmax(0, 1fr); }
 .desktop-area {
   position: relative; overflow: hidden;
   background: var(--wall);
@@ -104,7 +104,7 @@ kbd {
   padding: 3px; outline: none;
   animation: win-open 0.55s var(--ease-out) both; animation-delay: calc(2.9s + var(--open-delay, 0ms));
 }
-:root[data-booted] .win { animation-name: win-open-b; animation-delay: calc(0.25s + var(--open-delay, 0ms)); }
+:root[data-booted] .win, .win.is-late { animation-name: win-open-b; animation-delay: calc(0.25s + var(--open-delay, 0ms)); }
 /* Open: zoom up from small with a slight overshoot, sharpening out of a bright blur. */
 @keyframes win-open {
   0% { opacity: 0; scale: 0.55; translate: 0 22px; filter: blur(6px) brightness(1.6); }
@@ -124,7 +124,7 @@ kbd {
   translate: -110% 0; animation: title-sweep 0.7s ease-out both;
   animation-delay: calc(3.15s + var(--open-delay, 0ms));
 }
-:root[data-booted] .win-title::after { animation-name: title-sweep-b; animation-delay: calc(0.5s + var(--open-delay, 0ms)); }
+:root[data-booted] .win-title::after, .is-late .win-title::after { animation-name: title-sweep-b; animation-delay: calc(0.5s + var(--open-delay, 0ms)); }
 @keyframes title-sweep { to { translate: 110% 0; } }
 @keyframes title-sweep-b { to { translate: 110% 0; } }
 .win[hidden] { display: none; }
@@ -273,13 +273,13 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   height: 34px; display: inline-flex; align-items: center; gap: 6px; padding: 0 10px; border: 0;
   background: var(--silver); box-shadow: var(--raised); cursor: pointer; white-space: nowrap;
 }
-.start { font-size: 21px; }
+.start { font-size: 21px; flex-shrink: 0; }
 .start.is-pressed, .task.is-pressed { box-shadow: var(--pressed); background: repeating-conic-gradient(var(--silver) 0 25%, var(--silver-lt) 0 50%) 0 0 / 2px 2px; }
 .tasks { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; flex: 1; min-width: 0; overflow: hidden; }
 .tasks li { min-width: 0; flex: 0 1 180px; }
 .task { width: 100%; }
 .task span { overflow: hidden; text-overflow: ellipsis; }
-.tray { display: flex; align-items: center; gap: 12px; height: 34px; padding: 0 10px; box-shadow: var(--sunken); white-space: nowrap; }
+.tray { flex-shrink: 0; display: flex; align-items: center; gap: 12px; height: 34px; padding: 0 10px; box-shadow: var(--sunken); white-space: nowrap; }
 .lives, .tray-btn { display: flex; gap: 3px; background: none; border: 0; padding: 4px 2px; cursor: pointer; }
 .lives:disabled, .tray-btn:disabled { cursor: default; }
 .countdown { display: flex; align-items: center; gap: 6px; }
@@ -467,7 +467,7 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   background: var(--silver); box-shadow: var(--raised), 0 10px 24px -8px rgb(0 0 40 / 0.6); display: grid; gap: 8px; justify-items: center;
 }
 .game-card h3 { margin: 0; justify-content: center; text-wrap: balance; }
-.game-card p { margin: 0; font-size: 15px; color: var(--ink-soft); }
+.game-card p { margin: 0; font-size: 15px; line-height: 1.4; color: var(--ink-soft); }
 .bug-field { position: relative; height: 320px; touch-action: none; overflow: hidden; background: var(--cream); cursor: crosshair; }
 .bug { position: absolute; left: 0; top: 0; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0; background: none; cursor: crosshair; touch-action: none; -webkit-tap-highlight-color: transparent; }
 .bug:focus-visible { outline: none; box-shadow: none; }
@@ -520,6 +520,8 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   .balloon { width: min(280px, calc(100vw - 24px)); }
   .icon { width: 88px; }
   .win { inset: 0; width: auto; max-height: none; transform: none; }
+  .win-body:has(> .term) { flex: 1; }
+  .term { height: 100%; }
   .win-title { cursor: default; height: 32px; }
   .win-grip { display: none; }
   .win-btn { width: 30px; height: 26px; }

@@ -13,7 +13,7 @@ const BG = KEYS.indexOf('w');
 const TOOLS = [{ id: 'pencil', label: 'Pencil' }, { id: 'eraser', label: 'Eraser' }, { id: 'fill', label: 'Fill' }];
 const HISTORY = 100;
 const LOGO = logo(Object.fromEntries(['n', 'b', 'w', 'y', 'k', 'l', 'G', 'r'].map((k) => [k, KEYS.indexOf(k)])));
-const SPEED = { bg: 40, fg: 8 }; // pixels per frame: a quick background sweep, then slower strokes (~5.5 s at 60 fps)
+const SPEED = { bg: 2.4, fg: 0.48 }; // pixels per ms: a quick background sweep, then slower strokes (~5.5 s). Clock-based, so slow frames don't stretch it.
 
 export default function Paint({ active }) {
   const cv = useRef(null);
@@ -49,13 +49,14 @@ export default function Paint({ active }) {
   // Paint the HackHCC Ctrl Z badge stroke by stroke. One Ctrl+Z removes all of it.
   const paintLogo = () => {
     finish(); snapshot();
-    anim.current = { i: 0 };
+    anim.current = { i: 0, t0: performance.now() };
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return finish();
     setPainting(true);
     const tick = () => {
       const a = anim.current;
       if (!a) return;
-      const end = Math.min(LOGO.ops.length, a.i + (a.i < LOGO.bg ? SPEED.bg : SPEED.fg));
+      const ms = performance.now() - a.t0, bgMs = LOGO.bg / SPEED.bg;
+      const end = Math.min(LOGO.ops.length, Math.floor(ms < bgMs ? ms * SPEED.bg : LOGO.bg + (ms - bgMs) * SPEED.fg));
       for (; a.i < end; a.i++) px.current[LOGO.ops[a.i][0]] = LOGO.ops[a.i][1];
       render();
       if (a.i >= LOGO.ops.length) { anim.current = null; setPainting(false); setHint(true); return; }

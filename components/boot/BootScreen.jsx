@@ -14,8 +14,8 @@ export default function BootScreen() {
     if (root.dataset.booted) return;
     const phone = matchMedia('(max-width: 640px)').matches;
     // Natural end: CSS already hides the boot and plays the entrances. Setting data-booted here would
-    // restart those entrances mid-zoom (windows opened twice), so only remember and stop listening.
-    const t = setTimeout(() => { remember(); window.removeEventListener('keydown', skip); }, phone ? 1450 : 2900);
+    // restart those entrances mid-zoom (windows opened twice). data-boot-done only tells windows opened later to skip the boot delay (Window.jsx).
+    const t = setTimeout(() => { root.dataset.bootDone = '1'; remember(); window.removeEventListener('keydown', skip); }, phone ? 1450 : 2900);
     window.addEventListener('keydown', skip);
     document.getElementById('boot-skip')?.addEventListener('click', skip);
     return () => { clearTimeout(t); window.removeEventListener('keydown', skip); };
