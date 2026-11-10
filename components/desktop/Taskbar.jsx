@@ -69,7 +69,7 @@ export default function Taskbar({ apps, state, top, dispatch }) {
                 </button>
               </li>
             ))}
-            <li className="start-sep" role="separator" />
+            <li className="start-sep" aria-hidden="true" />
             <li>
               <button type="button" disabled={!state.closed.length} onClick={() => pick(() => dispatch({ type: 'undo' }))}>
                 <Icon name="undo" size={24} /> Undo close <kbd>Ctrl+Z</kbd>
@@ -84,7 +84,7 @@ export default function Taskbar({ apps, state, top, dispatch }) {
           const active = top === a.id;
           return (
             <li key={a.id}>
-              <button type="button" className={`task${active ? ' is-pressed' : ''}`} aria-pressed={active}
+              <button type="button" className={`task${active ? ' is-pressed' : ''}`} aria-pressed={active} aria-label={a.label}
                 onClick={() => dispatch({ type: active ? 'minimize' : 'focus', id: a.id })}>
                 <Icon name={a.icon} size={16} /> <span>{a.label}</span>
               </button>

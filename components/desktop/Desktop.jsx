@@ -31,12 +31,12 @@ export const APPS = [
   { id: 'faq', label: 'Help', title: 'Help — FAQ and Rules', icon: 'faq', Body: lazy('faq'), w: 560, x: 0.24, y: 0.1 },
   { id: 'sponsors', label: 'Sponsors & Team', title: 'C:\\SPONSORS', icon: 'sponsors', Body: lazy('sponsors'), w: 540, x: 0.3, y: 0.18 },
   { id: 'terminal', label: 'Terminal', title: 'C:\\> Terminal', icon: 'terminal', Body: lazy('terminal'), w: 600, x: 0.2, y: 0.22 },
-  { id: 'bughunt', label: 'Bug Hunt', title: 'Bug Hunt', icon: 'bughunt', Body: lazy('bughunt'), w: 520, x: 0.26, y: 0.12 },
-  { id: 'pong', label: 'Ping Pong', title: 'Ping Pong', icon: 'pong', Body: lazy('pong'), w: 520, x: 0.32, y: 0.16 },
-  { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), w: 800, x: 0.1, y: 0.03 },
+  { id: 'bughunt', label: 'Bug Hunt', title: 'Bug Hunt', icon: 'bughunt', Body: lazy('bughunt'), game: true, w: 520, x: 0.26, y: 0.12 },
+  { id: 'pong', label: 'Ping Pong', title: 'Ping Pong', icon: 'pong', Body: lazy('pong'), game: true, w: 520, x: 0.32, y: 0.16 },
+  { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), game: true, w: 800, x: 0.1, y: 0.03 },
   { id: 'challenge', label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.6, y: 0.24 },
   { id: 'dontclick', label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
-  { id: 'doom', label: 'Freedoom', title: 'Freedoom', icon: 'doom', Body: lazy('doom'), w: 680, x: 0.2, y: 0.06 },
+  { id: 'doom', label: 'Freedoom', title: 'Freedoom', icon: 'doom', Body: lazy('doom'), game: true, w: 680, x: 0.2, y: 0.06 },
 ];
 
 const STORE = 'ctrlz-windows';
@@ -66,7 +66,8 @@ export default function Desktop() {
         dispatch({ type: 'undo' });
       } else if (e.key === 'Escape' && !document.querySelector('.start-menu, .menu-drop, .msgbox')) {
         const id = focusedId(state);
-        if (id) dispatch({ type: 'close', id });
+        // Games keep Esc for themselves (pause, menus); close them with the X button.
+        if (id && !APPS.find((a) => a.id === id)?.game) dispatch({ type: 'close', id });
       }
     };
     window.addEventListener('keydown', onKey);

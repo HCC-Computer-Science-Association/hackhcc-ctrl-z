@@ -5,9 +5,16 @@ const pixel = Jersey_15({ subsets: ['latin'], weight: '400', variable: '--f-pixe
 const bios = VT323({ subsets: ['latin'], weight: '400', variable: '--f-bios', display: 'swap' });
 const prose = Atkinson_Hyperlegible({ subsets: ['latin'], weight: ['400', '700'], variable: '--f-prose', display: 'swap' });
 
+const SITE = 'https://hcc-computer-science-association.github.io/hackhcc-ctrl-z';
+const description = 'A 24-hour student hackathon at Houston City College, open to students from any school. Date and venue TBA.';
+
+// The preview image comes from app/opengraph-image.png (and twitter-image.png) by Next's file convention.
 export const metadata = {
+  metadataBase: new URL('https://hcc-computer-science-association.github.io'), // domain only: Next adds the basePath itself
   title: 'HackHCC Ctrl Z — 24-hour hackathon at Houston City College',
-  description: 'A 24-hour student hackathon at Houston City College, open to students from any school. Date and venue TBA.',
+  description,
+  openGraph: { title: 'HackHCC Ctrl Z', description, url: `${SITE}/`, siteName: 'HackHCC Ctrl Z', type: 'website' },
+  twitter: { card: 'summary_large_image', title: 'HackHCC Ctrl Z', description },
 };
 
 export const viewport = { themeColor: '#000067' };
