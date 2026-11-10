@@ -68,7 +68,7 @@ export const team = [
     { name: 'Lara Iskander', photo: '/team/lara.jpg' },
   ] },
   { group: 'Logistics', people: [
-    { name: 'Francisco', photo: '/team/francisco.jpg' },
+    { name: 'Francisco Medina', photo: '/team/francisco.jpg' },
     { name: 'William Oyouha', photo: '/team/will.jpg' },
   ] },
   { group: 'Sponsorship & Hospitality', people: [
