@@ -16,17 +16,40 @@
 <body>
 <div id="dos"></div>
 <script>
+(() => { // own scope: js-dos already defines globals such as `ci`
+  // WASD: translated here into the keys the engine already uses (arrows move, , and . strafe),
+  // so it works without touching the engine's own key config. Codes are js-dos (GLFW) key codes.
+  const WASD = { KeyW: 265, KeyS: 264, KeyA: 44, KeyD: 46 };
+  let dosCI = null;
+  const held = new Set();
+  const onKey = (e) => {
+    const code = WASD[e.code];
+    if (!code || !dosCI) return;
+    e.preventDefault();
+    e.stopImmediatePropagation(); // keep js-dos from also sending the letter itself
+    const down = e.type === 'keydown';
+    if (down && held.has(code)) return; // ignore auto-repeat
+    down ? held.add(code) : held.delete(code);
+    dosCI.sendKeyEvent(code, down);
+  };
+  window.addEventListener('keydown', onKey, true);
+  window.addEventListener('keyup', onKey, true);
+  // Release held keys if focus leaves the game, or the player keeps walking.
+  window.addEventListener('blur', () => { held.forEach((c) => dosCI && dosCI.sendKeyEvent(c, false)); held.clear(); });
+
   try {
     Dos(document.getElementById('dos'), {
-      url: 'freedoom-v2.jsdos', // bump the name whenever the bundle changes, so browsers can't serve a stale copy
+      url: 'freedoom-v3.jsdos', // bump the name whenever the bundle changes, so browsers can't serve a stale copy
       pathPrefix: 'https://cdn.jsdelivr.net/npm/js-dos@8.5.3/dist/emulators/',
       autoStart: true,
       kiosk: true,
       noCloud: true,
+      onEvent: (event, arg) => { if (event === 'ci-ready') { dosCI = arg; document.body.dataset.ready = '1'; } },
     });
   } catch (e) {
     document.body.innerHTML = '<p class="err">Freedoom could not start. Reload the window to try again.</p>';
   }
+})();
 </script>
 </body>
 </html>

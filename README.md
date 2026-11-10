@@ -93,7 +93,7 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Bug Hunt:** squash bugs in 30 seconds, with a saved best score.
 - **Ping Pong:** first to 5 against the computer.
 - **Solitaire:** drag cards, or click one to send it to its best spot.
-- **Freedoom:** a free first-person shooter in a DOS emulator. Move with WASD, turn with the arrow keys, fire with Ctrl.
+- **Freedoom:** a free first-person shooter in a DOS emulator. Move with WASD, aim with the mouse, click to fire.
 - **Challenge:** the "Can it run Doom?" side challenge, with an idea roller and draft rules.
 
 **Extras**
@@ -155,7 +155,10 @@ Freedoom runs through three pieces, all free to redistribute:
 | MBF 2.03 | The DOS game engine ([source](https://www.doomworld.com/idgames/source/mbfsrc)) | GPL-2.0 |
 | [js-dos](https://js-dos.com/) | The DOS emulator in the browser | GPL-2.0 |
 
-The bundle is `public/doom/freedoom-v2.jsdos`, a zip file. Bump the version in its name (and in `public/doom/index.html`) whenever you change it, or browsers keep the old copy. `MBF.CFG` inside it sets the WASD keys. It contains no files from the original commercial Doom. The game runs inside `public/doom/index.html` in an iframe, so the emulator's styles don't leak into the site.
+The bundle is `public/doom/freedoom-v3.jsdos`, a zip file. Bump the version in its name (and in `public/doom/index.html`) whenever you change it, or browsers keep the old copy.
+
+- **WASD:** `public/doom/index.html` translates W/A/S/D into the engine's own movement keys.
+- **Mouse:** `MBF.CFG` inside the bundle sets the mouse to aim and fire only (no forward/back). It contains no files from the original commercial Doom. The game runs inside `public/doom/index.html` in an iframe, so the emulator's styles don't leak into the site.
 
 This repo is licensed under GPL-3.0 (see `LICENSE`).
 

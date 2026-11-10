@@ -36,13 +36,13 @@ export default function Doom() {
       </div>
       <div className="doom-bar">
         <p className="doom-keys">
-          <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move · <kbd>←</kbd><kbd>→</kbd> turn · <kbd>Ctrl</kbd> fire · <kbd>Space</kbd> open · <kbd>1</kbd>–<kbd>7</kbd> weapons · <kbd>Esc</kbd> menu
+          <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move · Mouse aims · Click or <kbd>Ctrl</kbd> fires · <kbd>Space</kbd> open · <kbd>1</kbd>–<kbd>7</kbd> weapons · <kbd>Esc</kbd> menu
         </p>
         <button type="button" className="btn" disabled={!play} onClick={() => frame.current?.requestFullscreen?.().then(() => frame.current.focus()).catch(() => {})}>
           Fullscreen
         </button>
       </div>
-      <p className="doom-hint">Want it bigger without fullscreen? Use the window's maximize button or double-click its title bar.</p>
+      <p className="doom-hint">Click the game once to capture the mouse; Esc releases it. Want it bigger? Maximize this window or press Fullscreen.</p>
       <p className="doom-legal">
         Levels: <a href="https://freedoom.github.io/" target="_blank" rel="noopener noreferrer">Freedoom</a> (BSD license).
         Engine: MBF 2.03 (GPL-2.0, <a href="https://www.doomworld.com/idgames/source/mbfsrc" target="_blank" rel="noopener noreferrer">source</a>).
