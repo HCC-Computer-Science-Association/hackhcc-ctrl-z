@@ -1,5 +1,5 @@
 import Icon from '../desktop/icons';
-import { event, sponsors, team } from '../../content';
+import { event, sponsors } from '../../content';
 
 const BASE = process.env.NEXT_PUBLIC_BASE;
 
@@ -28,11 +28,6 @@ export default function Sponsors() {
           <li key={s.name}><a href={s.url} target="_blank" rel="noopener noreferrer">
             <img src={`${BASE}${s.logo}`} alt="" width="64" height="64" /><span>{s.name}</span>
           </a></li>
-        )} />
-      <Folder name="Team" items={team}
-        empty="The organizing team is announced soon."
-        render={(p) => (
-          <li key={p.name}><Icon name="about" size={32} /><span>{p.name}<small>{p.role}</small></span></li>
         )} />
     </div>
   );

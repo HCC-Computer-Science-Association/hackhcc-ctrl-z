@@ -29,6 +29,11 @@ const MAPS = {
     '.kyyyyyyyyyyyyok', '.kyyyyyyyyyyyyok', '.kyyyyyyyyyyyyok', '.kyyyyyyyyyyyyok',
     '.koooooooooooook', '.kkkkkkkkkkkkkkk',
   ],
+  team: [
+    '................', '..kkkk....kkkk..', '.knnnnk..knnnnk.', '.kcccck..kcccck.', '.kcccck..kcccck.',
+    '..kkkk....kkkk..', '.kkkkkk..kkkkkk.', 'kbbbbbbkkyyyyyyk', 'kbbbbbbkkyyyyyyk', 'kbbllbbkkyyooyyk',
+    'kbbbbbbkkyyyyyyk', 'kkkkkkkkkkkkkkkk', '................', '................',
+  ],
   undo: [
     '................', '.....kkkkkk.....', '..kkkkkkkkkkkk..', '..kssssssssssk..',
     '...kwsssssssk...', '...kwsbbbsssk...', '...kwbbsssbsk...', '...kbbbbssbsk...',

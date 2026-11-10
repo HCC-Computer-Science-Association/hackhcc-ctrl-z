@@ -51,7 +51,32 @@ export const rules = [
 ];
 
 export const sponsors = []; // { name, url, logo } — logo path under /public
-export const team = []; // { name, role }
+// The organizing team, in display order. photo: a square JPEG under /public/team (240x240 is plenty).
+// nick: optional "goes by" name, shown under the full name.
+export const team = [
+  { group: 'Marketing & Directing', people: [
+    { name: 'John Pierre', photo: '/team/john.jpg' },
+    { name: 'Nelson Aviles', photo: '/team/nelson.jpg' },
+  ] },
+  { group: 'Website & Tech', people: [
+    { name: 'Khizar Ahmed', photo: '/team/khizar.jpg' },
+    { name: 'Gabriel Morales', photo: '/team/gabriel.jpg' },
+    { name: 'Andrei Bornstein', photo: '/team/andrei.jpg' },
+  ] },
+  { group: 'Marketing & Design', people: [
+    { name: 'Madison Emshousen', photo: '/team/madison.jpg' },
+    { name: 'Lara Iskander', photo: '/team/lara.jpg' },
+  ] },
+  { group: 'Logistics', people: [
+    { name: 'Francisco', photo: '/team/francisco.jpg' },
+    { name: 'William Oyouha', photo: '/team/will.jpg' },
+  ] },
+  { group: 'Sponsorship & Hospitality', people: [
+    { name: 'Oyinade Balogun', nick: 'Comfort', photo: '/team/comfort.jpg' },
+    { name: 'Elexis Robinson', photo: '/team/elexis.jpg' },
+    { name: 'Idris Junaid', photo: '/team/idris.jpg' },
+  ] },
+];
 
 // Desktop extras
 export const watermark = { title: 'Activate Windows', line: 'Go to Settings to activate Windows.' };

@@ -4,14 +4,14 @@ import { event, schedule, faq } from '../../content';
 import { ACHIEVEMENTS, unlocked, unlock } from '../../lib/achieve.mjs';
 import { complete, closest } from '../../lib/complete.mjs';
 
-const OPENERS = { about: 'about', schedule: 'schedule', faq: 'faq', sponsors: 'sponsors', bughunt: 'bughunt', pong: 'pong', solitaire: 'solitaire', doom: 'doom', freedoom: 'doom', challenge: 'challenge', display: 'display', paint: 'paint' };
+const OPENERS = { about: 'about', schedule: 'schedule', faq: 'faq', sponsors: 'sponsors', team: 'team', bughunt: 'bughunt', pong: 'pong', solitaire: 'solitaire', doom: 'doom', freedoom: 'doom', challenge: 'challenge', display: 'display', paint: 'paint' };
 const TBA = (v) => v || 'TBA';
 const HIST_KEY = 'ctrlz-term-history';
 
 // Every command, with the one-line help text. Tab completion and "did you mean" read this list.
 const DOCS = {
   help: 'list commands',
-  about: 'open About.txt', schedule: 'open the schedule', faq: 'open FAQ and rules', sponsors: 'open sponsors and team',
+  about: 'open About.txt', schedule: 'open the schedule', faq: 'open FAQ and rules', sponsors: 'open sponsors', team: 'meet the organizers',
   bughunt: 'play Bug Hunt', pong: 'play Ping Pong', solitaire: 'play Solitaire', doom: 'play Doom', freedoom: 'play Doom',
   challenge: 'can it run Doom?', display: 'wallpaper, CRT and screensaver', paint: 'open Ctrl Z Paint',
   info: 'event facts', register: 'how to sign up', agenda: 'print the schedule', questions: 'print the FAQ questions',
@@ -24,7 +24,7 @@ const DOCS = {
 const COMMANDS = Object.keys(DOCS);
 const HELP = [
   'Commands:',
-  ...['about schedule faq sponsors challenge display paint', 'bughunt pong solitaire doom', 'info register agenda questions achievements',
+  ...['about schedule faq sponsors team challenge display paint', 'bughunt pong solitaire doom', 'info register agenda questions achievements',
     'history !! neofetch matrix date ver whoami echo ls', 'undo screensaver hack clear exit'].map((l) => `  ${l}`),
   '',
   'Tab completes a command. Up and Down walk through history.',
@@ -116,7 +116,7 @@ export default function Terminal({ onOpen, onUndo, onClose, onSaver }) {
       case 'clear': case 'cls': setLines([]); break;
       case 'exit': onClose(); break;
       case 'sudo': err('Nice try. This is 1995. There is no sudo.'); break;
-      case 'ls': case 'dir': print(' ABOUT.TXT  SCHEDULE  HELP  SPONSORS  BUGHUNT.EXE  PONG.EXE  SOLITAIR.EXE  DOOM.EXE  DISPLAY.CPL  PAINT.EXE', ''); break;
+      case 'ls': case 'dir': print(' ABOUT.TXT  SCHEDULE  HELP  SPONSORS  TEAM  BUGHUNT.EXE  PONG.EXE  SOLITAIR.EXE  DOOM.EXE  DISPLAY.CPL  PAINT.EXE', ''); break;
       case 'agenda': print(...schedule.map((s) => `  H+${String(s.hour).padEnd(3)} ${s.title}`), { t: '  (sample schedule, not final)', k: 'dim' }, ''); break;
       case 'questions': print(...faq.map((f) => `  - ${f.q}`), ''); break;
       default: {

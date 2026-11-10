@@ -50,9 +50,10 @@ Other things you can edit in the same file:
 
 1. **`schedule`:** rows as hours after kickoff (`hour: 2` shows as `H+2`). The current rows are a **sample**, not the real schedule.
 2. **`faq` and `rules`:** questions, answers and rules for the Help window.
-3. **`sponsors` and `team`:** add `{ name, url, logo }` or `{ name, role }`. Put logo files in `public/`.
-4. **`challenge`:** the "Can it run Doom?" pitch, idea-roller lists and draft rules.
-5. **`tips`, `stickyNote`, `watermark`:** desktop extras.
+3. **`sponsors`:** add `{ name, url, logo }`. Put logo files in `public/`.
+4. **`team`:** crews in display order, each `{ group, people: [{ name, photo, nick? }] }`. Photos are square JPEGs in `public/team/` (240×240).
+5. **`challenge`:** the "Can it run Doom?" pitch, idea-roller lists and draft rules.
+6. **`tips`, `stickyNote`, `watermark`:** desktop extras.
 
 ---
 
@@ -87,7 +88,8 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **About.txt:** the hook, the event facts and Register.
 - **Schedule:** sample 24-hour timeline.
 - **Help:** FAQ and rules.
-- **Sponsors & Team:** empty until you add entries.
+- **Sponsors:** empty until you add entries.
+- **Team:** the 12 organizers in 5 crews, with photos (`#team`, or `team` in the Terminal).
 
 **Games**
 - **Bug Hunt:** squash bugs in 30 seconds, with a saved best score.

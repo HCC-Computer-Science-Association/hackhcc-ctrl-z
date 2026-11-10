@@ -254,6 +254,20 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .rules { margin: 0; padding-left: 1.5em; }
 .rules li { margin-bottom: 4px; }
 
+/* ---------- Team: one 90s group box per crew ---------- */
+.team { padding: 12px 14px 14px; display: grid; gap: 22px; }
+.team-intro { margin: 0; color: var(--ink-soft); max-width: 60ch; }
+.crew { position: relative; padding: 20px 12px 12px; box-shadow: var(--sunken); }
+.crew h3 { position: absolute; top: -12px; left: 8px; margin: 0; padding: 0 6px; background: var(--silver); font-size: 21px; } /* breaks the group-box line, like Display's legends */
+.crew ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 14px 12px; }
+.crew li { display: grid; justify-items: center; align-content: start; gap: 6px; text-align: center; }
+.crew-photo { display: block; width: 100%; max-width: 132px; padding: 3px; background: var(--navy); box-shadow: var(--sunken); }
+.crew-photo img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; background: var(--cream); animation: scan-in 0.9s steps(12) both; animation-delay: calc(0.35s + var(--n, 0) * 0.11s); }
+@keyframes scan-in { from { clip-path: inset(0 0 100% 0); } }
+.crew-name { font: 400 19px/1.05 var(--f-pixel), sans-serif; color: var(--navy); text-wrap: balance; }
+.crew small { margin-top: -4px; font-size: 13px; color: var(--ink-soft); }
+.team .statusline { margin: -10px 0 0; }
+
 /* ---------- Sponsors (explorer) ---------- */
 .explorer { min-height: 120px; }
 .empty { margin: 0; padding: 22px 18px; color: var(--ink-soft); max-width: 52ch; }
@@ -526,6 +540,8 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   .win-grip { display: none; }
   .win-btn { width: 30px; height: 26px; }
   .facts { grid-template-columns: 1fr; }
+  .crew ul { grid-template-columns: repeat(3, 1fr); gap: 12px 8px; }
+  .crew-name { font-size: 17px; }
   .doc { padding: 16px; }
   .statusbar { flex-direction: column; align-items: stretch; }
   .statusbar .btn { justify-content: center; }

@@ -15,6 +15,7 @@ const loaders = {
   schedule: () => import('../apps/Schedule'),
   faq: () => import('../apps/Faq'),
   sponsors: () => import('../apps/Sponsors'),
+  team: () => import('../apps/Team'),
   terminal: () => import('../apps/Terminal'),
   bughunt: () => import('../apps/BugHunt'),
   pong: () => import('../apps/Pong'),
@@ -33,7 +34,8 @@ export const APPS = [
   { id: 'about', label: 'About.txt', title: 'About.txt — Ctrl Z Edit', icon: 'about', Body: About, w: 620, x: 0.4, y: 0.06 },
   { id: 'schedule', label: 'Schedule', title: 'Schedule — 24 hours', icon: 'schedule', Body: lazy('schedule'), w: 520, x: 0.1, y: 0.16 },
   { id: 'faq', label: 'Help', title: 'Help — FAQ and Rules', icon: 'faq', Body: lazy('faq'), w: 560, x: 0.24, y: 0.1 },
-  { id: 'sponsors', label: 'Sponsors & Team', title: 'C:\\SPONSORS', icon: 'sponsors', Body: lazy('sponsors'), w: 540, x: 0.3, y: 0.18 },
+  { id: 'sponsors', label: 'Sponsors', title: 'C:\\SPONSORS', icon: 'sponsors', Body: lazy('sponsors'), w: 540, x: 0.3, y: 0.18 },
+  { id: 'team', label: 'Team', title: 'C:\\TEAM', icon: 'team', Body: lazy('team'), w: 600, x: 0.34, y: 0.06 },
   { id: 'terminal', label: 'Terminal', title: 'C:\\> Terminal', icon: 'terminal', Body: lazy('terminal'), w: 600, x: 0.2, y: 0.22 },
   { id: 'bughunt', label: 'Bug Hunt', title: 'Bug Hunt', icon: 'bughunt', Body: lazy('bughunt'), game: true, w: 520, x: 0.26, y: 0.12 },
   { id: 'pong', label: 'Ping Pong', title: 'Ping Pong', icon: 'pong', Body: lazy('pong'), game: true, w: 520, x: 0.32, y: 0.16 },
@@ -50,7 +52,7 @@ const STORE = 'ctrlz-windows';
 const INITIAL = ['schedule', 'challenge', 'about'];
 const IDLE_MS = 45000;
 // Deep links: #schedule opens Schedule. A few friendlier names map to app ids.
-const ALIASES = { help: 'faq', rules: 'faq', team: 'sponsors', register: 'about', freedoom: 'doom' };
+const ALIASES = { help: 'faq', rules: 'faq', organizers: 'team', register: 'about', freedoom: 'doom' };
 const fromHash = () => {
   const h = decodeURIComponent(location.hash.slice(1)).toLowerCase();
   return APPS.some((a) => a.id === h) ? h : ALIASES[h];
