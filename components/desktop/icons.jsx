@@ -139,20 +139,30 @@ const MAPS = {
   heartEmpty: ['.kk.kk.', 'k..k..k', 'k.....k', '.k...k.', '..k.k..', '...k...'],
 };
 
-export default function Icon({ name, size = 32, className }) {
-  const rows = MAPS[name];
-  const w = Math.max(...rows.map((r) => r.length));
-  const rects = [];
+// Each icon is drawn as one <path> per colour, with every horizontal run of same-colour pixels merged into one
+// rectangle. Same pixels as one <rect> per pixel, at a fraction of the markup and DOM nodes. Cached per icon.
+const PATHS = {};
+function paths(name) {
+  if (PATHS[name]) return PATHS[name];
+  const rows = MAPS[name], d = {};
   rows.forEach((row, y) => {
-    for (let x = 0; x < row.length; x++) {
-      const fill = C[row[x]];
-      if (fill) rects.push(<rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={fill} />);
+    for (let x = 0; x < row.length;) {
+      const ch = row[x];
+      let end = x + 1;
+      while (row[end] === ch) end++;
+      if (C[ch]) d[ch] = `${d[ch] || ''}M${x} ${y}h${end - x}v1H${x}z`;
+      x = end;
     }
   });
+  return (PATHS[name] = { w: Math.max(...rows.map((r) => r.length)), h: rows.length, d: Object.entries(d) });
+}
+
+export default function Icon({ name, size = 32, className }) {
+  const { w, h, d } = paths(name);
   return (
-    <svg className={className} viewBox={`0 0 ${w} ${rows.length}`} width={size} height={(size * rows.length) / w}
+    <svg className={className} viewBox={`0 0 ${w} ${h}`} width={size} height={(size * h) / w}
       shapeRendering="crispEdges" aria-hidden="true" focusable="false">
-      {rects}
+      {d.map(([ch, path]) => <path key={ch} fill={C[ch]} d={path} />)}
     </svg>
   );
 }

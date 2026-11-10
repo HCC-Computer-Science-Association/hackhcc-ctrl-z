@@ -142,7 +142,7 @@ kbd {
 }
 .win.is-max .win-title { cursor: default; }
 .win-max { margin-left: -2px; }
-.win.dragging { box-shadow: var(--raised), 0 18px 40px -10px rgb(0 0 40 / 0.6); }
+.win.dragging { will-change: transform; box-shadow: var(--raised), 0 18px 40px -10px rgb(0 0 40 / 0.6); }
 .win.dragging .win-body { pointer-events: none; }
 @keyframes win-in { from { opacity: 0; scale: 0.94; } }
 /* Signature: Ctrl+Z rewinds the window back into place. */
@@ -299,8 +299,10 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .countdown { display: flex; align-items: center; gap: 6px; }
 .meter { width: 54px; height: 10px; background: var(--white); box-shadow: var(--sunken); padding: 2px; display: block; }
 .meter span { display: block; height: 100%; width: calc(var(--fill) * 100%); background: repeating-linear-gradient(90deg, var(--green) 0 4px, #2f8f22 4px 6px); }
-.meter .idle { background-size: 12px 100%; animation: idle 1.2s steps(6) infinite; }
-@keyframes idle { to { background-position: 12px 0; } }
+/* Idle (date TBA): the stripes march. A transformed layer, so the compositor runs it without repainting. */
+.meter .idle { position: relative; overflow: hidden; background: none; }
+.meter .idle::before { content: ""; position: absolute; inset: 0 0 0 -12px; background: repeating-linear-gradient(90deg, var(--green) 0 4px, #2f8f22 4px 6px) 0 0 / 12px 100%; animation: idle 1.2s steps(6) infinite; will-change: transform; }
+@keyframes idle { to { transform: translateX(12px); } }
 .clock { min-width: 4.5em; text-align: right; font-variant-numeric: tabular-nums; }
 
 .start-menu {
@@ -657,8 +659,11 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
     radial-gradient(ellipse at center, transparent 60%, rgb(0 0 20 / 0.42) 100%),
     repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.12) 0 1px, transparent 1px 3px);
   box-shadow: inset 0 0 90px rgb(0 0 30 / 0.45);
+  will-change: transform; /* own compositor layer: painted once, never repainted when the desktop under it changes */
 }
 @media (prefers-contrast: more), print { body::after { display: none; } }
 /* Paint: after the logo is painted, Clear glows gently to say "this canvas is yours". */
-.btn.is-hint { outline: 2px solid var(--royal); outline-offset: 2px; animation: hint-pulse 1.4s ease-in-out infinite; }
-@keyframes hint-pulse { 50% { outline-color: transparent; outline-offset: 4px; } }
+/* The ring is its own element animating opacity and scale only, so the pulse never repaints. */
+.btn.is-hint { position: relative; }
+.btn.is-hint::after { content: ""; position: absolute; inset: -4px; border: 2px solid var(--royal); pointer-events: none; animation: hint-pulse 1.4s ease-in-out infinite; }
+@keyframes hint-pulse { 50% { opacity: 0; transform: scale(1.06); } }

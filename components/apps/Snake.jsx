@@ -65,6 +65,14 @@ export default function Snake({ active }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [phase]);
 
+  // Hidden tab: pause, so the snake doesn't keep moving (and using CPU) where nobody can see it.
+  useEffect(() => {
+    if (phase !== 'play') return;
+    const onHide = () => { if (document.hidden) setPhase('pause'); };
+    document.addEventListener('visibilitychange', onHide);
+    return () => document.removeEventListener('visibilitychange', onHide);
+  }, [phase]);
+
   // Swipe: the longer axis of the drag picks the direction.
   const touch = useRef(null);
   const onPointerDown = (e) => { touch.current = [e.clientX, e.clientY]; };

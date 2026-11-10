@@ -40,6 +40,7 @@ export default function Defrag() {
     if (!run) return;
     let phase = 0, move = null; // phase 0: read the block, 1: write it into the gap
     const t = setInterval(() => {
+      if (document.hidden) return; // no work in a background tab
       const d = disk.current;
       if (!move) move = nextMove(d);
       if (!move) { draw(); setPct(1); setRun(false); setDone(true); return; }

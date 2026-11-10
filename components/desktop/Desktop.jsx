@@ -123,11 +123,13 @@ export default function Desktop() {
   // Screensaver after IDLE_MS without input. Never while Doom or the video is open: input inside their iframes never reaches this page.
   useEffect(() => {
     if (saver || state.wins.doom?.open || state.wins.dontclick?.open) return;
-    let t = setTimeout(() => setSaver(true), IDLE_MS);
-    const reset = () => { clearTimeout(t); t = setTimeout(() => setSaver(true), IDLE_MS); };
+    // Input only stamps the time; a slow check starts the saver. (Re-arming a timer on every mouse move was wasted work.)
+    let last = Date.now();
+    const reset = () => { last = Date.now(); };
+    const t = setInterval(() => { if (Date.now() - last >= IDLE_MS && !document.hidden) setSaver(true); }, 5000);
     const evs = ['pointermove', 'pointerdown', 'keydown', 'wheel'];
     evs.forEach((ev) => window.addEventListener(ev, reset, { passive: true }));
-    return () => { clearTimeout(t); evs.forEach((ev) => window.removeEventListener(ev, reset)); };
+    return () => { clearInterval(t); evs.forEach((ev) => window.removeEventListener(ev, reset)); };
   }, [saver, state.wins.doom?.open, state.wins.dontclick?.open]);
 
   // The address bar follows the front window, so copying the URL shares that window.

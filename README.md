@@ -112,7 +112,7 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **TODO note, tip balloons, drifting clouds, right-click menu.**
 - **Screensaver:** starts after 45 seconds idle.
 - **Achievements:** 11 hidden goals (beat the CPU, win Solitaire, shut down…). A balloon pops up on unlock; type `achievements` in the Terminal to list them.
-- **Sound effects:** off by default. Click the speaker in the taskbar tray to turn them on. They're made in code, with no audio files.
+- **Sound effects:** on by default. Click the speaker in the taskbar tray to mute them (the choice is saved). They're made in code, with no audio files.
 - **CRT effect:** on by default (scanlines and a dark edge, with no flicker). Turn it off in Display. It hides itself for high-contrast users.
 - **Shut Down:** in the Start menu or the right-click menu. Press any key to reboot and replay the intro.
 
