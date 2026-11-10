@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import Icon from '../desktop/icons';
 
 const ROUND = 30; // seconds
-const BUGS = 6;
+const BUGS = 5;
+const SIZE = 44; // hit box in px; the sprite is 32px inside it
 const KEY = 'ctrlz-bughunt-best';
 
 const readBest = () => { try { return +localStorage.getItem(KEY) || 0; } catch { return 0; } };
@@ -24,24 +25,29 @@ export default function BugHunt() {
     if (phase !== 'play') return;
     const f = field.current;
     const els = [...f.querySelectorAll('.bug')];
+    // Speeds are px per second, so the game plays the same on 60 Hz and 144 Hz screens.
     const spawn = (b) => {
-      b.x = Math.random() * (f.clientWidth - 32); b.y = Math.random() * (f.clientHeight - 32);
-      const a = Math.random() * Math.PI * 2, sp = 1.2 + Math.random() * 1.6 + scoreRef.current * 0.05;
-      b.vx = Math.cos(a) * sp; b.vy = Math.sin(a) * sp;
+      b.x = Math.random() * (f.clientWidth - SIZE); b.y = Math.random() * (f.clientHeight - SIZE);
+      const a = Math.random() * Math.PI * 2, sp = 55 + Math.random() * 35 + Math.min(scoreRef.current, 20) * 3;
+      b.vx = Math.cos(a) * sp; b.vy = Math.sin(a) * sp; b.rest = 0;
     };
     bugs.current = els.map((el) => { const b = { el }; spawn(b); return b; });
-    let raf;
-    const tick = () => {
+    let raf, last = performance.now();
+    const tick = (now) => {
+      const dt = Math.min((now - last) / 1000, 0.05); last = now;
       for (const b of bugs.current) {
-        if (Math.random() < 0.02) { const a = Math.atan2(b.vy, b.vx) + (Math.random() - 0.5) * 1.6, sp = Math.hypot(b.vx, b.vy); b.vx = Math.cos(a) * sp; b.vy = Math.sin(a) * sp; }
-        b.x += b.vx; b.y += b.vy;
-        if (b.x < 0 || b.x > f.clientWidth - 32) b.vx *= -1;
-        if (b.y < 0 || b.y > f.clientHeight - 32) b.vy *= -1;
+        // Bugs wander, and now and then stop for a moment: that is your chance.
+        if (b.rest > 0) { b.rest -= dt; b.el.style.transform = `translate(${b.x}px, ${b.y}px) rotate(${Math.atan2(b.vy, b.vx) + Math.PI / 2}rad)`; continue; }
+        if (Math.random() < dt * 0.5) b.rest = 0.5 + Math.random() * 0.7;
+        if (Math.random() < dt * 1.2) { const a = Math.atan2(b.vy, b.vx) + (Math.random() - 0.5) * 1.6, sp = Math.hypot(b.vx, b.vy); b.vx = Math.cos(a) * sp; b.vy = Math.sin(a) * sp; }
+        b.x += b.vx * dt; b.y += b.vy * dt;
+        if (b.x < 0 || b.x > f.clientWidth - SIZE) { b.vx *= -1; b.x = Math.max(0, Math.min(b.x, f.clientWidth - SIZE)); }
+        if (b.y < 0 || b.y > f.clientHeight - SIZE) { b.vy *= -1; b.y = Math.max(0, Math.min(b.y, f.clientHeight - SIZE)); }
         b.el.style.transform = `translate(${b.x}px, ${b.y}px) rotate(${Math.atan2(b.vy, b.vx) + Math.PI / 2}rad)`;
       }
       raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
+    raf = requestAnimationFrame((t) => { last = t; tick(t); });
     const clock = setInterval(() => setLeft((s) => s - 1), 1000);
     bugs.current.respawn = spawn;
     return () => { cancelAnimationFrame(raf); clearInterval(clock); };
@@ -58,6 +64,7 @@ export default function BugHunt() {
 
   const squash = (i, e) => {
     const b = bugs.current[i];
+    e.preventDefault();
     const splat = document.createElement('span');
     splat.className = 'splat';
     splat.style.transform = `translate(${b.x}px, ${b.y}px)`;
@@ -65,7 +72,6 @@ export default function BugHunt() {
     setTimeout(() => splat.remove(), 600);
     scoreRef.current += 1; setScore(scoreRef.current);
     bugs.current.respawn(b);
-    e.currentTarget.blur();
   };
 
   return (

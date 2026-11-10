@@ -31,7 +31,7 @@ export const APPS = [
   { id: 'terminal', label: 'Terminal', title: 'C:\\> Terminal', icon: 'terminal', Body: lazy('terminal'), w: 600, x: 0.2, y: 0.22 },
   { id: 'bughunt', label: 'Bug Hunt', title: 'Bug Hunt', icon: 'bughunt', Body: lazy('bughunt'), w: 520, x: 0.26, y: 0.12 },
   { id: 'pong', label: 'Ping Pong', title: 'Ping Pong', icon: 'pong', Body: lazy('pong'), w: 520, x: 0.32, y: 0.16 },
-  { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), w: 720, x: 0.12, y: 0.04 },
+  { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), w: 800, x: 0.1, y: 0.03 },
   { id: 'doom', label: 'Freedoom', title: 'Freedoom', icon: 'doom', Body: lazy('doom'), w: 680, x: 0.2, y: 0.06 },
 ];
 

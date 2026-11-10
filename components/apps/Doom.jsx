@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const SRC = `${process.env.NEXT_PUBLIC_BASE}/doom/index.html`;
 
@@ -8,6 +8,7 @@ const SRC = `${process.env.NEXT_PUBLIC_BASE}/doom/index.html`;
 export default function Doom() {
   const [play, setPlay] = useState(false);
   const [touch, setTouch] = useState(false);
+  const frame = useRef(null);
 
   useEffect(() => { setTouch(matchMedia('(pointer: coarse)').matches && !matchMedia('(any-pointer: fine)').matches); }, []);
 
@@ -15,7 +16,7 @@ export default function Doom() {
     <div className="game doom">
       <div className="doom-screen sunken">
         {play
-          ? <iframe className="doom-host" src={SRC} title="Freedoom game" allow="autoplay; fullscreen" ref={(el) => el?.focus()} />
+          ? <iframe className="doom-host" src={SRC} title="Freedoom game" allow="autoplay; fullscreen" ref={(el) => { frame.current = el; el?.focus(); }} />
           : (
             <div className="game-card doom-card">
               {touch ? (
@@ -33,9 +34,15 @@ export default function Doom() {
             </div>
           )}
       </div>
-      <p className="doom-keys">
-        <kbd>Arrows</kbd> move · <kbd>Ctrl</kbd> fire · <kbd>Space</kbd> open · <kbd>1</kbd>–<kbd>7</kbd> weapons · <kbd>Esc</kbd> menu
-      </p>
+      <div className="doom-bar">
+        <p className="doom-keys">
+          <kbd>Arrows</kbd> move · <kbd>Ctrl</kbd> fire · <kbd>Space</kbd> open · <kbd>1</kbd>–<kbd>7</kbd> weapons · <kbd>Esc</kbd> menu
+        </p>
+        <button type="button" className="btn" disabled={!play} onClick={() => frame.current?.requestFullscreen?.().then(() => frame.current.focus()).catch(() => {})}>
+          Fullscreen
+        </button>
+      </div>
+      <p className="doom-hint">Want it bigger without fullscreen? Use the window's maximize button or double-click its title bar.</p>
       <p className="doom-legal">
         Levels: <a href="https://freedoom.github.io/" target="_blank" rel="noopener noreferrer">Freedoom</a> (BSD license).
         Engine: MBF 2.03 (GPL-2.0, <a href="https://www.doomworld.com/idgames/source/mbfsrc" target="_blank" rel="noopener noreferrer">source</a>).

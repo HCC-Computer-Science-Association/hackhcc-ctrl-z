@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Icon from '../desktop/icons';
-import { deal, draw, move, toFoundation, won, red } from '../../lib/klondike.mjs';
+import { deal, draw, move, toFoundation, bestMove, won, red } from '../../lib/klondike.mjs';
 
 const SUITS = ['spade', 'heart', 'diamond', 'club'];
 const SUIT_NAME = ['spades', 'hearts', 'diamonds', 'clubs'];
@@ -27,9 +27,13 @@ export default function Solitaire() {
 
   const apply = (next) => { if (next) setSt(next); setSel(null); return !!next; };
 
-  // Click a card: select it, or move the selection onto it.
+  // Click a card: it jumps to its best legal spot. If it has none, it is selected,
+  // so the next click on a pile chooses where it goes.
   const clickSource = (src) => {
-    if (!sel) return setSel(src);
+    if (!sel) {
+      if (apply(bestMove(st, src))) return;
+      return setSel(src);
+    }
     if (sel.pile === src.pile && sel.i === src.i && sel.idx === src.idx) return setSel(null);
     const to = src.pile === 'found' ? { pile: 'found', i: src.i } : src.pile === 'tab' ? { pile: 'tab', i: src.i } : null;
     if (!to || !apply(move(st, sel, to))) setSel(src);
@@ -42,7 +46,7 @@ export default function Solitaire() {
     <div className="game solitaire">
       <div className="game-hud">
         <span>Moves <b>{st.moves}</b></span>
-        <span className="sol-hint">Click a card, then where it goes. Double-click sends it home.</span>
+        <span className="sol-hint">Click a card and it moves to the best spot. Click the deck to draw.</span>
         <button type="button" className="btn" onClick={() => { setSt(deal()); setSel(null); }}>New game</button>
       </div>
       <div className="felt">

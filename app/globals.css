@@ -94,6 +94,20 @@ kbd {
   animation: win-in 0.32s var(--ease-out) both; animation-delay: calc(var(--boot-end) + 0.35s);
 }
 .win[hidden] { display: none; }
+.win.is-max { inset: 0; width: auto; max-height: none; transform: none; }
+.win.has-size { height: min(var(--h), calc(100% - 16px)); }
+.win.is-max .win-body, .win.has-size .win-body { flex: 1; container-type: size; }
+.win.is-max .game, .win.has-size .game { height: 100%; display: flex; flex-direction: column; }
+.win.is-max .bug-field, .win.has-size .bug-field, .win.is-max .felt, .win.has-size .felt { flex: 1; height: auto; min-height: 200px; }
+.win.is-max .pong-field, .win.has-size .pong-field { flex: 1; min-height: 0; display: grid; place-items: center; background: var(--navy); }
+.win.is-max .pong-field canvas, .win.has-size .pong-field canvas { width: auto; height: auto; max-width: 100%; max-height: 100cqh; }
+.win.is-max .term, .win.has-size .term { height: 100%; }
+.win-grip {
+  position: absolute; right: 2px; bottom: 2px; width: 14px; height: 14px; cursor: nwse-resize; touch-action: none;
+  background: linear-gradient(135deg, transparent 0 45%, var(--white) 45% 52%, var(--shade) 52% 60%, transparent 60% 70%, var(--white) 70% 77%, var(--shade) 77% 85%, transparent 85%);
+}
+.win.is-max .win-title { cursor: default; }
+.win-max { margin-left: -2px; }
 .win.dragging { box-shadow: var(--raised), 0 18px 40px -10px rgb(0 0 40 / 0.6); }
 .win.dragging .win-body { pointer-events: none; }
 @keyframes win-in { from { opacity: 0; scale: 0.94; } }
@@ -355,6 +369,7 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 
 /* ---------- Games ---------- */
 .game { padding: 8px; }
+.solitaire { container-type: inline-size; }
 .game-hud { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 2px 4px 8px; font: 400 19px var(--f-pixel), sans-serif; }
 .game-hud b { font-weight: 400; color: var(--royal); font-variant-numeric: tabular-nums; }
 .game-card {
@@ -363,15 +378,16 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 }
 .game-card h3 { margin: 0; justify-content: center; text-wrap: balance; }
 .game-card p { margin: 0; font-size: 15px; color: var(--ink-soft); }
-.bug-field { position: relative; height: 300px; overflow: hidden; background: var(--cream); cursor: crosshair; }
-.bug { position: absolute; left: 0; top: 0; padding: 0; border: 0; background: none; cursor: crosshair; touch-action: manipulation; }
+.bug-field { position: relative; height: 320px; touch-action: none; overflow: hidden; background: var(--cream); cursor: crosshair; }
+.bug { position: absolute; left: 0; top: 0; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0; background: none; cursor: crosshair; touch-action: none; -webkit-tap-highlight-color: transparent; }
+.bug:focus-visible { outline: none; box-shadow: none; }
 .bug svg { display: block; }
-.splat { position: absolute; left: 0; top: 0; width: 32px; height: 32px; background: radial-gradient(circle, var(--green) 30%, transparent 32%), radial-gradient(circle at 20% 30%, var(--green) 14%, transparent 16%), radial-gradient(circle at 80% 75%, var(--green) 12%, transparent 14%); animation: splat 0.6s ease-out forwards; pointer-events: none; }
+.splat { position: absolute; left: 0; top: 0; width: 44px; height: 44px; background: radial-gradient(circle, var(--green) 30%, transparent 32%), radial-gradient(circle at 20% 30%, var(--green) 14%, transparent 16%), radial-gradient(circle at 80% 75%, var(--green) 12%, transparent 14%); animation: splat 0.6s ease-out forwards; pointer-events: none; }
 @keyframes splat { from { scale: 0.4; } 30% { scale: 1.2; } to { opacity: 0; scale: 1.3; } }
 .pong-field { position: relative; line-height: 0; }
 .pong-field canvas { width: 100%; height: auto; image-rendering: pixelated; touch-action: none; cursor: none; }
 
-.felt { position: relative; min-height: 470px; padding: 12px; background: repeating-conic-gradient(#0f6b3a 0 25%, #0c5f33 0 50%) 0 0 / 4px 4px; box-shadow: var(--sunken); --cw: min(84px, calc((100vw - 64px) / 7)); --ch: calc(var(--cw) * 1.38); }
+.felt { position: relative; min-height: 470px; padding: 12px; background: repeating-conic-gradient(#0f6b3a 0 25%, #0c5f33 0 50%) 0 0 / 4px 4px; box-shadow: var(--sunken); --cw: min(112px, calc((100cqw - 72px) / 7)); --ch: calc(var(--cw) * 1.38); }
 .sol-top, .sol-tab { display: grid; grid-template-columns: repeat(7, var(--cw)); gap: calc((100% - 7 * var(--cw)) / 6); }
 .sol-tab { margin-top: 16px; }
 .sol-col { position: relative; min-height: calc(var(--ch) + 240px); }
@@ -381,7 +397,8 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   box-shadow: 0 0 0 1px var(--ink), 2px 2px 0 rgb(0 0 0 / 0.25); position: relative; cursor: pointer; display: block;
 }
 .card.is-red { color: var(--red); }
-.card-corner { position: absolute; left: 5px; top: 3px; display: grid; justify-items: center; font: 400 20px/1 var(--f-pixel), sans-serif; }
+.card-corner { position: absolute; left: 6px; top: 4px; display: grid; justify-items: center; font: 400 24px/1 var(--f-pixel), sans-serif; }
+.card:not(.card-back):not(.card-slot):hover { box-shadow: 0 0 0 2px var(--yellow), 2px 2px 0 rgb(0 0 0 / 0.25); }
 .card-pip { position: absolute; right: 8px; bottom: 8px; }
 .card.is-selected { outline: 3px solid var(--yellow); outline-offset: 0; z-index: 2; }
 .card-back {
@@ -395,7 +412,10 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .doom-screen { position: relative; aspect-ratio: 4 / 3; background: #000; padding: 2px; }
 .doom-host { position: absolute; inset: 2px; width: calc(100% - 4px); height: calc(100% - 4px); border: 0; display: block; }
 .doom-card { color: var(--ink); }
-.doom-keys { margin: 8px 2px 2px; font-size: 14px; }
+.doom-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+.doom-keys { margin: 0 2px; font-size: 14px; }
+.doom-hint { margin: 6px 2px 0; font-size: 13px; color: var(--ink-soft); }
+.win.is-max .doom-screen, .win.has-size .doom-screen { width: min(100%, calc((100cqh - 120px) * 4 / 3)); margin-inline: auto; }
 .doom-legal { margin: 2px; font-size: 12px; color: var(--ink-soft); }
 .doom-legal a { color: var(--royal); }
 
@@ -408,6 +428,7 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   .icon { width: 88px; }
   .win { inset: 0; width: auto; max-height: none; transform: none; }
   .win-title { cursor: default; height: 32px; }
+  .win-grip { display: none; }
   .win-btn { width: 30px; height: 26px; }
   .facts { grid-template-columns: 1fr; }
   .doc { padding: 16px; }

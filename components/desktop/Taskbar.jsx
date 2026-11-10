@@ -94,7 +94,7 @@ export default function Taskbar({ apps, state, top, dispatch }) {
       </ul>
 
       <div className="balloon-slot" aria-live="polite">
-        {tip >= 0 && (
+        {tip >= 0 && !Object.values(state.wins).some((w) => w.open && w.max && !w.min) && (
           <div className="balloon" key={tip}>
             <strong>Ctrl Z OS tip</strong>
             <p>{tips[tip]}</p>
