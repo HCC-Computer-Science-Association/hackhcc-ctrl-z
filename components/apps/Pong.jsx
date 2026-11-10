@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { unlock } from '../../lib/achieve.mjs';
 
 const W = 480, H = 300, PW = 8, PH = 54, BALL = 8, WIN = 5;
-const SERVE = 2.7, MAX = 6.5, SPEEDUP = 1.04, CPU = 2.9; // px per frame
+const SERVE = 2.5, MAX = 5.6, SPEEDUP = 1.035, CPU = 2.4; // px per frame. CPU < ball speed after a few hits, so rallies are winnable.
 const PAUSE = 500; // ms between a point and the next serve
 const COL = { bg: '#000067', line: '#1738bb', you: '#f5e7cd', cpu: '#8fb4ff', ball: '#ffe600' };
 
