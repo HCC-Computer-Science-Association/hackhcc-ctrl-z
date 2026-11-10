@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { C } from '../desktop/icons';
-import { W, H, blank, line, fill } from '../../lib/paint.mjs';
+import { W, H, blank, line, fill, logo } from '../../lib/paint.mjs';
 import { unlock } from '../../lib/achieve.mjs';
 
 // Ctrl Z Paint: a 64x40 pixel canvas where Ctrl+Z undoes each stroke (Ctrl+Y or Ctrl+Shift+Z redoes).
@@ -12,6 +12,8 @@ const RGB = KEYS.map((k) => [1, 3, 5].map((i) => parseInt(C[k].slice(i, i + 2), 
 const BG = KEYS.indexOf('w');
 const TOOLS = [{ id: 'pencil', label: 'Pencil' }, { id: 'eraser', label: 'Eraser' }, { id: 'fill', label: 'Fill' }];
 const HISTORY = 100;
+const LOGO = logo(Object.fromEntries(['n', 'b', 'w', 'y', 'k', 'l', 'G', 'r'].map((k) => [k, KEYS.indexOf(k)])));
+const SPEED = { bg: 64, fg: 12 }; // pixels per frame: a quick background sweep, then slower strokes (~3.5 s at 60 fps)
 
 export default function Paint({ active }) {
   const cv = useRef(null);
@@ -23,6 +25,8 @@ export default function Paint({ active }) {
   const [color, setColor] = useState(KEYS.indexOf('b'));
   const [at, setAt] = useState(null);
   const [, bump] = useState(0); // re-render so Undo/Redo buttons enable and disable
+  const anim = useRef(null); // { i, raf } while the logo is being painted
+  const [painting, setPainting] = useState(false);
 
   const render = () => {
     const ctx = cv.current.getContext('2d');
@@ -31,6 +35,33 @@ export default function Paint({ active }) {
     ctx.putImageData(img, 0, 0);
   };
   useEffect(render, []);
+  useEffect(() => () => cancelAnimationFrame(anim.current?.raf), []);
+
+  // Jump to the end of the logo animation (any other action does this first).
+  const finish = () => {
+    const a = anim.current;
+    if (!a) return;
+    cancelAnimationFrame(a.raf);
+    for (; a.i < LOGO.ops.length; a.i++) px.current[LOGO.ops[a.i][0]] = LOGO.ops[a.i][1];
+    anim.current = null; setPainting(false); render();
+  };
+  // Paint the HackHCC Ctrl Z badge stroke by stroke. One Ctrl+Z removes all of it.
+  const paintLogo = () => {
+    finish(); snapshot();
+    anim.current = { i: 0 };
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return finish();
+    setPainting(true);
+    const tick = () => {
+      const a = anim.current;
+      if (!a) return;
+      const end = Math.min(LOGO.ops.length, a.i + (a.i < LOGO.bg ? SPEED.bg : SPEED.fg));
+      for (; a.i < end; a.i++) px.current[LOGO.ops[a.i][0]] = LOGO.ops[a.i][1];
+      render();
+      if (a.i >= LOGO.ops.length) { anim.current = null; setPainting(false); return; }
+      a.raf = requestAnimationFrame(tick);
+    };
+    anim.current.raf = requestAnimationFrame(tick);
+  };
 
   const snapshot = () => {
     undo.current.push(px.current.slice());
@@ -39,6 +70,7 @@ export default function Paint({ active }) {
     bump((n) => n + 1);
   };
   const step = (from, to) => {
+    finish();
     if (!from.current.length) return false;
     to.current.push(px.current);
     px.current = from.current.pop();
@@ -70,6 +102,7 @@ export default function Paint({ active }) {
   };
   const down = (e) => {
     if (e.button !== 0) return;
+    finish();
     e.currentTarget.setPointerCapture(e.pointerId);
     const [x, y] = cell(e);
     snapshot();
@@ -88,7 +121,7 @@ export default function Paint({ active }) {
   };
   const up = () => { last.current = null; };
 
-  const clear = () => { snapshot(); px.current.fill(BG); render(); };
+  const clear = () => { finish(); snapshot(); px.current.fill(BG); render(); };
   const save = () => {
     const big = document.createElement('canvas');
     big.width = W * 10; big.height = H * 10;
@@ -109,6 +142,9 @@ export default function Paint({ active }) {
         {TOOLS.map((t) => (
           <button key={t.id} type="button" className={`btn${tool === t.id ? ' is-pressed' : ''}`} aria-pressed={tool === t.id} onClick={() => setTool(t.id)}>{t.label}</button>
         ))}
+        <button type="button" className="btn" onClick={paintLogo} disabled={painting} title="Paint the HackHCC Ctrl Z logo">
+          {painting ? 'Painting…' : 'HackHCC'}
+        </button>
         <span className="paint-gap" />
         <button type="button" className="btn" onClick={doUndo} disabled={!undo.current.length} title="Ctrl+Z">Undo</button>
         <button type="button" className="btn" onClick={doRedo} disabled={!redo.current.length} title="Ctrl+Y">Redo</button>

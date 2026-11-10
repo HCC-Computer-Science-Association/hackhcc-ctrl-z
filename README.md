@@ -97,7 +97,7 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Challenge:** the "Can it run Doom?" side challenge, with an idea roller and draft rules.
 - **Don't click me:** plays a certain 1987 music video the moment it opens. Closing the window stops it.
 - **Display:** pick a wallpaper, turn the CRT effect off or on, and pick a screensaver. Choices are saved in the browser.
-- **Paint (Ctrl Z Paint):** pixel drawing with Pencil, Eraser and Fill. **Ctrl+Z** undoes each stroke and **Ctrl+Y** redoes. With nothing left to undo, Ctrl+Z goes back to reopening closed windows. **Save PNG** downloads the drawing.
+- **Paint (Ctrl Z Paint):** pixel drawing with Pencil, Eraser and Fill. **Ctrl+Z** undoes each stroke and **Ctrl+Y** redoes. With nothing left to undo, Ctrl+Z goes back to reopening closed windows. **Save PNG** downloads the drawing. **HackHCC** paints the event logo onto the canvas stroke by stroke (about 3.5 s); one Ctrl+Z removes it.
 
 **Extras**
 - **Terminal:** type `help` to list the commands. **Tab** completes a command, **Up/Down** walk through history (kept for the tab), **Right arrow** accepts the grey suggestion, **Ctrl+L** clears, **Ctrl+C** cancels the line. Also: `history`, `!!`, `help <command>`, `neofetch`. Typos get a "Did you mean…?".
