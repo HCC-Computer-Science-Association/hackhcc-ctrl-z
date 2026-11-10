@@ -8,17 +8,17 @@ const BASE = process.env.NEXT_PUBLIC_BASE;
 export default function BootScreen() {
   useEffect(() => {
     const root = document.documentElement;
-    const done = () => {
-      root.dataset.booted = '1';
-      try { sessionStorage.setItem('booted', '1'); } catch {}
-      window.removeEventListener('keydown', done);
-    };
+    const remember = () => { try { sessionStorage.setItem('booted', '1'); } catch {} };
+    // Skip: data-booted swaps in the post-boot entrance animations, so windows open right away.
+    const skip = () => { root.dataset.booted = '1'; remember(); window.removeEventListener('keydown', skip); };
     if (root.dataset.booted) return;
     const phone = matchMedia('(max-width: 640px)').matches;
-    const t = setTimeout(done, phone ? 1450 : 2900); // matches the CSS boot-out
-    window.addEventListener('keydown', done);
-    document.getElementById('boot-skip')?.addEventListener('click', done);
-    return () => { clearTimeout(t); window.removeEventListener('keydown', done); };
+    // Natural end: CSS already hides the boot and plays the entrances. Setting data-booted here would
+    // restart those entrances mid-zoom (windows opened twice), so only remember and stop listening.
+    const t = setTimeout(() => { remember(); window.removeEventListener('keydown', skip); }, phone ? 1450 : 2900);
+    window.addEventListener('keydown', skip);
+    document.getElementById('boot-skip')?.addEventListener('click', skip);
+    return () => { clearTimeout(t); window.removeEventListener('keydown', skip); };
   }, []);
 
   return (
