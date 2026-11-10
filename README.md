@@ -96,7 +96,7 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Doom:** Freedoom, a free first-person shooter in a DOS emulator. Move with WASD, aim with the mouse, click to fire.
 - **Challenge:** the "Can it run Doom?" side challenge, with an idea roller and draft rules.
 - **Don't click me:** plays a certain 1987 music video the moment it opens. Closing the window stops it.
-- **Display:** pick a wallpaper, turn the CRT effect off or on, and pick a screensaver. Choices are saved in the browser.
+- **Display:** pick a wallpaper (including animated **Code rain**; the Terminal's `matrix` command toggles it), turn the CRT effect off or on, and pick a screensaver. Choices are saved in the browser.
 - **Paint (Ctrl Z Paint):** pixel drawing with Pencil, Eraser and Fill. **Ctrl+Z** undoes each stroke and **Ctrl+Y** redoes. With nothing left to undo, Ctrl+Z goes back to reopening closed windows. **Save PNG** downloads the drawing. Paint opens by painting the event logo stroke by stroke (about 5.5 s); the **HackHCC** button replays it, and **Clear** pulses afterwards to hint the canvas is yours. One Ctrl+Z removes the logo.
 
 **Extras**

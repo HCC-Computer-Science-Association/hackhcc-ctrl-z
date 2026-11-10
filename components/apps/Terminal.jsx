@@ -15,7 +15,7 @@ const DOCS = {
   bughunt: 'play Bug Hunt', pong: 'play Ping Pong', solitaire: 'play Solitaire', doom: 'play Doom', freedoom: 'play Doom',
   challenge: 'can it run Doom?', display: 'wallpaper, CRT and screensaver', paint: 'open Ctrl Z Paint',
   info: 'event facts', register: 'how to sign up', agenda: 'print the schedule', questions: 'print the FAQ questions',
-  achievements: 'what you have unlocked', neofetch: 'system info',
+  achievements: 'what you have unlocked', neofetch: 'system info', matrix: 'code rain wallpaper on or off', rain: 'code rain wallpaper on or off',
   history: 'commands you ran', '!!': 'run the last command again',
   date: 'today\'s date', ver: 'OS version', whoami: 'who are you?', echo: 'print text', ls: 'list files', dir: 'list files',
   undo: 'reopen the last closed window', screensaver: 'start the screensaver', hack: 'hack the mainframe',
@@ -25,7 +25,7 @@ const COMMANDS = Object.keys(DOCS);
 const HELP = [
   'Commands:',
   ...['about schedule faq sponsors challenge display paint', 'bughunt pong solitaire doom', 'info register agenda questions achievements',
-    'history !! neofetch date ver whoami echo ls', 'undo screensaver hack clear exit'].map((l) => `  ${l}`),
+    'history !! neofetch matrix date ver whoami echo ls', 'undo screensaver hack clear exit'].map((l) => `  ${l}`),
   '',
   'Tab completes a command. Up and Down walk through history.',
   'Ctrl+L clears the screen. Ctrl+C cancels the line. "help <command>" explains one.',
@@ -94,6 +94,13 @@ export default function Terminal({ onOpen, onUndo, onClose, onSaver }) {
         else print(...[...history].reverse().map((h, i) => `  ${String(i + 1).padStart(3)}  ${h}`), '');
         break;
       case 'neofetch': print(...NEOFETCH, ''); break;
+      case 'matrix': case 'rain': { // same setting as Display > Wallpaper
+        const root = document.documentElement, next = root.dataset.wall === 'rain' ? 'checker' : 'rain';
+        root.dataset.wall = next;
+        try { localStorage.setItem('ctrlz-wall', next); } catch {}
+        print(next === 'rain' ? 'Follow the green code. Type "matrix" again to switch it off.' : 'Back to the checker wallpaper.', '');
+        break;
+      }
       case 'date': print(new Date().toString(), ''); break;
       case 'ver': print('Ctrl Z OS 1.0 (build 2027)', ''); break;
       case 'whoami': print('a future HackHCC hacker', ''); break;

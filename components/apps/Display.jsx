@@ -8,6 +8,7 @@ const WALLS = [
   { id: 'plain', label: 'Plain' },
   { id: 'dots', label: 'Dots' },
   { id: 'grid', label: 'Blueprint' },
+  { id: 'rain', label: 'Code rain' },
 ];
 const SAVERS = [
   { id: 'keys', label: 'Ctrl + Z keycaps' },

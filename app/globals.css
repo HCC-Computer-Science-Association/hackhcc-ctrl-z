@@ -70,6 +70,10 @@ kbd {
 :root, .swatch[data-wall="checker"] { --wall: repeating-conic-gradient(var(--royal) 0 25%, var(--royal-dk) 0 50%) 0 0 / 4px 4px; }
 :root[data-wall="plain"], .swatch[data-wall="plain"] { --wall: var(--royal); }
 :root[data-wall="dots"], .swatch[data-wall="dots"] { --wall: radial-gradient(var(--royal) 1px, transparent 1.5px) 0 0 / 12px 12px, var(--navy); }
+:root[data-wall="rain"] { --wall: var(--ink); }
+.swatch[data-wall="rain"] { --wall: linear-gradient(var(--ink), transparent 70%), repeating-linear-gradient(90deg, var(--green) 0 3px, transparent 3px 9px), var(--ink); }
+:root[data-wall="rain"] .clouds { display: none; }
+.rain { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 :root[data-wall="grid"], .swatch[data-wall="grid"] { --wall: linear-gradient(var(--royal) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, var(--royal) 1px, transparent 1px) 0 0 / 24px 24px, var(--navy); }
 
 .icons {

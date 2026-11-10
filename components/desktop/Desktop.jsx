@@ -5,7 +5,7 @@ import { initState, reducer, focusedId } from '../../lib/windows.mjs';
 import Icon from './icons';
 import Window from './Window';
 import Taskbar from './Taskbar';
-import { Clouds, StickyNote, Watermark, ContextMenu } from './Living';
+import { Clouds, CodeRain, StickyNote, Watermark, ContextMenu } from './Living';
 import About from '../apps/About';
 import { play } from '../../lib/sound.mjs';
 import { unlock, trackOpened } from '../../lib/achieve.mjs';
@@ -132,6 +132,7 @@ export default function Desktop() {
   return (
     <div className="desktop">
       <main className="desktop-area" id="desktop">
+        <CodeRain />
         <Clouds />
         <h1 className="sr-only">HackHCC Ctrl Z — a 24-hour hackathon at Houston City College</h1>
         <ul className="icons" aria-label="Desktop" key={refresh}>
