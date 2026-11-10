@@ -34,25 +34,25 @@ const Loading = () => <p className="win-loading">Loading…</p>;
 const lazy = (id) => dynamic(loaders[id], { loading: Loading });
 const Screensaver = dynamic(() => import('./Screensaver'));
 
-// info: event basics, shown in the left icon column (and first in Start). Everything else is the fun stuff, on the right.
+// left: shown in the left icon column (event basics plus a few tools) and first in Start. Everything else, on the right.
 export const APPS = [
-  { id: 'about', info: true, label: 'About.txt', title: 'About.txt — Ctrl Z Edit', icon: 'about', Body: About, w: 620, x: 0.4, y: 0.06 },
-  { id: 'schedule', info: true, label: 'Schedule', title: 'Schedule — 24 hours', icon: 'schedule', Body: lazy('schedule'), w: 520, x: 0.1, y: 0.16 },
-  { id: 'faq', info: true, label: 'Help', title: 'Help — FAQ and Rules', icon: 'faq', Body: lazy('faq'), w: 560, x: 0.24, y: 0.1 },
-  { id: 'sponsors', info: true, label: 'Sponsors', title: 'C:\\SPONSORS', icon: 'sponsors', Body: lazy('sponsors'), w: 540, x: 0.3, y: 0.18 },
-  { id: 'team', info: true, label: 'Team', title: 'C:\\TEAM', icon: 'team', Body: lazy('team'), w: 600, x: 0.34, y: 0.06 },
-  { id: 'dontclick', info: true, label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
+  { id: 'about', left: true, label: 'About.txt', title: 'About.txt — Ctrl Z Edit', icon: 'about', Body: About, w: 620, x: 0.4, y: 0.06 },
+  { id: 'schedule', left: true, label: 'Schedule', title: 'Schedule — 24 hours', icon: 'schedule', Body: lazy('schedule'), w: 520, x: 0.1, y: 0.16 },
+  { id: 'faq', left: true, label: 'Help', title: 'Help — FAQ and Rules', icon: 'faq', Body: lazy('faq'), w: 560, x: 0.24, y: 0.1 },
+  { id: 'sponsors', left: true, label: 'Sponsors', title: 'C:\\SPONSORS', icon: 'sponsors', Body: lazy('sponsors'), w: 540, x: 0.3, y: 0.18 },
+  { id: 'team', left: true, label: 'Team', title: 'C:\\TEAM', icon: 'team', Body: lazy('team'), w: 600, x: 0.34, y: 0.06 },
+  { id: 'dontclick', left: true, label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
   { id: 'terminal', label: 'Terminal', title: 'C:\\> Terminal', icon: 'terminal', Body: lazy('terminal'), w: 600, x: 0.2, y: 0.22 },
   { id: 'bughunt', label: 'Bug Hunt', title: 'Bug Hunt', icon: 'bughunt', Body: lazy('bughunt'), game: true, w: 520, x: 0.26, y: 0.12 },
   { id: 'sweeper', label: 'Bug Sweeper', title: 'Bug Sweeper', icon: 'sweeper', Body: lazy('sweeper'), w: 340, x: 0.42, y: 0.1 },
   { id: 'snake', label: 'SNAKE.BAS', title: 'C:\\GAMES\\SNAKE.BAS', icon: 'snake', Body: lazy('snake'), w: 520, x: 0.3, y: 0.12 },
   { id: 'pong', label: 'Ping Pong', title: 'Ping Pong', icon: 'pong', Body: lazy('pong'), game: true, w: 520, x: 0.32, y: 0.16 },
   { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), game: true, w: 800, x: 0.1, y: 0.03 },
-  { id: 'challenge', label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.6, y: 0.24 },
-  { id: 'ideas', label: 'Ideas.txt', title: 'Ideas.txt — Ctrl Z Edit', icon: 'ideas', Body: lazy('ideas'), w: 520, x: 0.46, y: 0.14 },
+  { id: 'challenge', left: true, label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.6, y: 0.24 },
+  { id: 'ideas', left: true, label: 'Ideas.txt', title: 'Ideas.txt — Ctrl Z Edit', icon: 'ideas', Body: lazy('ideas'), w: 520, x: 0.46, y: 0.14 },
   { id: 'defrag', label: 'Defrag', title: 'Disk Defragmenter', icon: 'defrag', Body: lazy('defrag'), w: 540, x: 0.28, y: 0.1 },
-  { id: 'paint', label: 'Paint', title: 'Ctrl Z Paint', icon: 'paint', Body: lazy('paint'), w: 660, x: 0.22, y: 0.08 },
-  { id: 'display', label: 'Display', title: 'Display Properties', icon: 'display', Body: lazy('display'), w: 460, x: 0.38, y: 0.14 },
+  { id: 'paint', left: true, label: 'Paint', title: 'Ctrl Z Paint', icon: 'paint', Body: lazy('paint'), w: 660, x: 0.22, y: 0.08 },
+  { id: 'display', left: true, label: 'Display', title: 'Display Properties', icon: 'display', Body: lazy('display'), w: 460, x: 0.38, y: 0.14 },
   { id: 'doom', label: 'Doom', title: 'Doom', icon: 'doom', Body: lazy('doom'), game: true, w: 680, x: 0.2, y: 0.06 },
 ];
 
@@ -156,15 +156,15 @@ export default function Desktop() {
         <CodeRain />
         <Clouds />
         <h1 className="sr-only">HackHCC Ctrl Z — a 24-hour hackathon at Houston City College</h1>
-        {/* Event basics on the left (shortcuts right after About.txt); games and extras on the right. */}
-        <ul className="icons" aria-label="Event info" key={`l${refresh}`}>
-          {[APPS[0], ...LINKS, ...APPS.filter((a) => a.info).slice(1)].map((app, i) => <DesktopIcon key={app.id} app={app} i={i} open={open} prefetch={prefetch} at={spots[app.id]} onMove={moveIcon} />)}
-        </ul>
-        <ul className="icons icons-right" aria-label="Apps and games" key={`r${refresh}`}>
-          {APPS.filter((a) => !a.info).map((app, i) => <DesktopIcon key={app.id} app={app} i={i + 7} open={open} prefetch={prefetch} at={spots[app.id]} onMove={moveIcon} />)}
+        {/* Event basics and tools on the left (shortcuts right after About.txt, Undo Bin last); games and extras on the right. */}
+        <ul className="icons" aria-label="Event info and tools" key={`l${refresh}`}>
+          {[APPS[0], ...LINKS, ...APPS.filter((a) => a.left).slice(1)].map((app, i) => <DesktopIcon key={app.id} app={app} i={i} open={open} prefetch={prefetch} at={spots[app.id]} onMove={moveIcon} />)}
           <DesktopIcon app={{ id: 'undobin', icon: 'undo', label: 'Undo Bin' }} i={APPS.length + LINKS.length} at={spots.undobin} onMove={moveIcon}
             open={() => act({ type: 'undo' })} disabled={!state.closed.length}
             aria={`Undo bin: reopen last closed window (${state.closed.length} in history)`} />
+        </ul>
+        <ul className="icons icons-right" aria-label="Apps and games" key={`r${refresh}`}>
+          {APPS.filter((a) => !a.left).map((app, i) => <DesktopIcon key={app.id} app={app} i={i + 12} open={open} prefetch={prefetch} at={spots[app.id]} onMove={moveIcon} />)}
         </ul>
         <StickyNote />
         <Watermark onActivate={() => open('about')} />

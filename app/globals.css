@@ -373,10 +373,11 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .icons li.is-dragging .icon { cursor: grabbing; }
 
 .sticky {
-  position: absolute; right: 236px; top: 28px; /* left of the two right-hand icon columns */ width: 210px; padding: 12px 14px 14px; rotate: 2deg;
+  position: absolute; right: 140px; top: 28px; /* left of the right-hand icon column (two on short screens, below) */ width: 210px; padding: 12px 14px 14px; rotate: 2deg;
   background: var(--yellow); color: var(--navy); box-shadow: 0 10px 20px -8px rgb(0 0 40 / 0.6);
   font: 400 18px/1.15 var(--f-pixel), sans-serif;
 }
+@media (max-height: 820px) { .sticky { right: 236px; } }
 .sticky h2 { margin: 0 0 8px; font: inherit; font-size: 20px; border-bottom: 2px solid var(--navy); padding-bottom: 4px; }
 .sticky ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .sticky label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; }

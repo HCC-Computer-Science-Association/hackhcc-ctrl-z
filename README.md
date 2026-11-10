@@ -125,7 +125,7 @@ Add `#` and the app name to the URL to open that window, for example:
 The address bar follows the front window, so copying the URL shares whatever window is on top.
 
 **Desktop layout**
-- The left column holds the event basics (About.txt, CodeRunners, Schedule, Help, Sponsors, Team, Don't click me). Apps and games sit on the right. The Start menu uses the same split. Mark an app `info: true` in `APPS` (`components/desktop/Desktop.jsx`) to put it on the left.
+- The left side holds the event basics and a few tools (About.txt, CodeRunners, Schedule, Help, Sponsors, Team, Don't click me, Challenge, Ideas.txt, Paint, Display, Undo Bin). The games sit on the right. The Start menu uses the same split. Mark an app `left: true` in `APPS` (`components/desktop/Desktop.jsx`) to put it on the left.
 - Drag any icon with the mouse to move it; spots are saved in the browser. Right-click the desktop and pick **Arrange icons** to put them back. Phones keep a fixed grid.
 
 **Window controls**

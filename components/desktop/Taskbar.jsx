@@ -79,8 +79,8 @@ export default function Taskbar({ apps, links, state, top, dispatch, onShutdown 
         <nav id="start-menu" className="start-menu" ref={menuRef} aria-label="Start menu">
           <div className="start-rail" aria-hidden="true"><span>Ctrl Z OS</span></div>
           <ul>
-            {/* Same split as the desktop: event info and the shortcuts first, then the apps and games. */}
-            {[apps[0], ...links, ...apps.filter((a) => a.info).slice(1), null, ...apps.filter((a) => !a.info)].map((a) => (a === null
+            {/* Same split as the desktop: the left column's apps and the shortcuts first, then the apps and games. */}
+            {[apps[0], ...links, ...apps.filter((a) => a.left).slice(1), null, ...apps.filter((a) => !a.left)].map((a) => (a === null
               ? <li key="sep-info" className="start-sep" aria-hidden="true" />
               : (
                 <li key={a.id}>
