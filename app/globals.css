@@ -420,6 +420,12 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .term { background: #000; color: #c8c8c8; font: 20px/1.25 var(--f-bios), monospace; height: min(380px, 60vh); padding: 2px; box-shadow: var(--sunken); cursor: text; }
 .term-out { height: 100%; overflow: auto; padding: 8px 10px; white-space: pre-wrap; word-break: break-word; }
 .term-line { display: flex; }
+.term-field { flex: 1; min-width: 0; position: relative; display: flex; }
+.term-ghost { position: absolute; inset: 0; pointer-events: none; color: #6a6a78; white-space: pre; overflow: hidden; }
+.term-ghost span { visibility: hidden; }
+.term-cmd { color: var(--yellow); }
+.term-err { color: #ff8a8f; }
+.term-dim { color: #8a8a96; }
 .term-line input { flex: 1; min-width: 0; background: none; border: 0; color: var(--yellow); font: inherit; caret-color: var(--yellow); padding: 0; }
 .term-line input:focus-visible { outline: none; box-shadow: none; }
 .term ::selection { background: var(--yellow); color: #000; }

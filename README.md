@@ -99,7 +99,7 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Display:** pick a wallpaper and a screensaver. The choice is saved in the browser.
 
 **Extras**
-- **Terminal:** type `help` to list the commands.
+- **Terminal:** type `help` to list the commands. **Tab** completes a command, **Up/Down** walk through history (kept for the tab), **Right arrow** accepts the grey suggestion, **Ctrl+L** clears, **Ctrl+C** cancels the line. Also: `history`, `!!`, `help <command>`, `neofetch`. Typos get a "Did you mean…?".
 - **Undo Bin:** reopens the last closed window.
 - **TODO note, tip balloons, drifting clouds, right-click menu.**
 - **Screensaver:** starts after 45 seconds idle.
