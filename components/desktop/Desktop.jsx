@@ -23,6 +23,7 @@ const loaders = {
   challenge: () => import('../apps/Challenge'),
   dontclick: () => import('../apps/DontClick'),
   display: () => import('../apps/Display'),
+  paint: () => import('../apps/Paint'),
 };
 const Loading = () => <p className="win-loading">Loading…</p>;
 const lazy = (id) => dynamic(loaders[id], { loading: Loading });
@@ -39,6 +40,7 @@ export const APPS = [
   { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), game: true, w: 800, x: 0.1, y: 0.03 },
   { id: 'challenge', label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.6, y: 0.24 },
   { id: 'dontclick', label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
+  { id: 'paint', label: 'Paint', title: 'Ctrl Z Paint', icon: 'paint', Body: lazy('paint'), w: 660, x: 0.22, y: 0.08 },
   { id: 'display', label: 'Display', title: 'Display Properties', icon: 'display', Body: lazy('display'), w: 460, x: 0.38, y: 0.14 },
   { id: 'doom', label: 'Freedoom', title: 'Freedoom', icon: 'doom', Body: lazy('doom'), game: true, w: 680, x: 0.2, y: 0.06 },
 ];

@@ -550,3 +550,29 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   .win { animation-delay: calc(1.45s + var(--open-delay, 0ms)); }
   .win-title::after { animation-delay: calc(1.7s + var(--open-delay, 0ms)); }
 }
+
+/* ---------- Ctrl Z Paint ---------- */
+.paint { padding: 8px; display: grid; gap: 8px; }
+.paint-tools { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.paint-tools .btn { padding: 2px 12px; min-height: 32px; font-size: 19px; }
+.paint-gap { flex: 1; }
+.btn.is-pressed { box-shadow: var(--pressed); background: repeating-conic-gradient(var(--silver) 0 25%, var(--silver-lt) 0 50%) 0 0 / 2px 2px; }
+.btn:disabled { color: var(--shade); text-shadow: 1px 1px var(--white); cursor: default; }
+.paint-colors { display: flex; flex-wrap: wrap; gap: 4px; }
+.paint-swatch { width: 26px; height: 26px; padding: 0; border: 0; box-shadow: var(--sunken); cursor: pointer; }
+.paint-swatch[aria-checked="true"] { outline: 3px solid var(--ink); outline-offset: 2px; }
+.paint-stage { display: grid; place-items: center; min-height: 0; line-height: 0; }
+.paint-stage canvas { display: block; width: 100%; aspect-ratio: 64 / 40; image-rendering: pixelated; cursor: crosshair; touch-action: none; }
+.paint-status { display: flex; justify-content: space-between; gap: 12px; font: 15px var(--f-prose), sans-serif; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.win.is-max .paint, .win.has-size .paint { height: 100%; grid-template-rows: auto auto 1fr auto; }
+.win.is-max .paint-stage canvas, .win.has-size .paint-stage canvas { width: auto; height: 100%; max-width: 100%; }
+
+/* ---------- CRT: on by default; Display turns it off (data-crt="off" on <html>). Static: no flicker. ---------- */
+:root:not([data-crt="off"]) body::after {
+  content: ""; position: fixed; inset: 0; z-index: 40000; pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 60%, rgb(0 0 20 / 0.42) 100%),
+    repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.12) 0 1px, transparent 1px 3px);
+  box-shadow: inset 0 0 90px rgb(0 0 30 / 0.45);
+}
+@media (prefers-contrast: more), print { body::after { display: none; } }

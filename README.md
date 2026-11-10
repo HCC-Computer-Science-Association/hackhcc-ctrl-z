@@ -73,7 +73,7 @@ The workflow lives in `.github/workflows/deploy.yml`. It runs the tests, builds 
 | Command | What it does |
 |---|---|
 | `npm run dev` | Dev server at http://localhost:3000 |
-| `npm test` | Runs the logic tests (window manager, countdown, Solitaire rules) |
+| `npm test` | Runs the logic tests (window manager, countdown, Solitaire, achievements, Terminal completion, Paint) |
 | `npm run build` | Builds the static site into `out/` |
 | `npm start` | Serves `out/` locally to check a build |
 
@@ -96,15 +96,17 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Freedoom:** a free first-person shooter in a DOS emulator. Move with WASD, aim with the mouse, click to fire.
 - **Challenge:** the "Can it run Doom?" side challenge, with an idea roller and draft rules.
 - **Don't click me:** plays a certain 1987 music video the moment it opens. Closing the window stops it.
-- **Display:** pick a wallpaper and a screensaver. The choice is saved in the browser.
+- **Display:** pick a wallpaper, turn the CRT effect off or on, and pick a screensaver. Choices are saved in the browser.
+- **Paint (Ctrl Z Paint):** pixel drawing with Pencil, Eraser and Fill. **Ctrl+Z** undoes each stroke and **Ctrl+Y** redoes. With nothing left to undo, Ctrl+Z goes back to reopening closed windows. **Save PNG** downloads the drawing.
 
 **Extras**
 - **Terminal:** type `help` to list the commands. **Tab** completes a command, **Up/Down** walk through history (kept for the tab), **Right arrow** accepts the grey suggestion, **Ctrl+L** clears, **Ctrl+C** cancels the line. Also: `history`, `!!`, `help <command>`, `neofetch`. Typos get a "Did you mean…?".
 - **Undo Bin:** reopens the last closed window.
 - **TODO note, tip balloons, drifting clouds, right-click menu.**
 - **Screensaver:** starts after 45 seconds idle.
-- **Achievements:** 8 hidden goals (beat the CPU, win Solitaire, shut down…). A balloon pops up on unlock; type `achievements` in the Terminal to list them.
+- **Achievements:** 9 hidden goals (beat the CPU, win Solitaire, shut down…). A balloon pops up on unlock; type `achievements` in the Terminal to list them.
 - **Sound effects:** off by default. Click the speaker in the taskbar tray to turn them on. They're made in code, with no audio files.
+- **CRT effect:** on by default (scanlines and a dark edge, with no flicker). Turn it off in Display. It hides itself for high-contrast users.
 - **Shut Down:** in the Start menu or the right-click menu. Press any key to reboot and replay the intro.
 
 **Share a window with a link**

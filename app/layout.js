@@ -19,8 +19,8 @@ export const metadata = {
 
 export const viewport = { themeColor: '#000067' };
 
-// Runs before paint: skip the boot on repeat visits in this tab, or for reduced motion; apply the saved wallpaper.
-const bootCheck = `try{if(sessionStorage.getItem('booted')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.dataset.booted='1'}catch(e){}try{var w=localStorage.getItem('ctrlz-wall');if(w)document.documentElement.dataset.wall=w}catch(e){}`;
+// Runs before paint: skip the boot on repeat visits in this tab, or for reduced motion; apply the saved wallpaper and CRT setting.
+const bootCheck = `try{if(sessionStorage.getItem('booted')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.dataset.booted='1'}catch(e){}try{var w=localStorage.getItem('ctrlz-wall');if(w)document.documentElement.dataset.wall=w;if(localStorage.getItem('ctrlz-crt')==='off')document.documentElement.dataset.crt='off'}catch(e){}`;
 
 export default function RootLayout({ children }) {
   return (

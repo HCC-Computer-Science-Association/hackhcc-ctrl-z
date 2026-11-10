@@ -1,5 +1,5 @@
 // Original 16x16 pixel icons, drawn as SVG rects (crisp at any scale).
-const C = {
+export const C = {
   k: '#0b0b1a', w: '#ffffff', c: '#f5e7cd', n: '#000067', b: '#1738bb', l: '#8fb4ff',
   y: '#ffe600', o: '#c9a400', g: '#7d7d86', s: '#c3c3cc', r: '#e0242f', G: '#4fbf3a',
 };
@@ -89,6 +89,11 @@ const MAPS = {
     '................', '.kkkkkkkkkkkkkk.', '.kssssssssssssk.', '.kskkkkkkkkkksk.', '.kskbbbbbbbbksk.',
     '.kskbyybbbbbksk.', '.kskbbbbbbbbksk.', '.kskbbbbllbbksk.', '.kskbbbllllbksk.', '.kskkkkkkkkkksk.',
     '.kssssssssssGsk.', '.kkkkkkkkkkkkkk.', '......kssk......', '....kkkkkkkk....',
+  ],
+  paint: [
+    '................', '....kkkkkkk.....', '..kkcccccccck...', '.kcrrcccyyccck..', '.kcrrcccyycccck.',
+    'kccccccccccccck.', 'kcbbcccckkcccck.', 'kcbbccck..kccck.', 'kccccccckkccck..', 'kcGGcccccccck...',
+    '.kGGcccccck.....', '..kkcccck.......', '....kkkk........', '................',
   ],
   power: [
     '................', '.......rr.......', '....r..rr..r....', '...rr..rr..rr...', '..rr...rr...rr..',
