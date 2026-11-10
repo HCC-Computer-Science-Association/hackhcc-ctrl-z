@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { event, schedule, faq } from '../../content';
 import { ACHIEVEMENTS, unlocked, unlock } from '../../lib/achieve.mjs';
 import { complete, closest } from '../../lib/complete.mjs';
+import { resolve } from '../desktop/Desktop';
 
-const OPENERS = { about: 'about', schedule: 'schedule', faq: 'faq', sponsors: 'sponsors', team: 'team', bughunt: 'bughunt', pong: 'pong', solitaire: 'solitaire', doom: 'doom', freedoom: 'doom', challenge: 'challenge', display: 'display', paint: 'paint' };
 const TBA = (v) => v || 'TBA';
 const HIST_KEY = 'ctrlz-term-history';
 
@@ -75,7 +75,8 @@ export default function Terminal({ onOpen, onUndo, onClose, onSaver }) {
     const c = (cmd || '').toLowerCase();
     print({ t: `C:\\> ${raw}`, k: 'cmd' });
     if (!c) return;
-    if (OPENERS[c]) { onOpen(OPENERS[c]); print(`Opening ${c}...`, ''); return; }
+    const app = c === 'help' || c === 'register' ? null : resolve(c); // these two are Terminal commands, not the #help/#register links
+    if (app) { onOpen(app); print(`Opening ${c}...`, ''); return; }
     switch (c) {
       case 'help': case '?': {
         const about = args[0]?.toLowerCase();

@@ -47,16 +47,20 @@ export const APPS = [
   { id: 'doom', label: 'Doom', title: 'Doom', icon: 'doom', Body: lazy('doom'), game: true, w: 680, x: 0.2, y: 0.06 },
 ];
 
+// Desktop shortcuts to other sites: open in a new tab instead of a window. short: the desktop label (rows fit 2 lines).
+export const LINKS = [
+  { id: 'coderunners', label: 'HackHCC: CodeRunners 2026', short: 'CodeRunners 2026', href: 'https://coderunners.hackhcc.org/', icon: 'link' },
+];
+
 const STORE = 'ctrlz-windows';
 // Open on first load, back to front; they pop in in this order.
 const INITIAL = ['schedule', 'challenge', 'about'];
 const IDLE_MS = 45000;
 // Deep links: #schedule opens Schedule. A few friendlier names map to app ids.
 const ALIASES = { help: 'faq', rules: 'faq', organizers: 'team', register: 'about', freedoom: 'doom' };
-const fromHash = () => {
-  const h = decodeURIComponent(location.hash.slice(1)).toLowerCase();
-  return APPS.some((a) => a.id === h) ? h : ALIASES[h];
-};
+// An app id or alias (from a #link or the Terminal) to an app id, or undefined.
+export const resolve = (name) => { const n = (name || '').toLowerCase(); return APPS.some((a) => a.id === n) ? n : ALIASES[n]; };
+const fromHash = () => resolve(decodeURIComponent(location.hash.slice(1)));
 const SFX = { open: 'open', close: 'close', undo: 'undo', minimize: 'click', maximize: 'click' };
 
 export default function Desktop() {
@@ -102,15 +106,15 @@ export default function Desktop() {
     return () => window.removeEventListener('keydown', onKey);
   }, [state]);
 
-  // Screensaver after IDLE_MS without input. Never while Doom is open (it may be played with no mouse).
+  // Screensaver after IDLE_MS without input. Never while Doom or the video is open: input inside their iframes never reaches this page.
   useEffect(() => {
-    if (saver || state.wins.doom?.open) return;
+    if (saver || state.wins.doom?.open || state.wins.dontclick?.open) return;
     let t = setTimeout(() => setSaver(true), IDLE_MS);
     const reset = () => { clearTimeout(t); t = setTimeout(() => setSaver(true), IDLE_MS); };
     const evs = ['pointermove', 'pointerdown', 'keydown', 'wheel'];
     evs.forEach((ev) => window.addEventListener(ev, reset, { passive: true }));
     return () => { clearTimeout(t); evs.forEach((ev) => window.removeEventListener(ev, reset)); };
-  }, [saver, state.wins.doom?.open]);
+  }, [saver, state.wins.doom?.open, state.wins.dontclick?.open]);
 
   // The address bar follows the front window, so copying the URL shares that window.
   const top = focusedId(state);
@@ -138,16 +142,24 @@ export default function Desktop() {
         <Clouds />
         <h1 className="sr-only">HackHCC Ctrl Z — a 24-hour hackathon at Houston City College</h1>
         <ul className="icons" aria-label="Desktop" key={refresh}>
-          {APPS.map((app, i) => (
+          {/* Shortcuts sit right after About.txt, so they are never hidden behind the first windows. */}
+          {[APPS[0], ...LINKS, ...APPS.slice(1)].map((app, i) => (
             <li key={app.id} style={{ '--i': i }}>
-              <button type="button" className="icon" onClick={() => open(app.id)}
-                onPointerEnter={() => prefetch(app.id)} onFocus={() => prefetch(app.id)}>
-                <Icon name={app.icon} size={36} />
-                <span>{app.label}</span>
-              </button>
+              {app.href ? (
+                <a className="icon" href={app.href} target="_blank" rel="noopener noreferrer" title={app.label} aria-label={`${app.label} (opens in a new tab)`}>
+                  <Icon name={app.icon} size={36} />
+                  <span>{app.short || app.label}</span>
+                </a>
+              ) : (
+                <button type="button" className="icon" onClick={() => open(app.id)}
+                  onPointerEnter={() => prefetch(app.id)} onFocus={() => prefetch(app.id)}>
+                  <Icon name={app.icon} size={36} />
+                  <span>{app.label}</span>
+                </button>
+              )}
             </li>
           ))}
-          <li style={{ '--i': APPS.length }}>
+          <li style={{ '--i': APPS.length + LINKS.length }}>
             <button type="button" className="icon" disabled={!state.closed.length}
               onClick={() => act({ type: 'undo' })}
               aria-label={`Undo bin: reopen last closed window (${state.closed.length} in history)`}>
@@ -172,7 +184,7 @@ export default function Desktop() {
         })}
         <ContextMenu items={ctxItems} />
       </main>
-      <Taskbar apps={APPS} state={state} top={top} dispatch={act} onShutdown={shutDown} />
+      <Taskbar apps={APPS} links={LINKS} state={state} top={top} dispatch={act} onShutdown={shutDown} />
       {saver && <Screensaver onExit={exitSaver} />}
       {off && <ShutDown />}
     </div>

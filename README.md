@@ -76,7 +76,7 @@ The workflow lives in `.github/workflows/deploy.yml`. It runs the tests, builds 
 | `npm run dev` | Dev server at http://localhost:3000 |
 | `npm test` | Runs the logic tests (window manager, countdown, Solitaire, achievements, Terminal completion, Paint) |
 | `npm run build` | Builds the static site into `out/` |
-| `npm start` | Serves `out/` locally to check a build |
+| `npm start` | Serves the build locally at http://localhost:3000/hackhcc-ctrl-z/ (the same path as GitHub Pages) |
 
 To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http://<your-computer's-IP>:3000` on the phone.
 
@@ -103,6 +103,7 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 
 **Extras**
 - **Terminal:** type `help` to list the commands. **Tab** completes a command, **Up/Down** walk through history (kept for the tab), **Right arrow** accepts the grey suggestion, **Ctrl+L** clears, **Ctrl+C** cancels the line. Also: `history`, `!!`, `help <command>`, `neofetch`. Typos get a "Did you mean…?".
+- **HackHCC: CodeRunners 2026:** a desktop shortcut (also in the Start menu) that opens https://coderunners.hackhcc.org/ in a new tab. Add more shortcuts to `LINKS` in `components/desktop/Desktop.jsx`.
 - **Undo Bin:** reopens the last closed window.
 - **TODO note, tip balloons, drifting clouds, right-click menu.**
 - **Screensaver:** starts after 45 seconds idle.

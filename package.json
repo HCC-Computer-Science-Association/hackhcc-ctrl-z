@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "npx serve out",
+    "start": "mkdir -p .preview && ln -sfn ../out .preview/hackhcc-ctrl-z && npx serve .preview",
     "test": "node --test"
   },
   "dependencies": {

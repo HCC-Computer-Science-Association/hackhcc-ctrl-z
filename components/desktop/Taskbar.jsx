@@ -42,7 +42,7 @@ function useAchievement() {
   return got;
 }
 
-export default function Taskbar({ apps, state, top, dispatch, onShutdown }) {
+export default function Taskbar({ apps, links, state, top, dispatch, onShutdown }) {
   const [menu, setMenu] = useState(false);
   const [tip, dismissTip] = useTip();
   const got = useAchievement();
@@ -84,6 +84,14 @@ export default function Taskbar({ apps, state, top, dispatch, onShutdown }) {
                 <button type="button" onClick={() => pick(() => dispatch({ type: 'open', id: a.id }))}>
                   <Icon name={a.icon} size={24} /> {a.label}
                 </button>
+              </li>
+            ))}
+            <li className="start-sep" aria-hidden="true" />
+            {links.map((l) => (
+              <li key={l.id}>
+                <a href={l.href} target="_blank" rel="noopener noreferrer" onClick={() => setMenu(false)} aria-label={`${l.label} (opens in a new tab)`}>
+                  <Icon name={l.icon} size={24} /> {l.label}
+                </a>
               </li>
             ))}
             <li className="start-sep" aria-hidden="true" />

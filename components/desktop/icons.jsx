@@ -34,6 +34,11 @@ const MAPS = {
     '..kkkk....kkkk..', '.kkkkkk..kkkkkk.', 'kbbbbbbkkyyyyyyk', 'kbbbbbbkkyyyyyyk', 'kbbllbbkkyyooyyk',
     'kbbbbbbkkyyyyyyk', 'kkkkkkkkkkkkkkkk', '................', '................',
   ],
+  link: [ // a web page with the 90s shortcut arrow in the corner
+    '................', '.kkkkkkkkkkkkkk.', '.knnnnnnnnnnnnk.', '.kwwwwwwwwwwwwk.', '.kwbbbbbbwwwwwk.',
+    '.kwwwwwwwwwwwwk.', '.kwggggggggggwk.', 'kkkkkkkwwwwwwwk.', 'kwwwwwkgggggwwk.', 'kwwkkkkwwwwwwwk.',
+    'kwwwkkkgggwwwwk.', 'kwwkwkkwwwwwwwk.', 'kwkwwwkkkkkkkkk.', 'kkkkkkk.........',
+  ],
   undo: [
     '................', '.....kkkkkk.....', '..kkkkkkkkkkkk..', '..kssssssssssk..',
     '...kwsssssssk...', '...kwsbbbsssk...', '...kwbbsssbsk...', '...kbbbbssbsk...',

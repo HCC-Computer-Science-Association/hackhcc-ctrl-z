@@ -16,12 +16,13 @@ export default function Screensaver({ onExit }) {
       el, x: W() * (0.2 + i * 0.4), y: H() * (0.3 + i * 0.2),
       vx: (i ? -1 : 1) * 2.4, vy: (i ? 1 : -1) * 1.9, hue: i * 140,
     }));
-    let raf;
+    let raf, last = performance.now();
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches; // show the caps, don't move them
-    const tick = () => {
+    const tick = (now = performance.now()) => {
+      const k = Math.max(0, Math.min(now - last, 50)) / (1000 / 60); last = now; // speed per 60 Hz frame, same on any refresh rate
       for (const c of b) {
         const w = c.el.offsetWidth, h = c.el.offsetHeight;
-        c.x += c.vx; c.y += c.vy;
+        c.x += c.vx * k; c.y += c.vy * k;
         if (c.x < 0 || c.x + w > W()) { c.vx *= -1; c.x = Math.max(0, Math.min(c.x, W() - w)); c.hue += 67; }
         if (c.y < 0 || c.y + h > H()) { c.vy *= -1; c.y = Math.max(0, Math.min(c.y, H() - h)); c.hue += 67; }
         c.el.style.transform = `translate(${c.x}px, ${c.y}px)`;

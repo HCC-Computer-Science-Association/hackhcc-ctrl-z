@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { unlock } from '../../lib/achieve.mjs';
 
 const W = 480, H = 300, PW = 8, PH = 54, BALL = 8, WIN = 5;
-const SERVE = 2.5, MAX = 5.6, SPEEDUP = 1.035, CPU = 2.4; // px per frame. CPU < ball speed after a few hits, so rallies are winnable.
+const SERVE = 2.5, MAX = 5.6, SPEEDUP = 1.035, CPU = 2.4; // px per 60 Hz frame, scaled by real frame time so 120/144 Hz screens play the same. CPU < ball speed after a few hits, so rallies are winnable.
 const PAUSE = 500; // ms between a point and the next serve
 const COL = { bg: '#000067', line: '#1738bb', you: '#f5e7cd', cpu: '#8fb4ff', ball: '#ffe600' };
 
@@ -45,25 +45,26 @@ export default function Pong({ active }) {
       s.you = Math.max(0, Math.min(H - PH, ((e.clientY - r.top) / r.height) * H - PH / 2));
     };
     const onKey = (e) => {
-      if (!activeRef.current) return;
+      if (!activeRef.current && e.type === 'keydown') return; // always take key releases, or a key let go in another window stays held
       if (['ArrowUp', 'ArrowDown', 'w', 's', 'W', 'S'].includes(e.key)) { e.preventDefault(); keys.current[e.key.toLowerCase()] = e.type === 'keydown'; }
     };
     canvas.current.addEventListener('pointermove', onMove);
     window.addEventListener('keydown', onKey);
     window.addEventListener('keyup', onKey);
 
-    let raf;
-    const tick = () => {
+    let raf, last = performance.now();
+    const tick = (now = performance.now()) => {
+      const f = Math.max(0, Math.min(now - last, 50)) / (1000 / 60); last = now; // frames' worth of time since the last tick
       if (phase === 'play' && performance.now() >= s.waitUntil) {
         const k = keys.current;
-        if (k.arrowup || k.w) s.you = Math.max(0, s.you - 6);
-        if (k.arrowdown || k.s) s.you = Math.min(H - PH, s.you + 6);
+        if (k.arrowup || k.w) s.you = Math.max(0, s.you - 6 * f);
+        if (k.arrowdown || k.s) s.you = Math.min(H - PH, s.you + 6 * f);
         // CPU follows the ball with a capped speed, so it can be beaten.
         const target = s.by - PH / 2 + BALL / 2;
-        s.cpu += Math.max(-CPU, Math.min(CPU, target - s.cpu));
+        s.cpu += Math.max(-CPU * f, Math.min(CPU * f, target - s.cpu));
         s.cpu = Math.max(0, Math.min(H - PH, s.cpu));
         const px0 = s.bx;
-        s.bx += s.vx; s.by += s.vy;
+        s.bx += s.vx * f; s.by += s.vy * f;
         if (s.by < 0 || s.by > H - BALL) { s.vy *= -1; s.by = Math.max(0, Math.min(H - BALL, s.by)); }
         // A paddle returns the ball only as the ball crosses the paddle's front face this frame,
         // so a ball that already got past can't bounce back from behind the paddle.

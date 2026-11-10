@@ -83,7 +83,7 @@ kbd {
 .icon {
   width: 96px; padding: 4px; display: grid; justify-items: center; align-content: start; gap: 4px;
   background: none; border: 0; cursor: pointer; color: var(--white);
-  font: 400 18px/1.1 var(--f-pixel), sans-serif; text-align: center;
+  font: 400 18px/1.1 var(--f-pixel), sans-serif; text-align: center; text-decoration: none;
 }
 .icon span { padding: 1px 4px; text-shadow: 1px 1px 0 var(--navy), -1px -1px 0 var(--navy), 1px -1px 0 var(--navy), -1px 1px 0 var(--navy), 0 2px 0 var(--navy); }
 .icon:focus-visible { outline: none; box-shadow: none; }
@@ -312,11 +312,11 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .start-rail { width: 30px; background: linear-gradient(0deg, var(--navy), var(--royal)); display: flex; align-items: flex-end; justify-content: center; padding: 8px 0; }
 .start-rail span { writing-mode: vertical-rl; rotate: 180deg; font: 400 22px var(--f-pixel), sans-serif; color: var(--yellow); letter-spacing: 0.05em; }
 .start-menu ul { list-style: none; margin: 0; padding: 2px; flex: 1; }
-.start-menu button {
-  width: 100%; display: flex; align-items: center; gap: 10px; padding: 7px 10px; border: 0; background: none;
+.start-menu button, .start-menu a {
+  width: 100%; color: inherit; text-decoration: none; display: flex; align-items: center; gap: 10px; padding: 7px 10px; border: 0; background: none;
   cursor: pointer; text-align: left; font: 400 20px var(--f-pixel), sans-serif;
 }
-.start-menu button:hover:not(:disabled), .start-menu button:focus-visible { background: var(--navy); color: var(--white); outline: none; box-shadow: none; }
+.start-menu button:hover:not(:disabled), .start-menu button:focus-visible, .start-menu a:hover, .start-menu a:focus-visible { background: var(--navy); color: var(--white); outline: none; box-shadow: none; }
 .start-menu button:disabled { color: var(--shade); cursor: default; }
 .start-menu kbd { margin-left: auto; color: var(--ink); }
 .start-sep { height: 0; margin: 4px 2px; border-top: 1px solid var(--shade); border-bottom: 1px solid var(--white); }

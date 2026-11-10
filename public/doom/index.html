@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Doom</title>
 <!-- Isolated in an iframe so js-dos's stylesheet cannot restyle the main site. -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-dos@8.5.3/dist/js-dos.css">
-<script src="https://cdn.jsdelivr.net/npm/js-dos@8.5.3/dist/js-dos.js"></script>
+<!-- integrity: the browser refuses these files if the CDN ever serves different bytes. Update both hashes with the version. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-dos@8.5.3/dist/js-dos.css" integrity="sha384-tYrgAxbRPufJUrIUwrHMumsQ0yWXdNaYMGKazEkzSgtkpSAps5dIS71lqDFtoVNF" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/js-dos@8.5.3/dist/js-dos.js" integrity="sha384-tpCX90eRzpJLpH4PcI+3QbJ04KXaHYTPTZWQ5klhoRPDf5n/ZCsrjLAqphsCl/zq" crossorigin="anonymous"></script>
 <style>
   html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
   #dos { width: 100%; height: 100%; }

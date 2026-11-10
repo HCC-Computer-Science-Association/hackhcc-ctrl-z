@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 
-const SRC = `${process.env.NEXT_PUBLIC_BASE}/doom/index.html`;
+const SRC = `${process.env.NEXT_PUBLIC_BASE}/doom/`; // the folder, not index.html: some static servers rewrite that to /doom and break its relative links
 
 // Freedoom (free levels, BSD) on the MBF engine (GPL-2.0), run by js-dos inside an iframe
 // (public/doom/index.html) so its CSS stays out of the site. Nothing downloads until Play.
