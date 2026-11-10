@@ -53,7 +53,7 @@
   // motion is turned into the turn keys the engine handles reliably (arrows).
   // More motion = a longer press; reversing swaps keys at once. Clicks become fire (Ctrl) and use (Space).
   const LEFT = 263, RIGHT = 262, FIRE = 341, USE = 32;
-  const PX_PER_FRAME = 7; // mouse pixels consumed per frame of turn-key hold (lower = faster turning)
+  const PX_PER_FRAME = 4; // mouse pixels consumed per frame of turn-key hold (lower = faster turning)
   let acc = 0, turning = 0;
   const locked = () => document.pointerLockElement === aim;
   const setTurn = (key) => {
