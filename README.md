@@ -96,7 +96,7 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Ping Pong:** first to 5 against the computer.
 - **Solitaire:** drag cards, or click one to send it to its best spot.
 - **Bug Sweeper:** clear a 9×9 board hiding 10 bugs. Right-click, **F**, or Flag mode marks a bug. **Ctrl+Z** takes back your last click, even the one that hit a bug.
-- **SNAKE.BAS:** a DOS-style snake. Eat the hearts; arrows or WASD, swipe on a phone, **Space** pauses. Best score is saved in the browser.
+- **SNAKE.BAS:** a DOS-style snake. Eat the hearts and don't bite your tail (walls wrap you to the other side); arrows or WASD, swipe on a phone, **Space** pauses. Best score is saved in the browser.
 - **Doom:** Freedoom, a free first-person shooter in a DOS emulator. Move with WASD, aim with the mouse, click to fire.
 - **Challenge:** the "Can it run Doom?" side challenge, with an idea roller and draft rules.
 - **Don't click me:** plays a certain 1987 music video the moment it opens. Closing the window stops it.
@@ -123,6 +123,10 @@ Add `#` and the app name to the URL to open that window, for example:
 - `…/hackhcc-ctrl-z/#challenge`
 
 The address bar follows the front window, so copying the URL shares whatever window is on top.
+
+**Desktop layout**
+- The left column holds the event basics (About.txt, CodeRunners, Schedule, Help, Sponsors, Team, Don't click me). Apps and games sit on the right. The Start menu uses the same split. Mark an app `info: true` in `APPS` (`components/desktop/Desktop.jsx`) to put it on the left.
+- Drag any icon with the mouse to move it; spots are saved in the browser. Right-click the desktop and pick **Arrange icons** to put them back. Phones keep a fixed grid.
 
 **Window controls**
 - Drag a window by its title bar.

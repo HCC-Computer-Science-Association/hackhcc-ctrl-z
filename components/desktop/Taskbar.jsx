@@ -79,21 +79,22 @@ export default function Taskbar({ apps, links, state, top, dispatch, onShutdown 
         <nav id="start-menu" className="start-menu" ref={menuRef} aria-label="Start menu">
           <div className="start-rail" aria-hidden="true"><span>Ctrl Z OS</span></div>
           <ul>
-            {apps.map((a) => (
-              <li key={a.id}>
-                <button type="button" onClick={() => pick(() => dispatch({ type: 'open', id: a.id }))}>
-                  <Icon name={a.icon} size={24} /> {a.label}
-                </button>
-              </li>
-            ))}
-            <li className="start-sep" aria-hidden="true" />
-            {links.map((l) => (
-              <li key={l.id}>
-                <a href={l.href} target="_blank" rel="noopener noreferrer" onClick={() => setMenu(false)} aria-label={`${l.label} (opens in a new tab)`}>
-                  <Icon name={l.icon} size={24} /> {l.label}
-                </a>
-              </li>
-            ))}
+            {/* Same split as the desktop: event info and the shortcuts first, then the apps and games. */}
+            {[apps[0], ...links, ...apps.filter((a) => a.info).slice(1), null, ...apps.filter((a) => !a.info)].map((a) => (a === null
+              ? <li key="sep-info" className="start-sep" aria-hidden="true" />
+              : (
+                <li key={a.id}>
+                  {a.href ? (
+                    <a href={a.href} target="_blank" rel="noopener noreferrer" onClick={() => setMenu(false)} aria-label={`${a.label} (opens in a new tab)`}>
+                      <Icon name={a.icon} size={24} /> {a.label}
+                    </a>
+                  ) : (
+                    <button type="button" onClick={() => pick(() => dispatch({ type: 'open', id: a.id }))}>
+                      <Icon name={a.icon} size={24} /> {a.label}
+                    </button>
+                  )}
+                </li>
+              )))}
             <li className="start-sep" aria-hidden="true" />
             <li>
               <button type="button" disabled={!state.closed.length} onClick={() => pick(() => dispatch({ type: 'undo' }))}>

@@ -365,9 +365,15 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .cloud-d { top: 36%; width: 240px; height: 75px; animation-duration: 200s; animation-delay: -150s; opacity: 0.85; }
 @keyframes drift { from { transform: translateX(-360px); } to { transform: translateX(calc(100vw + 40px)); } }
 .icons { position: relative; grid-template-rows: repeat(auto-fill, 78px); grid-auto-columns: 96px; grid-auto-flow: column; height: calc(100% - 8px); align-content: start; row-gap: 4px; padding-top: 10px; }
+/* Apps and games: columns fill from the right edge, stopping above the watermark. */
+.icons-right { position: absolute; top: 0; right: 0; direction: rtl; height: calc(100% - 96px); }
+.icons-right li { direction: ltr; }
+.icons li { touch-action: none; }
+.icons li.is-dragging { z-index: 2; opacity: 0.85; cursor: grabbing; }
+.icons li.is-dragging .icon { cursor: grabbing; }
 
 .sticky {
-  position: absolute; right: 28px; top: 28px; width: 210px; padding: 12px 14px 14px; rotate: 2deg;
+  position: absolute; right: 236px; top: 28px; /* left of the two right-hand icon columns */ width: 210px; padding: 12px 14px 14px; rotate: 2deg;
   background: var(--yellow); color: var(--navy); box-shadow: 0 10px 20px -8px rgb(0 0 40 / 0.6);
   font: 400 18px/1.15 var(--f-pixel), sans-serif;
 }
@@ -529,6 +535,8 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 /* ---------- Phone ---------- */
 @media (max-width: 640px) {
   .icons { grid-template-columns: repeat(auto-fill, 88px); grid-template-rows: none; grid-auto-flow: row; height: auto; width: auto; justify-content: center; padding-top: 24px; }
+  .icons-right { position: static; direction: ltr; padding-top: 4px; }
+  .icons li { translate: none !important; touch-action: auto; } /* phones keep the tidy grid */
   .sticky, .watermark { display: none; }
   .sol-hint { display: none; }
   .balloon { width: min(280px, calc(100vw - 24px)); }

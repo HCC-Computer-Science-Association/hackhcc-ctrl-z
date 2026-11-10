@@ -10,7 +10,7 @@ const BEST = 'ctrlz-snake-best';
 const HEART = ['.rr.rr.', 'rrrrrrr', 'rrrrrrr', '.rrrrr.', '..rrr..', '...r...']; // the badge's pixel heart
 const speed = (score) => Math.max(65, 140 - score * 4); // ms per move: a little faster with every heart
 
-// SNAKE.BAS: eat the hearts, don't hit the walls or yourself. Arrows or WASD; swipe on a phone; Space pauses.
+// SNAKE.BAS: eat the hearts and don't bite yourself. Walls wrap you to the other side. Arrows or WASD; swipe on a phone; Space pauses.
 export default function Snake({ active }) {
   const cv = useRef(null);
   const game = useRef(newSnake(GW, GH));
@@ -88,7 +88,7 @@ export default function Snake({ active }) {
         {phase !== 'play' && (
           <div className="game-card snake-card">
             <h3>{phase === 'over' ? `Game over. Score ${score}.` : phase === 'pause' ? 'Paused' : 'Snake'}</h3>
-            <p>{phase === 'pause' ? 'Press Space to keep going.' : 'Eat the hearts. Avoid the walls and your own tail. Arrows or WASD; swipe on a phone.'}</p>
+            <p>{phase === 'pause' ? 'Press Space to keep going.' : 'Eat the hearts and don\'t bite your own tail. Walls wrap you to the other side. Arrows or WASD; swipe on a phone.'}</p>
             {phase === 'pause'
               ? <button type="button" className="btn btn-primary" onClick={() => setPhase('play')}>Resume</button>
               : <button type="button" className="btn btn-primary" onClick={start}>{phase === 'over' ? 'Play again' : 'Start'}</button>}

@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { initState, reducer, focusedId } from '../../lib/windows.mjs';
 import Icon from './icons';
@@ -34,12 +34,14 @@ const Loading = () => <p className="win-loading">Loading…</p>;
 const lazy = (id) => dynamic(loaders[id], { loading: Loading });
 const Screensaver = dynamic(() => import('./Screensaver'));
 
+// info: event basics, shown in the left icon column (and first in Start). Everything else is the fun stuff, on the right.
 export const APPS = [
-  { id: 'about', label: 'About.txt', title: 'About.txt — Ctrl Z Edit', icon: 'about', Body: About, w: 620, x: 0.4, y: 0.06 },
-  { id: 'schedule', label: 'Schedule', title: 'Schedule — 24 hours', icon: 'schedule', Body: lazy('schedule'), w: 520, x: 0.1, y: 0.16 },
-  { id: 'faq', label: 'Help', title: 'Help — FAQ and Rules', icon: 'faq', Body: lazy('faq'), w: 560, x: 0.24, y: 0.1 },
-  { id: 'sponsors', label: 'Sponsors', title: 'C:\\SPONSORS', icon: 'sponsors', Body: lazy('sponsors'), w: 540, x: 0.3, y: 0.18 },
-  { id: 'team', label: 'Team', title: 'C:\\TEAM', icon: 'team', Body: lazy('team'), w: 600, x: 0.34, y: 0.06 },
+  { id: 'about', info: true, label: 'About.txt', title: 'About.txt — Ctrl Z Edit', icon: 'about', Body: About, w: 620, x: 0.4, y: 0.06 },
+  { id: 'schedule', info: true, label: 'Schedule', title: 'Schedule — 24 hours', icon: 'schedule', Body: lazy('schedule'), w: 520, x: 0.1, y: 0.16 },
+  { id: 'faq', info: true, label: 'Help', title: 'Help — FAQ and Rules', icon: 'faq', Body: lazy('faq'), w: 560, x: 0.24, y: 0.1 },
+  { id: 'sponsors', info: true, label: 'Sponsors', title: 'C:\\SPONSORS', icon: 'sponsors', Body: lazy('sponsors'), w: 540, x: 0.3, y: 0.18 },
+  { id: 'team', info: true, label: 'Team', title: 'C:\\TEAM', icon: 'team', Body: lazy('team'), w: 600, x: 0.34, y: 0.06 },
+  { id: 'dontclick', info: true, label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
   { id: 'terminal', label: 'Terminal', title: 'C:\\> Terminal', icon: 'terminal', Body: lazy('terminal'), w: 600, x: 0.2, y: 0.22 },
   { id: 'bughunt', label: 'Bug Hunt', title: 'Bug Hunt', icon: 'bughunt', Body: lazy('bughunt'), game: true, w: 520, x: 0.26, y: 0.12 },
   { id: 'sweeper', label: 'Bug Sweeper', title: 'Bug Sweeper', icon: 'sweeper', Body: lazy('sweeper'), w: 340, x: 0.42, y: 0.1 },
@@ -47,7 +49,6 @@ export const APPS = [
   { id: 'pong', label: 'Ping Pong', title: 'Ping Pong', icon: 'pong', Body: lazy('pong'), game: true, w: 520, x: 0.32, y: 0.16 },
   { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), game: true, w: 800, x: 0.1, y: 0.03 },
   { id: 'challenge', label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.6, y: 0.24 },
-  { id: 'dontclick', label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
   { id: 'ideas', label: 'Ideas.txt', title: 'Ideas.txt — Ctrl Z Edit', icon: 'ideas', Body: lazy('ideas'), w: 520, x: 0.46, y: 0.14 },
   { id: 'defrag', label: 'Defrag', title: 'Disk Defragmenter', icon: 'defrag', Body: lazy('defrag'), w: 540, x: 0.28, y: 0.1 },
   { id: 'paint', label: 'Paint', title: 'Ctrl Z Paint', icon: 'paint', Body: lazy('paint'), w: 660, x: 0.22, y: 0.08 },
@@ -61,6 +62,7 @@ export const LINKS = [
 ];
 
 const STORE = 'ctrlz-windows';
+const SPOTS = 'ctrlz-icons'; // { [icon id]: [dx, dy] } offsets from each icon's grid slot, saved per browser
 // Open on first load, back to front; they pop in in this order.
 const INITIAL = ['schedule', 'challenge', 'about'];
 const IDLE_MS = 45000;
@@ -76,6 +78,10 @@ export default function Desktop() {
   const [saver, setSaver] = useState(false);
   const [refresh, setRefresh] = useState(0);
   const [off, setOff] = useState(false);
+  const [spots, setSpots] = useState({});
+  useEffect(() => { try { setSpots(JSON.parse(localStorage.getItem(SPOTS)) || {}); } catch {} }, []);
+  const saveSpots = (next) => { setSpots(next); try { localStorage.setItem(SPOTS, JSON.stringify(next)); } catch {} };
+  const moveIcon = useCallback((id, at) => setSpots((cur) => { const next = { ...cur, [id]: at }; try { localStorage.setItem(SPOTS, JSON.stringify(next)); } catch {} return next; }), []);
   const act = useCallback((a) => { play(SFX[a.type]); dispatch(a); }, []); // dispatch with a sound effect
 
   // Restore open windows for this tab. A first visit on a phone opens only About.txt (or the
@@ -135,6 +141,7 @@ export default function Desktop() {
 
   const ctxItems = [
     { label: 'Refresh', run: () => setRefresh((n) => n + 1) },
+    { label: 'Arrange icons', run: () => saveSpots({}) },
     { label: 'Open Terminal', run: () => open('terminal') },
     { label: 'Start screensaver', run: () => setSaver(true) },
     { label: 'Display properties', run: () => open('display') },
@@ -149,32 +156,15 @@ export default function Desktop() {
         <CodeRain />
         <Clouds />
         <h1 className="sr-only">HackHCC Ctrl Z — a 24-hour hackathon at Houston City College</h1>
-        <ul className="icons" aria-label="Desktop" key={refresh}>
-          {/* Shortcuts sit right after About.txt, so they are never hidden behind the first windows. */}
-          {[APPS[0], ...LINKS, ...APPS.slice(1)].map((app, i) => (
-            <li key={app.id} style={{ '--i': i }}>
-              {app.href ? (
-                <a className="icon" href={app.href} target="_blank" rel="noopener noreferrer" title={app.label} aria-label={`${app.label} (opens in a new tab)`}>
-                  <Icon name={app.icon} size={36} />
-                  <span>{app.short || app.label}</span>
-                </a>
-              ) : (
-                <button type="button" className="icon" onClick={() => open(app.id)}
-                  onPointerEnter={() => prefetch(app.id)} onFocus={() => prefetch(app.id)}>
-                  <Icon name={app.icon} size={36} />
-                  <span>{app.label}</span>
-                </button>
-              )}
-            </li>
-          ))}
-          <li style={{ '--i': APPS.length + LINKS.length }}>
-            <button type="button" className="icon" disabled={!state.closed.length}
-              onClick={() => act({ type: 'undo' })}
-              aria-label={`Undo bin: reopen last closed window (${state.closed.length} in history)`}>
-              <Icon name="undo" size={36} />
-              <span>Undo Bin</span>
-            </button>
-          </li>
+        {/* Event basics on the left (shortcuts right after About.txt); games and extras on the right. */}
+        <ul className="icons" aria-label="Event info" key={`l${refresh}`}>
+          {[APPS[0], ...LINKS, ...APPS.filter((a) => a.info).slice(1)].map((app, i) => <DesktopIcon key={app.id} app={app} i={i} open={open} prefetch={prefetch} at={spots[app.id]} onMove={moveIcon} />)}
+        </ul>
+        <ul className="icons icons-right" aria-label="Apps and games" key={`r${refresh}`}>
+          {APPS.filter((a) => !a.info).map((app, i) => <DesktopIcon key={app.id} app={app} i={i + 7} open={open} prefetch={prefetch} at={spots[app.id]} onMove={moveIcon} />)}
+          <DesktopIcon app={{ id: 'undobin', icon: 'undo', label: 'Undo Bin' }} i={APPS.length + LINKS.length} at={spots.undobin} onMove={moveIcon}
+            open={() => act({ type: 'undo' })} disabled={!state.closed.length}
+            aria={`Undo bin: reopen last closed window (${state.closed.length} in history)`} />
         </ul>
         <StickyNote />
         <Watermark onActivate={() => open('about')} />
@@ -196,6 +186,51 @@ export default function Desktop() {
       {saver && <Screensaver onExit={exitSaver} />}
       {off && <ShutDown />}
     </div>
+  );
+}
+
+// One desktop icon: an app button (prefetches its window on hover/focus) or a link that opens a new tab.
+// Drag it with the mouse to move it; `at` is its saved offset from its grid slot. Phones keep the grid (CSS).
+function DesktopIcon({ app, i, open, prefetch, at, onMove, disabled, aria }) {
+  const moved = useRef(false); // true right after a drag, so the click that follows does not open the app
+  const onPointerDown = (e) => {
+    if (e.button !== 0 || e.pointerType === 'touch' || matchMedia('(max-width: 640px)').matches) return;
+    const li = e.currentTarget, r0 = li.getBoundingClientRect(), area = li.closest('.desktop-area').getBoundingClientRect();
+    const start = [e.clientX, e.clientY], base = at || [0, 0];
+    let to = null;
+    const move = (ev) => {
+      const dx = ev.clientX - start[0], dy = ev.clientY - start[1];
+      if (!to && Math.hypot(dx, dy) < 6) return; // a small wobble is still a click
+      // Keep the whole icon on the desktop.
+      to = [base[0] + Math.max(area.left - r0.left, Math.min(dx, area.right - r0.right)), base[1] + Math.max(area.top - r0.top, Math.min(dy, area.bottom - r0.bottom))];
+      li.style.translate = `${to[0]}px ${to[1]}px`;
+      li.classList.add('is-dragging');
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up);
+      li.classList.remove('is-dragging');
+      if (!to) return;
+      moved.current = true; setTimeout(() => { moved.current = false; }, 0);
+      onMove(app.id, to.map(Math.round));
+    };
+    window.addEventListener('pointermove', move); window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+  };
+  return (
+    <li style={{ '--i': i, translate: at ? `${at[0]}px ${at[1]}px` : undefined }} onPointerDown={onPointerDown}
+      onClickCapture={(e) => { if (moved.current) { e.preventDefault(); e.stopPropagation(); } }}>
+      {app.href ? (
+        <a className="icon" href={app.href} target="_blank" rel="noopener noreferrer" draggable={false} title={app.label} aria-label={`${app.label} (opens in a new tab)`}>
+          <Icon name={app.icon} size={36} />
+          <span>{app.short || app.label}</span>
+        </a>
+      ) : (
+        <button type="button" className="icon" onClick={() => open(app.id)} disabled={disabled} aria-label={aria}
+          onPointerEnter={() => prefetch?.(app.id)} onFocus={() => prefetch?.(app.id)}>
+          <Icon name={app.icon} size={36} />
+          <span>{app.label}</span>
+        </button>
+      )}
+    </li>
   );
 }
 
