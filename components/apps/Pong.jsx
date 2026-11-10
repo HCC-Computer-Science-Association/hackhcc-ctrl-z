@@ -4,7 +4,7 @@ import { unlock } from '../../lib/achieve.mjs';
 
 const W = 480, H = 300, PW = 8, PH = 54, BALL = 8, WIN = 5;
 const SERVE = 2.7, MAX = 6.5, SPEEDUP = 1.04, CPU = 2.9; // px per frame
-const PAUSE = 800; // ms between a point and the next serve
+const PAUSE = 500; // ms between a point and the next serve
 const COL = { bg: '#000067', line: '#1738bb', you: '#f5e7cd', cpu: '#8fb4ff', ball: '#ffe600' };
 
 // Ping Pong: you are the left paddle (mouse, touch, W/S or arrow keys). First to 5.
@@ -19,13 +19,14 @@ export default function Pong({ active }) {
   useEffect(() => {
     const ctx = canvas.current.getContext('2d');
     const s = { you: H / 2 - PH / 2, cpu: H / 2 - PH / 2, bx: W / 2, by: H / 2, vx: 0, vy: 0, pts: [0, 0], waitUntil: 0, msg: '' };
-    // A full reset: ball, speed and both paddles back to the middle, then serve after a short pause.
+    // A full reset: paddles back to the middle, speed back to SERVE, and the ball waits on the
+    // serving paddle's face (dir 1 = you serve toward the CPU, -1 = the CPU serves toward you).
     const serve = (dir, delay = 0) => {
-      s.bx = W / 2 - BALL / 2; s.by = H / 2 - BALL / 2; s.vx = SERVE * dir; s.vy = (Math.random() * 2 - 1) * 1.8;
+      s.bx = dir > 0 ? 16 + PW : W - 16 - PW - BALL; s.by = H / 2 - BALL / 2; s.vx = SERVE * dir; s.vy = (Math.random() * 2 - 1) * 1.8;
       s.you = s.cpu = H / 2 - PH / 2;
       s.waitUntil = performance.now() + delay;
     };
-    if (phase === 'play') serve(Math.random() < 0.5 ? -1 : 1);
+    if (phase === 'play') serve(Math.random() < 0.5 ? -1 : 1, PAUSE);
 
     const draw = () => {
       ctx.fillStyle = COL.bg; ctx.fillRect(0, 0, W, H);
@@ -33,7 +34,7 @@ export default function Pong({ active }) {
       for (let y = 4; y < H; y += 16) ctx.fillRect(W / 2 - 2, y, 4, 8);
       ctx.fillStyle = COL.you; ctx.fillRect(16, Math.round(s.you), PW, PH);
       ctx.fillStyle = COL.cpu; ctx.fillRect(W - 16 - PW, Math.round(s.cpu), PW, PH);
-      if (phase === 'play' && performance.now() >= s.waitUntil) { ctx.fillStyle = COL.ball; ctx.fillRect(Math.round(s.bx), Math.round(s.by), BALL, BALL); }
+      if (phase === 'play') { ctx.fillStyle = COL.ball; ctx.fillRect(Math.round(s.bx), Math.round(s.by), BALL, BALL); } // visible on the server's paddle during the pause
       if (phase === 'play' && performance.now() < s.waitUntil && s.msg) {
         ctx.fillStyle = COL.ball; ctx.font = '28px "Jersey 15", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(s.msg, W / 2, H / 2 + 10);
       }
