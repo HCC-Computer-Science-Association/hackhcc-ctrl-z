@@ -1,0 +1,509 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-10T03:53:12+00:00",
+  "title": "Design System: HackHCC Ctrl Z",
+  "extensions": {
+    "colorMeta": {
+      "navy": {
+        "role": "primary",
+        "displayName": "Deep Badge Navy",
+        "canonical": "#000067",
+        "tonalRamp": [
+          "oklch(15% 0.161 264)",
+          "oklch(26% 0.161 264)",
+          "oklch(38% 0.161 264)",
+          "oklch(49% 0.161 264)",
+          "oklch(61% 0.161 264)",
+          "oklch(72% 0.161 264)",
+          "oklch(84% 0.161 264)",
+          "oklch(95% 0.161 264)"
+        ]
+      },
+      "royal": {
+        "role": "primary",
+        "displayName": "Badge Royal",
+        "canonical": "#1738bb",
+        "tonalRamp": [
+          "oklch(15% 0.207 266)",
+          "oklch(26% 0.207 266)",
+          "oklch(38% 0.207 266)",
+          "oklch(49% 0.207 266)",
+          "oklch(61% 0.207 266)",
+          "oklch(72% 0.207 266)",
+          "oklch(84% 0.207 266)",
+          "oklch(95% 0.207 266)"
+        ]
+      },
+      "royal-dk": {
+        "role": "primary",
+        "displayName": "Royal Shadow",
+        "canonical": "#12309f",
+        "tonalRamp": [
+          "oklch(15% 0.181 265)",
+          "oklch(26% 0.181 265)",
+          "oklch(38% 0.181 265)",
+          "oklch(49% 0.181 265)",
+          "oklch(61% 0.181 265)",
+          "oklch(72% 0.181 265)",
+          "oklch(84% 0.181 265)",
+          "oklch(95% 0.181 265)"
+        ]
+      },
+      "sky": {
+        "role": "secondary",
+        "displayName": "Sky",
+        "canonical": "#8fb4ff",
+        "tonalRamp": [
+          "oklch(15% 0.115 264)",
+          "oklch(26% 0.115 264)",
+          "oklch(38% 0.115 264)",
+          "oklch(49% 0.115 264)",
+          "oklch(61% 0.115 264)",
+          "oklch(72% 0.115 264)",
+          "oklch(84% 0.115 264)",
+          "oklch(95% 0.115 264)"
+        ]
+      },
+      "cream": {
+        "role": "secondary",
+        "displayName": "Cream Paper",
+        "canonical": "#f5e7cd",
+        "tonalRamp": [
+          "oklch(15% 0.038 83)",
+          "oklch(26% 0.038 83)",
+          "oklch(38% 0.038 83)",
+          "oklch(49% 0.038 83)",
+          "oklch(61% 0.038 83)",
+          "oklch(72% 0.038 83)",
+          "oklch(84% 0.038 83)",
+          "oklch(95% 0.038 83)"
+        ]
+      },
+      "cream-dk": {
+        "role": "secondary",
+        "displayName": "Cream Shadow",
+        "canonical": "#e6d3b0",
+        "tonalRamp": [
+          "oklch(15% 0.051 83)",
+          "oklch(26% 0.051 83)",
+          "oklch(38% 0.051 83)",
+          "oklch(49% 0.051 83)",
+          "oklch(61% 0.051 83)",
+          "oklch(72% 0.051 83)",
+          "oklch(84% 0.051 83)",
+          "oklch(95% 0.051 83)"
+        ]
+      },
+      "yellow": {
+        "role": "secondary",
+        "displayName": "Pixel Yellow",
+        "canonical": "#ffe600",
+        "tonalRamp": [
+          "oklch(15% 0.192 101)",
+          "oklch(26% 0.192 101)",
+          "oklch(38% 0.192 101)",
+          "oklch(49% 0.192 101)",
+          "oklch(61% 0.192 101)",
+          "oklch(72% 0.192 101)",
+          "oklch(84% 0.192 101)",
+          "oklch(95% 0.192 101)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#0b0b1a",
+        "tonalRamp": [
+          "oklch(15% 0.031 282)",
+          "oklch(26% 0.031 282)",
+          "oklch(38% 0.031 282)",
+          "oklch(49% 0.031 282)",
+          "oklch(61% 0.031 282)",
+          "oklch(72% 0.031 282)",
+          "oklch(84% 0.031 282)",
+          "oklch(95% 0.031 282)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "canonical": "#3a3550",
+        "tonalRamp": [
+          "oklch(15% 0.047 292)",
+          "oklch(26% 0.047 292)",
+          "oklch(38% 0.047 292)",
+          "oklch(49% 0.047 292)",
+          "oklch(61% 0.047 292)",
+          "oklch(72% 0.047 292)",
+          "oklch(84% 0.047 292)",
+          "oklch(95% 0.047 292)"
+        ]
+      },
+      "silver": {
+        "role": "neutral",
+        "displayName": "Chrome Silver",
+        "canonical": "#c3c3cc",
+        "tonalRamp": [
+          "oklch(15% 0.012 286)",
+          "oklch(26% 0.012 286)",
+          "oklch(38% 0.012 286)",
+          "oklch(49% 0.012 286)",
+          "oklch(61% 0.012 286)",
+          "oklch(72% 0.012 286)",
+          "oklch(84% 0.012 286)",
+          "oklch(95% 0.012 286)"
+        ]
+      },
+      "silver-lt": {
+        "role": "neutral",
+        "displayName": "Silver Light",
+        "canonical": "#e4e4ec",
+        "tonalRamp": [
+          "oklch(15% 0.011 286)",
+          "oklch(26% 0.011 286)",
+          "oklch(38% 0.011 286)",
+          "oklch(49% 0.011 286)",
+          "oklch(61% 0.011 286)",
+          "oklch(72% 0.011 286)",
+          "oklch(84% 0.011 286)",
+          "oklch(95% 0.011 286)"
+        ]
+      },
+      "shade": {
+        "role": "neutral",
+        "displayName": "Bevel Shade",
+        "canonical": "#7d7d86",
+        "tonalRamp": [
+          "oklch(15% 0.014 286)",
+          "oklch(26% 0.014 286)",
+          "oklch(38% 0.014 286)",
+          "oklch(49% 0.014 286)",
+          "oklch(61% 0.014 286)",
+          "oklch(72% 0.014 286)",
+          "oklch(84% 0.014 286)",
+          "oklch(95% 0.014 286)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(26% 0.000 90)",
+          "oklch(38% 0.000 90)",
+          "oklch(49% 0.000 90)",
+          "oklch(61% 0.000 90)",
+          "oklch(72% 0.000 90)",
+          "oklch(84% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      },
+      "red": {
+        "role": "tertiary",
+        "displayName": "Heart Red",
+        "canonical": "#e0242f",
+        "tonalRamp": [
+          "oklch(15% 0.219 25)",
+          "oklch(26% 0.219 25)",
+          "oklch(38% 0.219 25)",
+          "oklch(49% 0.219 25)",
+          "oklch(61% 0.219 25)",
+          "oklch(72% 0.219 25)",
+          "oklch(84% 0.219 25)",
+          "oklch(95% 0.219 25)"
+        ]
+      },
+      "green": {
+        "role": "tertiary",
+        "displayName": "Meter Green",
+        "canonical": "#4fbf3a",
+        "tonalRamp": [
+          "oklch(15% 0.199 141)",
+          "oklch(26% 0.199 141)",
+          "oklch(38% 0.199 141)",
+          "oklch(49% 0.199 141)",
+          "oklch(61% 0.199 141)",
+          "oklch(72% 0.199 141)",
+          "oklch(84% 0.199 141)",
+          "oklch(95% 0.199 141)"
+        ]
+      },
+      "bios-black": {
+        "role": "neutral",
+        "displayName": "BIOS Black",
+        "canonical": "#000000",
+        "tonalRamp": [
+          "oklch(15% 0.000 0)",
+          "oklch(26% 0.000 0)",
+          "oklch(38% 0.000 0)",
+          "oklch(49% 0.000 0)",
+          "oklch(61% 0.000 0)",
+          "oklch(72% 0.000 0)",
+          "oklch(84% 0.000 0)",
+          "oklch(95% 0.000 0)"
+        ]
+      },
+      "bios-grey": {
+        "role": "neutral",
+        "displayName": "BIOS Grey",
+        "canonical": "#c8c8c8",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(26% 0.000 90)",
+          "oklch(38% 0.000 90)",
+          "oklch(49% 0.000 90)",
+          "oklch(61% 0.000 90)",
+          "oklch(72% 0.000 90)",
+          "oklch(84% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "About hook line; one per document window."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "In-window section heads and Start rail wordmark."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Window titles, menubar, taskbar, buttons, HUD."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All readable prose, max 62ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase fact-cell terms and TBA tags."
+      },
+      "bios": {
+        "displayName": "BIOS",
+        "purpose": "Boot screen and Terminal only, on black."
+      }
+    },
+    "shadows": [
+      {
+        "name": "raised",
+        "value": "inset -1px -1px var(--ink), inset 1px 1px var(--white), inset -2px -2px var(--shade), inset 2px 2px var(--silver-lt)",
+        "purpose": "Buttons, window frames, menus, keycaps, table heads."
+      },
+      {
+        "name": "pressed",
+        "value": "inset -1px -1px var(--white), inset 1px 1px var(--ink), inset -2px -2px var(--silver-lt), inset 2px 2px var(--shade)",
+        "purpose": "Active buttons, open menus, pressed Start/task buttons."
+      },
+      {
+        "name": "sunken",
+        "value": "inset -1px -1px var(--white), inset 1px 1px var(--shade), inset -2px -2px var(--silver-lt), inset 2px 2px var(--ink)",
+        "purpose": "Fields, document panes, tray, meters, terminal, felt."
+      },
+      {
+        "name": "float",
+        "value": "0 10px 28px -8px rgb(0 0 40 / 0.55)",
+        "purpose": "Paired with raised on windows; deepens to 0 18px 40px -10px rgb(0 0 40 / 0.6) while dragging."
+      },
+      {
+        "name": "menu-float",
+        "value": "4px 8px 18px -6px rgb(0 0 40 / 0.5)",
+        "purpose": "Paired with raised on drop, context and Start menus."
+      },
+      {
+        "name": "dither-ground",
+        "value": "repeating-conic-gradient(var(--royal) 0 25%, var(--royal-dk) 0 50%) 0 0 / 4px 4px",
+        "purpose": "The desktop ground; image-rendering: pixelated."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default easing for every entrance."
+      },
+      {
+        "name": "boot",
+        "value": "2.6s total; year 2026 to 1995 over 0.8s cubic-bezier(0.5, 0, 0.2, 1) at 0.55s; splash at 1.8s; bar steps(10) 0.75s; fade 0.35s ease-in",
+        "purpose": "BIOS rewind and badge splash; skippable; skipped on repeat visits and reduced motion."
+      },
+      {
+        "name": "icon-in",
+        "value": "0.35s ease-out, translateY(6px) scale(0.85), stagger 70ms after boot",
+        "purpose": "Desktop icon pop-in."
+      },
+      {
+        "name": "win-in",
+        "value": "0.32s ease-out, opacity 0 scale 0.94",
+        "purpose": "Window, message box and win-state entrance."
+      },
+      {
+        "name": "win-rewind",
+        "value": "0.45s ease-out, scale 0.6 blur(3px) saturate(0) clip-path wipe down",
+        "purpose": "Signature: Ctrl+Z reopens a closed window."
+      },
+      {
+        "name": "menu-in",
+        "value": "0.18s ease-out clip-path wipe up",
+        "purpose": "Start menu open."
+      },
+      {
+        "name": "drift",
+        "value": "linear infinite, 90s to 200s per cloud",
+        "purpose": "Pixel clouds crossing the desktop."
+      },
+      {
+        "name": "balloon",
+        "value": "9s ease-out: rise in, hold, fade",
+        "purpose": "Tray tip balloon."
+      },
+      {
+        "name": "screensaver",
+        "value": "rAF bounce of Ctrl and Z keycaps, hue +67 per wall hit",
+        "purpose": "Idle screensaver on black; any input exits."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "boot hidden; clouds frozen at 30vw; animations 0.01ms, no delays, no transitions",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "640px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Button",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Silver bevelled push button; Pressed bevel when active.",
+      "html": "<button class=\"ds-btn\">Open</button>",
+      "css": ".ds-btn{--raised: inset -1px -1px #0b0b1a, inset 1px 1px #fff, inset -2px -2px #7d7d86, inset 2px 2px #e4e4ec; --pressed: inset -1px -1px #fff, inset 1px 1px #0b0b1a, inset -2px -2px #e4e4ec, inset 2px 2px #7d7d86; --sunken: inset -1px -1px #fff, inset 1px 1px #7d7d86, inset -2px -2px #e4e4ec, inset 2px 2px #0b0b1a;font-family:'Jersey 15',sans-serif;font-weight:400;font-size:21px;padding:4px 20px;min-height:36px;border:0;border-radius:0;background:#c3c3cc;color:#0b0b1a;box-shadow:var(--raised);cursor:pointer} .ds-btn:active{box-shadow:var(--pressed)} .ds-btn:focus-visible{outline:2px solid #ffe600;outline-offset:2px;box-shadow:var(--raised),0 0 0 4px #000067}"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single main action per window (Register).",
+      "html": "<button class=\"ds-btn-primary\">Register</button>",
+      "css": ".ds-btn-primary{--raised: inset -1px -1px #0b0b1a, inset 1px 1px #fff, inset -2px -2px #7d7d86, inset 2px 2px #e4e4ec; --pressed: inset -1px -1px #fff, inset 1px 1px #0b0b1a, inset -2px -2px #e4e4ec, inset 2px 2px #7d7d86; --sunken: inset -1px -1px #fff, inset 1px 1px #7d7d86, inset -2px -2px #e4e4ec, inset 2px 2px #0b0b1a;font-family:'Jersey 15',sans-serif;font-weight:400;font-size:21px;padding:4px 20px;min-height:36px;border:0;border-radius:0;background:#ffe600;color:#000067;outline:1px solid #0b0b1a;outline-offset:-1px;box-shadow:var(--raised);cursor:pointer} .ds-btn-primary:hover{background:#fff27a} .ds-btn-primary:active{box-shadow:var(--pressed)} .ds-btn-primary:focus-visible{outline:2px solid #ffe600;outline-offset:2px;box-shadow:0 0 0 4px #000067}"
+    },
+    {
+      "name": "Window",
+      "kind": "card",
+      "refersTo": "window",
+      "description": "App window: silver raised frame, navy-to-royal focused title bar, bevelled title buttons.",
+      "html": "<section class=\"ds-win\"><header class=\"ds-win-title\"><h2>About.txt</h2><button class=\"ds-win-btn\" aria-label=\"Close\"><svg viewBox=\"0 0 8 8\" width=\"9\" height=\"9\" shape-rendering=\"crispEdges\"><path d=\"M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v2h1v1h1v1h1v1H6V7H5V6H3v1H2v1H0V7h1V6h1V5h1V3H2V2H1V1H0z\" fill=\"currentColor\"/></svg></button></header><div class=\"ds-win-body\"><p>24 hours to build something.</p></div></section>",
+      "css": ".ds-win{--raised: inset -1px -1px #0b0b1a, inset 1px 1px #fff, inset -2px -2px #7d7d86, inset 2px 2px #e4e4ec; --pressed: inset -1px -1px #fff, inset 1px 1px #0b0b1a, inset -2px -2px #e4e4ec, inset 2px 2px #7d7d86; --sunken: inset -1px -1px #fff, inset 1px 1px #7d7d86, inset -2px -2px #e4e4ec, inset 2px 2px #0b0b1a;width:320px;background:#c3c3cc;padding:3px;box-shadow:var(--raised),0 10px 28px -8px rgb(0 0 40 / .55)} .ds-win-title{display:flex;align-items:center;gap:6px;height:26px;padding:0 3px 0 5px;background:linear-gradient(90deg,#000067,#1738bb);color:#fff} .ds-win-title h2{flex:1;margin:0;font-family:'Jersey 15',sans-serif;font-weight:400;font-size:19px;line-height:1} .ds-win-btn{width:22px;height:20px;display:grid;place-items:center;padding:0;border:0;background:#c3c3cc;color:#0b0b1a;box-shadow:var(--raised);cursor:pointer} .ds-win-btn:active{box-shadow:var(--pressed)} .ds-win-body{margin-top:3px;background:#f5e7cd;box-shadow:var(--sunken);padding:16px;font:16px/1.5 'Atkinson Hyperlegible',system-ui,sans-serif;color:#3a3550} .ds-win-body p{margin:0}"
+    },
+    {
+      "name": "Menu",
+      "kind": "nav",
+      "refersTo": "menu-item-hover",
+      "description": "Drop, context and Start menu rows: navy highlight, right-aligned shortcut.",
+      "html": "<ul class=\"ds-menu\"><li><button>Undo<kbd>Ctrl+Z</kbd></button></li><li class=\"ds-sep\"></li><li><button disabled>Redo</button></li></ul>",
+      "css": ".ds-menu{--raised: inset -1px -1px #0b0b1a, inset 1px 1px #fff, inset -2px -2px #7d7d86, inset 2px 2px #e4e4ec; --pressed: inset -1px -1px #fff, inset 1px 1px #0b0b1a, inset -2px -2px #e4e4ec, inset 2px 2px #7d7d86; --sunken: inset -1px -1px #fff, inset 1px 1px #7d7d86, inset -2px -2px #e4e4ec, inset 2px 2px #0b0b1a;list-style:none;margin:0;padding:2px;min-width:200px;background:#c3c3cc;box-shadow:var(--raised),4px 8px 18px -6px rgb(0 0 40 / .5)} .ds-menu button{width:100%;display:flex;gap:16px;padding:4px 10px 4px 22px;border:0;background:none;text-align:left;cursor:pointer;font:16px 'Atkinson Hyperlegible',sans-serif;color:#0b0b1a} .ds-menu button:hover:not(:disabled),.ds-menu button:focus-visible{background:#000067;color:#fff;outline:none} .ds-menu button:disabled{color:#7d7d86;text-shadow:1px 1px #fff;cursor:default} .ds-menu kbd{margin-left:auto;font-family:'Jersey 15',sans-serif;font-weight:400;font-size:1.1em} .ds-sep{margin:4px 2px;border-top:1px solid #7d7d86;border-bottom:1px solid #fff}"
+    },
+    {
+      "name": "Taskbar",
+      "kind": "nav",
+      "refersTo": "taskbar",
+      "description": "44px silver bar: Start, task buttons, sunken tray with hearts, meter, clock.",
+      "html": "<footer class=\"ds-tb\"><button class=\"ds-tb-btn\">Start</button><button class=\"ds-tb-btn ds-on\">About.txt</button><div class=\"ds-tray\"><span class=\"ds-hearts\">&#9632;&#9632;&#9632;</span><span class=\"ds-meter\"><span></span></span><span>9:49 PM</span></div></footer>",
+      "css": ".ds-tb{--raised: inset -1px -1px #0b0b1a, inset 1px 1px #fff, inset -2px -2px #7d7d86, inset 2px 2px #e4e4ec; --pressed: inset -1px -1px #fff, inset 1px 1px #0b0b1a, inset -2px -2px #e4e4ec, inset 2px 2px #7d7d86; --sunken: inset -1px -1px #fff, inset 1px 1px #7d7d86, inset -2px -2px #e4e4ec, inset 2px 2px #0b0b1a;display:flex;align-items:center;gap:6px;padding:4px;height:44px;background:#c3c3cc;box-shadow:inset 0 1px #fff,inset 0 2px #e4e4ec;font-family:'Jersey 15',sans-serif;font-weight:400;font-size:19px;color:#0b0b1a} .ds-tb-btn{height:34px;padding:0 10px;border:0;font:inherit;background:#c3c3cc;box-shadow:var(--raised);cursor:pointer} .ds-tb-btn.ds-on,.ds-tb-btn:active{box-shadow:var(--pressed);background:repeating-conic-gradient(#c3c3cc 0 25%,#e4e4ec 0 50%) 0 0/2px 2px} .ds-tray{margin-left:auto;display:flex;align-items:center;gap:12px;height:34px;padding:0 10px;box-shadow:var(--sunken)} .ds-hearts{color:#e0242f;letter-spacing:2px} .ds-meter{width:54px;height:10px;background:#fff;box-shadow:var(--sunken);padding:2px;display:block} .ds-meter span{display:block;height:100%;width:70%;background:repeating-linear-gradient(90deg,#4fbf3a 0 4px,#2f8f22 4px 6px)}"
+    },
+    {
+      "name": "Fact Cells",
+      "kind": "card",
+      "refersTo": "fact-cell",
+      "description": "Navy fact grid on an ink gutter; TBA values as yellow tags.",
+      "html": "<dl class=\"ds-facts\"><div><dt>Length</dt><dd>24 hours</dd></div><div><dt>Date</dt><dd><span class=\"ds-tba\">TBA</span></dd></div></dl>",
+      "css": ".ds-facts{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:#0b0b1a;padding:2px;margin:0} .ds-facts div{background:#000067;color:#fff;padding:10px 12px} .ds-facts dt{font-family:'Jersey 15',sans-serif;font-weight:400;font-size:17px;line-height:1;color:#8fb4ff;text-transform:uppercase;letter-spacing:.08em} .ds-facts dd{margin:2px 0 0;font-family:'Jersey 15',sans-serif;font-weight:400;font-size:28px;line-height:1.1;color:#ffe600} .ds-tba{font-family:'Jersey 15',sans-serif;font-weight:400;font-size:24px;letter-spacing:.06em;text-transform:uppercase;background:#ffe600;color:#000067;padding:0 .4em}"
+    },
+    {
+      "name": "Sticky Note",
+      "kind": "custom",
+      "refersTo": "sticky-note",
+      "description": "Tilted yellow desktop TODO note with sunken pixel checkboxes.",
+      "html": "<aside class=\"ds-sticky\"><h2>TODO.txt</h2><label><input type=\"checkbox\" checked><span>Register for HackHCC</span></label><label><input type=\"checkbox\"><span>Find a team</span></label></aside>",
+      "css": ".ds-sticky{--sunken:inset -1px -1px #fff,inset 1px 1px #7d7d86,inset -2px -2px #e4e4ec,inset 2px 2px #0b0b1a;width:210px;padding:12px 14px 14px;rotate:2deg;background:#ffe600;color:#000067;box-shadow:0 10px 20px -8px rgb(0 0 40 / .6);font-family:'Jersey 15',sans-serif;font-weight:400;font-size:18px;line-height:1.15;display:grid;gap:6px} .ds-sticky h2{margin:0 0 2px;font:inherit;font-size:20px;border-bottom:2px solid #000067;padding-bottom:4px} .ds-sticky label{display:flex;gap:8px;cursor:pointer} .ds-sticky input{appearance:none;flex:none;width:15px;height:15px;margin:1px 0 0;background:#fff;box-shadow:var(--sunken);display:grid;place-content:center} .ds-sticky input:checked::after{content:'';width:9px;height:9px;background:#000067;clip-path:polygon(0 55%,35% 85%,100% 10%,100% 30%,35% 100%,0 70%)} .ds-sticky input:checked+span{text-decoration:line-through;opacity:.65} .ds-sticky input:focus-visible{outline:2px solid #000067;outline-offset:2px}"
+    },
+    {
+      "name": "Balloon Tip",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Tray balloon with tail and bevelled close button.",
+      "html": "<div class=\"ds-balloon\"><strong>Ctrl Z OS tip</strong><p>Closed a window by mistake? Ctrl+Z brings it back.</p><button class=\"ds-bx\" aria-label=\"Turn off tips\"><svg viewBox=\"0 0 8 8\" width=\"9\" height=\"9\" shape-rendering=\"crispEdges\"><path d=\"M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v2h1v1h1v1h1v1H6V7H5V6H3v1H2v1H0V7h1V6h1V5h1V3H2V2H1V1H0z\" fill=\"currentColor\"/></svg></button></div>",
+      "css": ".ds-balloon{position:relative;width:280px;padding:10px 34px 12px 12px;background:#fffbe6;color:#0b0b1a;border:1px solid #0b0b1a;box-shadow:0 8px 18px -8px rgb(0 0 40 / .6);margin-bottom:10px} .ds-balloon::after{content:'';position:absolute;right:42px;bottom:-9px;width:14px;height:9px;background:inherit;clip-path:polygon(0 0,100% 0,100% 100%);border-right:1px solid #0b0b1a} .ds-balloon strong{font-family:'Jersey 15',sans-serif;font-weight:400;font-size:18px;color:#000067} .ds-balloon p{margin:2px 0 0;font:15px/1.35 'Atkinson Hyperlegible',sans-serif} .ds-bx{--raised: inset -1px -1px #0b0b1a, inset 1px 1px #fff, inset -2px -2px #7d7d86, inset 2px 2px #e4e4ec; --pressed: inset -1px -1px #fff, inset 1px 1px #0b0b1a, inset -2px -2px #e4e4ec, inset 2px 2px #7d7d86; --sunken: inset -1px -1px #fff, inset 1px 1px #7d7d86, inset -2px -2px #e4e4ec, inset 2px 2px #0b0b1a;position:absolute;right:6px;top:6px;width:22px;height:20px;display:grid;place-items:center;padding:0;border:0;background:#c3c3cc;box-shadow:var(--raised);cursor:pointer} .ds-bx:active{box-shadow:var(--pressed)}"
+    },
+    {
+      "name": "Game Card",
+      "kind": "card",
+      "refersTo": "game-card",
+      "description": "Centred raised panel for game start, pause and win states.",
+      "html": "<div class=\"ds-gc\"><h3>Bug Hunt</h3><p>Squash bugs before they ship.</p><button class=\"ds-gc-btn\">Start</button></div>",
+      "css": ".ds-gc{--raised: inset -1px -1px #0b0b1a, inset 1px 1px #fff, inset -2px -2px #7d7d86, inset 2px 2px #e4e4ec; --pressed: inset -1px -1px #fff, inset 1px 1px #0b0b1a, inset -2px -2px #e4e4ec, inset 2px 2px #7d7d86; --sunken: inset -1px -1px #fff, inset 1px 1px #7d7d86, inset -2px -2px #e4e4ec, inset 2px 2px #0b0b1a;width:min(320px,88%);padding:16px 18px;text-align:center;background:#c3c3cc;box-shadow:var(--raised),0 10px 24px -8px rgb(0 0 40 / .6);display:grid;gap:8px;justify-items:center} .ds-gc h3{margin:0;font-family:'Jersey 15',sans-serif;font-weight:400;font-size:22px;color:#000067} .ds-gc p{margin:0;font:15px 'Atkinson Hyperlegible',sans-serif;color:#3a3550} .ds-gc-btn{font-family:'Jersey 15',sans-serif;font-weight:400;font-size:21px;padding:4px 20px;min-height:36px;border:0;background:#c3c3cc;box-shadow:var(--raised);cursor:pointer} .ds-gc-btn:active{box-shadow:var(--pressed)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Ctrl Z OS",
+    "overview": "\n**Creative North Star: \"Ctrl Z OS\"**\n\nThe site is a working mid-90s desktop operating system dressed in the HackHCC Ctrl+Z badge's colours. A royal-blue dithered desktop carries pixel icons, drifting cream clouds, a yellow sticky note and silver bevelled windows; every section of the event is an app window, and closing a window is undoable. The look is Win95-era *inspired*, built from first principles in CSS: bevels are four inset hairlines, the ground is a conic-gradient checker, icons are hand-authored 16x16 pixel maps drawn as SVG rects.\n\nDensity is that of a real desktop: small chrome, square corners, everything one click from the taskbar. Pixel type (Jersey 15) owns the chrome, labels and display lines; Atkinson Hyperlegible carries every sentence a visitor must actually read. VT323 appears only on the BIOS boot screen and in the Terminal app, where it reads as the machine talking.\n\nThe world stays light in dark mode on purpose: it is a 90s screen, not a theme-aware app.",
+    "keyCharacteristics": [
+      "Badge palette only: navy, royal, sky, cream, yellow, ink, silver family, red, green.",
+      "Square corners everywhere; depth comes from 2px bevels, not radius or blur.",
+      "Dithered royal desktop ground (4px checker of royal and royal-dk).",
+      "Pixel display type for chrome, legible sans for prose.",
+      "Motion tells the Ctrl+Z story: the boot rewinds the clock to 1995, a closed window rewinds back open."
+    ],
+    "rules": [
+      {
+        "name": "The Badge Palette Rule",
+        "body": "Every colour on screen comes from the badge or the silver chrome family. New surfaces pick from these tokens; no new hues.",
+        "section": "colors"
+      },
+      {
+        "name": "The Yellow Means Attention Rule",
+        "body": "Yellow marks focus, the primary action, live or TBA state, and selection. It is never a decorative fill.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Pixel type for chrome, labels and short display lines; Atkinson for any sentence a visitor needs to read. Never set a paragraph in Jersey 15.",
+        "section": "typography"
+      },
+      {
+        "name": "The BIOS Only Rule",
+        "body": "VT323 appears only on black: the boot screen and the Terminal app.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hairline Bevel Rule",
+        "body": "Depth is drawn with the three bevel tokens. No border-radius, no blur-only cards, no hard offset shadows; the only offset shadow is the 2px playing-card edge, which is part of the card.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do build every new control from the silver face plus the Raised, Pressed and Sunken bevel tokens.",
+      "Do use yellow for focus, the single primary action, TBA and live state.",
+      "Do set chrome, labels and short display lines in Jersey 15 and every readable sentence in Atkinson Hyperlegible, prose capped at 62ch.",
+      "Do draw new icons as original 16x16 pixel maps in the badge palette, rendered as crisp SVG.",
+      "Do render every undecided fact as a yellow TBA tag.",
+      "Do give every new window the full-bleed treatment and 32px title bar at 640px and below.",
+      "Do honour reduced motion: no boot, frozen clouds, near-zero animation."
+    ],
+    "donts": [
+      "Don't use Microsoft logos, the \"Windows\" wordmark, the Bliss wallpaper or a startup sound; the world is Win95-inspired, never a copy.",
+      "Don't use any part of logo.png except the badge.",
+      "Don't round corners or replace bevels with blurred card shadows.",
+      "Don't use VT323 outside the boot screen and Terminal.",
+      "Don't introduce hues outside the badge palette and silver chrome family.",
+      "Don't switch the desktop to a dark theme in dark mode."
+    ]
+  }
+}
