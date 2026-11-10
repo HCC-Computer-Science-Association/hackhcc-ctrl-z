@@ -1,9 +1,12 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-// Two keycaps, Ctrl and Z, bounce around the screen. Any input ends it.
+const BASE = process.env.NEXT_PUBLIC_BASE;
+
+// Two keycaps (Ctrl and Z) or the badge bounce around the screen; picked in the Display app. Any input ends it.
 export default function Screensaver({ onExit }) {
   const ref = useRef(null);
+  const [badge] = useState(() => { try { return localStorage.getItem('ctrlz-saver') === 'badge'; } catch { return false; } });
 
   useEffect(() => {
     const stage = ref.current;
@@ -44,8 +47,9 @@ export default function Screensaver({ onExit }) {
 
   return (
     <div className="screensaver" ref={ref} role="presentation">
-      <span className="ss-cap">Ctrl</span>
-      <span className="ss-cap ss-z">Z</span>
+      {badge
+        ? <img className="ss-cap ss-badge" src={`${BASE}/badge.png`} alt="" width="1161" height="238" />
+        : <><span className="ss-cap">Ctrl</span><span className="ss-cap ss-z">Z</span></>}
       <p className="sr-only">Screensaver running. Press any key to return.</p>
     </div>
   );

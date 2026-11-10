@@ -7,6 +7,8 @@ import Window from './Window';
 import Taskbar from './Taskbar';
 import { Clouds, StickyNote, Watermark, ContextMenu } from './Living';
 import About from '../apps/About';
+import { play } from '../../lib/sound.mjs';
+import { unlock, trackOpened } from '../../lib/achieve.mjs';
 
 // Only About ships in the first bundle; the rest load on hover/focus/open.
 const loaders = {
@@ -20,6 +22,7 @@ const loaders = {
   doom: () => import('../apps/Doom'),
   challenge: () => import('../apps/Challenge'),
   dontclick: () => import('../apps/DontClick'),
+  display: () => import('../apps/Display'),
 };
 const Loading = () => <p className="win-loading">Loading…</p>;
 const lazy = (id) => dynamic(loaders[id], { loading: Loading });
@@ -36,6 +39,7 @@ export const APPS = [
   { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), game: true, w: 800, x: 0.1, y: 0.03 },
   { id: 'challenge', label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.6, y: 0.24 },
   { id: 'dontclick', label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
+  { id: 'display', label: 'Display', title: 'Display Properties', icon: 'display', Body: lazy('display'), w: 460, x: 0.38, y: 0.14 },
   { id: 'doom', label: 'Freedoom', title: 'Freedoom', icon: 'doom', Body: lazy('doom'), game: true, w: 680, x: 0.2, y: 0.06 },
 ];
 
@@ -43,20 +47,38 @@ const STORE = 'ctrlz-windows';
 // Open on first load, back to front; they pop in in this order.
 const INITIAL = ['schedule', 'challenge', 'about'];
 const IDLE_MS = 45000;
+// Deep links: #schedule opens Schedule. A few friendlier names map to app ids.
+const ALIASES = { help: 'faq', rules: 'faq', team: 'sponsors', register: 'about', freedoom: 'doom' };
+const fromHash = () => {
+  const h = decodeURIComponent(location.hash.slice(1)).toLowerCase();
+  return APPS.some((a) => a.id === h) ? h : ALIASES[h];
+};
+const SFX = { open: 'open', close: 'close', undo: 'undo', minimize: 'click', maximize: 'click' };
 
 export default function Desktop() {
   const [state, dispatch] = useReducer(reducer, INITIAL, initState);
   const [saver, setSaver] = useState(false);
   const [refresh, setRefresh] = useState(0);
+  const [off, setOff] = useState(false);
+  const act = useCallback((a) => { play(SFX[a.type]); dispatch(a); }, []); // dispatch with a sound effect
 
-  // Restore open windows for this tab. A first visit on a phone opens only About.txt,
-  // since phone windows are full-screen and would just stack.
+  // Restore open windows for this tab. A first visit on a phone opens only About.txt (or the
+  // deep-linked window), since phone windows are full-screen and would just stack.
   useEffect(() => {
-    try { const saved = JSON.parse(sessionStorage.getItem(STORE)); if (saved) return dispatch({ type: 'restore', state: saved }); } catch {}
-    if (matchMedia('(max-width: 640px)').matches) dispatch({ type: 'restore', state: initState(['about']) });
+    const link = fromHash();
+    let saved = null;
+    try { saved = JSON.parse(sessionStorage.getItem(STORE)); } catch {}
+    if (saved) dispatch({ type: 'restore', state: saved });
+    else if (matchMedia('(max-width: 640px)').matches) dispatch({ type: 'restore', state: initState([link || 'about']) });
+    if (link) dispatch({ type: 'open', id: link });
+    const onHash = () => { const id = fromHash(); if (id) dispatch({ type: 'open', id }); };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
   }, []);
   useEffect(() => {
     try { sessionStorage.setItem(STORE, JSON.stringify(state)); } catch {}
+    trackOpened(Object.keys(state.wins), APPS.length); // wins only gets a key once a window has opened
+    if (state.rewound) unlock('undo');
   }, [state]);
 
   // Ctrl+Z / Cmd+Z reopens the last closed window. Esc closes the focused one.
@@ -65,11 +87,11 @@ export default function Desktop() {
       if (e.target.closest?.('input, textarea, [contenteditable="true"], .game')) return;
       if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z') {
         e.preventDefault();
-        dispatch({ type: 'undo' });
+        act({ type: 'undo' });
       } else if (e.key === 'Escape' && !document.querySelector('.start-menu, .menu-drop, .msgbox')) {
         const id = focusedId(state);
         // Games keep Esc for themselves (pause, menus); close them with the X button.
-        if (id && !APPS.find((a) => a.id === id)?.game) dispatch({ type: 'close', id });
+        if (id && !APPS.find((a) => a.id === id)?.game) act({ type: 'close', id });
       }
     };
     window.addEventListener('keydown', onKey);
@@ -86,17 +108,23 @@ export default function Desktop() {
     return () => { clearTimeout(t); evs.forEach((ev) => window.removeEventListener(ev, reset)); };
   }, [saver, state.wins.doom?.open]);
 
-  const open = useCallback((id) => dispatch({ type: 'open', id }), []);
+  // The address bar follows the front window, so copying the URL shares that window.
+  const top = focusedId(state);
+  useEffect(() => { history.replaceState(null, '', top ? `#${top}` : location.pathname + location.search); }, [top]);
+
+  const open = useCallback((id) => act({ type: 'open', id }), [act]);
+  const shutDown = useCallback(() => { unlock('shutdown'); setOff(true); }, []);
   const exitSaver = useCallback(() => setSaver(false), []);
   const prefetch = (id) => loaders[id]?.();
-  const top = focusedId(state);
 
   const ctxItems = [
     { label: 'Refresh', run: () => setRefresh((n) => n + 1) },
     { label: 'Open Terminal', run: () => open('terminal') },
     { label: 'Start screensaver', run: () => setSaver(true) },
+    { label: 'Display properties', run: () => open('display') },
     { sep: 'a' },
     { label: 'About Ctrl Z OS', run: () => open('about') },
+    { label: 'Shut down', run: shutDown },
   ];
 
   return (
@@ -116,7 +144,7 @@ export default function Desktop() {
           ))}
           <li style={{ '--i': APPS.length }}>
             <button type="button" className="icon" disabled={!state.closed.length}
-              onClick={() => dispatch({ type: 'undo' })}
+              onClick={() => act({ type: 'undo' })}
               aria-label={`Undo bin: reopen last closed window (${state.closed.length} in history)`}>
               <Icon name="undo" size={36} />
               <span>Undo Bin</span>
@@ -126,21 +154,44 @@ export default function Desktop() {
         <StickyNote />
         <Watermark onActivate={() => open('about')} />
 
-        {APPS.map(({ id, title, icon, Body, w, x, y }) => {
+        {!off && APPS.map(({ id, title, icon, Body, w, x, y }) => {
           const win = state.wins[id];
           if (!win?.open) return null;
           return (
             <Window key={id} id={id} title={title} icon={icon} width={w} win={win} defaultPos={{ x, y }}
-              focused={top === id} rewound={state.rewound === id} dispatch={dispatch} openDelay={Math.max(0, INITIAL.indexOf(id)) * 140}>
-              <Body onOpen={open} onUndo={() => dispatch({ type: 'undo' })} canUndo={state.closed.length > 0}
-                onClose={() => dispatch({ type: 'close', id })} onSaver={() => setSaver(true)} active={top === id} />
+              focused={top === id} rewound={state.rewound === id} dispatch={act} openDelay={Math.max(0, INITIAL.indexOf(id)) * 140}>
+              <Body onOpen={open} onUndo={() => act({ type: 'undo' })} canUndo={state.closed.length > 0}
+                onClose={() => act({ type: 'close', id })} onSaver={() => setSaver(true)} active={top === id} />
             </Window>
           );
         })}
         <ContextMenu items={ctxItems} />
       </main>
-      <Taskbar apps={APPS} state={state} top={top} dispatch={dispatch} />
+      <Taskbar apps={APPS} state={state} top={top} dispatch={act} onShutdown={shutDown} />
       {saver && <Screensaver onExit={exitSaver} />}
+      {off && <ShutDown />}
     </div>
+  );
+}
+
+// "It's now safe to turn off your computer." Any key or click reboots: a reload with the boot intro again.
+function ShutDown() {
+  useEffect(() => {
+    const reboot = () => {
+      try { sessionStorage.removeItem('booted'); sessionStorage.removeItem(STORE); } catch {}
+      location.replace(location.pathname + location.search);
+    };
+    let ready = false;
+    const t = setTimeout(() => { ready = true; }, 1100); // ignore input until the message shows
+    const go = () => ready && reboot();
+    window.addEventListener('keydown', go);
+    window.addEventListener('pointerdown', go);
+    return () => { clearTimeout(t); window.removeEventListener('keydown', go); window.removeEventListener('pointerdown', go); };
+  }, []);
+  return (
+    <button type="button" className="shutdown" autoFocus aria-label="Shut down. Press any key to restart.">
+      <strong>It's now safe to turn off your computer.</strong>
+      <span>Press any key or tap to restart.</span>
+    </button>
   );
 }

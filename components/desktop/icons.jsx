@@ -85,6 +85,18 @@ const MAPS = {
   spade: ['...k...', '..kkk..', '.kkkkk.', 'kkkkkkk', 'kkkkkkk', '.k.k.k.', '...k...', '..kkk..'],
   diamond: ['...r...', '..rrr..', '.rrrrr.', 'rrrrrrr', '.rrrrr.', '..rrr..', '...r...'],
   club: ['..kkk..', '..kkk..', 'kk.k.kk', 'kkkkkkk', 'kk.k.kk', '...k...', '..kkk..'],
+  display: [
+    '................', '.kkkkkkkkkkkkkk.', '.kssssssssssssk.', '.kskkkkkkkkkksk.', '.kskbbbbbbbbksk.',
+    '.kskbyybbbbbksk.', '.kskbbbbbbbbksk.', '.kskbbbbllbbksk.', '.kskbbbllllbksk.', '.kskkkkkkkkkksk.',
+    '.kssssssssssGsk.', '.kkkkkkkkkkkkkk.', '......kssk......', '....kkkkkkkk....',
+  ],
+  power: [
+    '................', '.......rr.......', '....r..rr..r....', '...rr..rr..rr...', '..rr...rr...rr..',
+    '..r....rr....r..', '.rr....rr....rr.', '.rr..........rr.', '.rr..........rr.', '..r..........r..',
+    '..rr........rr..', '...rr......rr...', '....rrrrrrrr....', '................',
+  ],
+  speaker: ['...k.....', '..kk..k..', 'kkwk...k.', 'kwwk.k.k.', 'kwwk.k.k.', 'kkwk...k.', '..kk..k..', '...k.....'],
+  mute: ['...k.....', '..kk.....', 'kkwk.r.r.', 'kwwk..r..', 'kwwk.r.r.', 'kkwk.....', '..kk.....', '...k.....'],
   heartEmpty: ['.kk.kk.', 'k..k..k', 'k.....k', '.k...k.', '..k.k..', '...k...'],
 };
 

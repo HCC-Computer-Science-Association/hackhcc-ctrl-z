@@ -1,4 +1,5 @@
 'use client';
+import { unlock } from '../../lib/achieve.mjs';
 import { useEffect, useRef, useState } from 'react';
 import Icon from '../desktop/icons';
 
@@ -56,6 +57,7 @@ export default function BugHunt() {
   useEffect(() => {
     if (phase === 'play' && left <= 0) {
       setPhase('over');
+      if (scoreRef.current >= 20) unlock('bughunt');
       if (scoreRef.current > readBest()) { try { localStorage.setItem(KEY, scoreRef.current); } catch {} setBest(scoreRef.current); }
     }
   }, [left, phase]);

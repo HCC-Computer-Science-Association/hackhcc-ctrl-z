@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { unlock } from '../../lib/achieve.mjs';
 
 const W = 480, H = 300, PW = 8, PH = 54, BALL = 8, WIN = 5;
 const SERVE = 2.7, MAX = 6.5, SPEEDUP = 1.04, CPU = 2.9; // px per frame
@@ -79,7 +80,7 @@ export default function Pong({ active }) {
           s.pts = s.pts.map((p, i) => (i === who ? p + 1 : p));
           setScore(s.pts);
           s.msg = who ? 'Point: CPU' : 'Point: you';
-          if (s.pts[who] >= WIN) setPhase('over'); else serve(who ? -1 : 1, PAUSE);
+          if (s.pts[who] >= WIN) { setPhase('over'); if (!who) unlock('pong'); } else serve(who ? -1 : 1, PAUSE);
         }
       }
       draw();

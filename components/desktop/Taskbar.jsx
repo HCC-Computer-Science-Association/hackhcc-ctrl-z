@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import Icon from './icons';
 import { countdown } from '../../lib/time.mjs';
 import { event, tips } from '../../content';
+import { play, soundOn, setSound } from '../../lib/sound.mjs';
 
 function useNow(ms) {
   const [now, setNow] = useState(null); // null on the server: no hydration mismatch
@@ -29,9 +30,25 @@ function useTip() {
   return [off ? -1 : tip, () => setOff(true)];
 }
 
-export default function Taskbar({ apps, state, top, dispatch }) {
+// Achievement balloon: shown for 6 s when lib/achieve.mjs announces an unlock.
+function useAchievement() {
+  const [got, setGot] = useState(null);
+  useEffect(() => {
+    let t;
+    const on = (e) => { play('achieve'); setGot(e.detail); clearTimeout(t); t = setTimeout(() => setGot(null), 6000); };
+    window.addEventListener('ctrlz-achieve', on);
+    return () => { clearTimeout(t); window.removeEventListener('ctrlz-achieve', on); };
+  }, []);
+  return got;
+}
+
+export default function Taskbar({ apps, state, top, dispatch, onShutdown }) {
   const [menu, setMenu] = useState(false);
   const [tip, dismissTip] = useTip();
+  const got = useAchievement();
+  const [sound, setSoundState] = useState(false);
+  useEffect(() => setSoundState(soundOn()), []);
+  const toggleSound = () => { setSound(!sound); setSoundState(!sound); };
   const menuRef = useRef(null);
   const startRef = useRef(null);
   const now = useNow(30000);
@@ -75,6 +92,11 @@ export default function Taskbar({ apps, state, top, dispatch }) {
                 <Icon name="undo" size={24} /> Undo close <kbd>Ctrl+Z</kbd>
               </button>
             </li>
+            <li>
+              <button type="button" onClick={() => pick(onShutdown)}>
+                <Icon name="power" size={24} /> Shut Down…
+              </button>
+            </li>
           </ul>
         </nav>
       )}
@@ -94,7 +116,12 @@ export default function Taskbar({ apps, state, top, dispatch }) {
       </ul>
 
       <div className="balloon-slot" aria-live="polite">
-        {tip >= 0 && !Object.values(state.wins).some((w) => w.open && w.max && !w.min) && (
+        {got ? (
+          <div className="balloon is-achieve" key={got.id}>
+            <strong>Achievement unlocked: {got.name}</strong>
+            <p>{got.how} Type “achievements” in the Terminal to see them all.</p>
+          </div>
+        ) : tip >= 0 && !Object.values(state.wins).some((w) => w.open && w.max && !w.min) && (
           <div className="balloon" key={tip}>
             <strong>Ctrl Z OS tip</strong>
             <p>{tips[tip]}</p>
@@ -108,6 +135,10 @@ export default function Taskbar({ apps, state, top, dispatch }) {
       </div>
 
       <div className="tray">
+        <button type="button" className="tray-btn" aria-pressed={sound} aria-label="Sound effects" onClick={toggleSound}
+          title={sound ? 'Sound on. Click to mute.' : 'Sound off. Click to turn on.'}>
+          <Icon name={sound ? 'speaker' : 'mute'} size={18} />
+        </button>
         <button type="button" className="lives" disabled={!state.closed.length} onClick={() => dispatch({ type: 'undo' })}
           title="Undo history. Click or press Ctrl+Z to reopen a closed window."
           aria-label={`Undo history: ${state.closed.length} closed window${state.closed.length === 1 ? '' : 's'}. Reopen last.`}>

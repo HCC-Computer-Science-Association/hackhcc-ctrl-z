@@ -96,12 +96,24 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Freedoom:** a free first-person shooter in a DOS emulator. Move with WASD, aim with the mouse, click to fire.
 - **Challenge:** the "Can it run Doom?" side challenge, with an idea roller and draft rules.
 - **Don't click me:** plays a certain 1987 music video the moment it opens. Closing the window stops it.
+- **Display:** pick a wallpaper and a screensaver. The choice is saved in the browser.
 
 **Extras**
 - **Terminal:** type `help` to list the commands.
 - **Undo Bin:** reopens the last closed window.
 - **TODO note, tip balloons, drifting clouds, right-click menu.**
 - **Screensaver:** starts after 45 seconds idle.
+- **Achievements:** 8 hidden goals (beat the CPU, win Solitaire, shut down…). A balloon pops up on unlock; type `achievements` in the Terminal to list them.
+- **Sound effects:** off by default. Click the speaker in the taskbar tray to turn them on. They're made in code, with no audio files.
+- **Shut Down:** in the Start menu or the right-click menu. Press any key to reboot and replay the intro.
+
+**Share a window with a link**
+Add `#` and the app name to the URL to open that window, for example:
+- `…/hackhcc-ctrl-z/#schedule`
+- `…/hackhcc-ctrl-z/#faq` (or `#help`, `#rules`)
+- `…/hackhcc-ctrl-z/#challenge`
+
+The address bar follows the front window, so copying the URL shares whatever window is on top.
 
 **Window controls**
 - Drag a window by its title bar.

@@ -1,6 +1,7 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Icon from '../desktop/icons';
+import { unlock } from '../../lib/achieve.mjs';
 import { deal, draw, move, toFoundation, bestMove, won, red } from '../../lib/klondike.mjs';
 
 const SUITS = ['spade', 'heart', 'diamond', 'club'];
@@ -24,6 +25,7 @@ export default function Solitaire() {
   const [st, setSt] = useState(() => deal());
   const [sel, setSel] = useState(null); // a source: { pile, i, idx }
   const done = won(st);
+  useEffect(() => { if (done) unlock('solitaire'); }, [done]);
 
   const apply = (next) => { if (next) setSt(next); setSel(null); return !!next; };
   const dragged = useRef(false); // true right after a drop, so the click that follows is ignored

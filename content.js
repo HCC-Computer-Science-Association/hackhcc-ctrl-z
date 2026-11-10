@@ -67,6 +67,8 @@ export const tips = [
   'Stay still for 45 seconds and see what happens.',
   'Side challenge: can it run Doom? Open the Challenge app.',
   'Students from any school can join.',
+  'Some things on this desktop unlock achievements. Type "achievements" in the Terminal.',
+  'Change the wallpaper in Display, or right-click the desktop.',
 ];
 
 // "Can it run Doom?" side challenge. Rules and prizes are a draft until organizers confirm.

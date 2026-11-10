@@ -1,8 +1,9 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { event, schedule, faq } from '../../content';
+import { ACHIEVEMENTS, unlocked, unlock } from '../../lib/achieve.mjs';
 
-const OPENERS = { about: 'about', schedule: 'schedule', faq: 'faq', sponsors: 'sponsors', bughunt: 'bughunt', pong: 'pong', solitaire: 'solitaire', doom: 'doom', freedoom: 'doom', challenge: 'challenge' };
+const OPENERS = { about: 'about', schedule: 'schedule', faq: 'faq', sponsors: 'sponsors', bughunt: 'bughunt', pong: 'pong', solitaire: 'solitaire', doom: 'doom', freedoom: 'doom', challenge: 'challenge', display: 'display' };
 const TBA = (v) => v || 'TBA';
 
 const HELP = [
@@ -10,6 +11,8 @@ const HELP = [
   '  about  schedule  faq  sponsors   open a window',
   '  bughunt  pong  solitaire  doom   play a game',
   '  challenge         can it run Doom?',
+  '  achievements      what you have unlocked',
+  '  display           wallpaper and screensaver',
   '  register          how to sign up',
   '  info              event facts',
   '  date  ver  whoami  echo <text>',
@@ -37,6 +40,7 @@ export default function Terminal({ onOpen, onUndo, onClose, onSaver }) {
   const hack = () => {
     const steps = ['Bypassing mainframe...', 'Reversing the polarity...', 'Downloading more RAM...', 'Compiling 24 hours of caffeine...', 'Access granted. Just kidding: register to hack for real.'];
     setBusy(true);
+    unlock('hacker');
     steps.forEach((s, i) => setTimeout(() => { print(s); if (i === steps.length - 1) setBusy(false); }, 450 * (i + 1)));
   };
 
@@ -60,10 +64,15 @@ export default function Terminal({ onOpen, onUndo, onClose, onSaver }) {
       case 'undo': onUndo(); print('Undo: reopened the last closed window (if any).', ''); break;
       case 'screensaver': onSaver(); break;
       case 'hack': hack(); break;
+      case 'achievements': {
+        const have = unlocked();
+        print(...ACHIEVEMENTS.map((a) => `  [${have.includes(a.id) ? 'x' : ' '}] ${a.name.padEnd(16)} ${a.how}`), `  ${have.length} of ${ACHIEVEMENTS.length} unlocked`, '');
+        break;
+      }
       case 'clear': case 'cls': setLines([]); break;
       case 'exit': onClose(); break;
       case 'sudo': print('Nice try. This is 1995. There is no sudo.', ''); break;
-      case 'ls': case 'dir': print(' ABOUT.TXT  SCHEDULE  HELP  SPONSORS  BUGHUNT.EXE  PONG.EXE  SOLITAIR.EXE  FREEDOOM.EXE', ''); break;
+      case 'ls': case 'dir': print(' ABOUT.TXT  SCHEDULE  HELP  SPONSORS  BUGHUNT.EXE  PONG.EXE  SOLITAIR.EXE  FREEDOOM.EXE  DISPLAY.CPL', ''); break;
       case 'agenda': print(...schedule.map((s) => `  H+${String(s.hour).padEnd(3)} ${s.title}`), '  (sample schedule, not final)', ''); break;
       case 'questions': print(...faq.map((f) => `  - ${f.q}`), ''); break;
       default: print(`'${cmd}' is not recognized as a command. Type "help".`, '');
