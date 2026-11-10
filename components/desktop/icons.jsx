@@ -39,6 +39,30 @@ const MAPS = {
     '.kwwwwwwwwwwwwk.', '.kwggggggggggwk.', 'kkkkkkkwwwwwwwk.', 'kwwwwwkgggggwwk.', 'kwwkkkkwwwwwwwk.',
     'kwwwkkkgggwwwwk.', 'kwwkwkkwwwwwwwk.', 'kwkwwwkkkkkkkkk.', 'kkkkkkk.........',
   ],
+  sweeper: [
+    '................', '.wwwwwwwwwwwwwg.', '.wssssssssssssg.', '.wsssrrrksssssg.', '.wssrrrrksssssg.',
+    '.wsssrrrksssssg.', '.wssssssksssssg.', '.wssssssksssssg.', '.wsssskkkkssssg.', '.wsskkkkkkkkssg.',
+    '.wssssssssssssg.', '.wggggggggggggg.', '................', '................',
+  ],
+  ideas: [
+    '......kkkk......', '.....kyyyyk.....', '....kyywyyyk....', '....kywyyyyk....', '....kyyyyyyk....',
+    '....kyyyyyyk....', '.....kyyyyk.....', '......kyyk......', '......kssk......', '......kggk......',
+    '......kssk......', '.......kk.......', '................', '................',
+  ],
+  defrag: [
+    '................', '.kkkkkkkkkkkkkk.', '.knnnnnnnnnnnnk.', '.kncclllccnrrnk.', '.kncclllccnrrnk.',
+    '.knnnnnnnnnnnnk.', '.knllnccnGGllnk.', '.knllnccnGGllnk.', '.knnnnnnnnnnnnk.', '.knccnnnnnnccnk.',
+    '.knccnnnnnnccnk.', '.knnnnnnnnnnnnk.', '.kkkkkkkkkkkkkk.', '................',
+  ],
+  snake: [
+    '................', '.kkkkkkkkkkkkkk.', '.knnnnnnnnnnnnk.', '.knyyyyyynnnnnk.', '.knnnnnnynnrnnk.',
+    '.knnnnnnynnnnnk.', '.knnyyyyynnnnnk.', '.knnynnnnnnnnnk.', '.knnyyyyyyyynnk.', '.knnnnnnnnnnnnk.',
+    '.knnnnnnnnnnnnk.', '.knnnnnnnnnnnnk.', '.kkkkkkkkkkkkkk.', '................',
+  ],
+  face: ['...kkkkkk...', '..kyyyyyyk..', '.kyyyyyyyyk.', 'kyykyyyykyyk', 'kyykyyyykyyk', 'kyyyyyyyyyyk', 'kyyyyyyyyyyk', 'kykyyyyyykyk', 'kyykkkkkkyyk', '.kyyyyyyyyk.', '..kyyyyyyk..', '...kkkkkk...'],
+  faceLost: ['...kkkkkk...', '..kyyyyyyk..', '.kyyyyyyyyk.', 'kykykyykykyk', 'kyykyyyykyyk', 'kykykyykykyk', 'kyyyyyyyyyyk', 'kyyykkkkyyyk', 'kyykyyyykyyk', '.kyyyyyyyyk.', '..kyyyyyyk..', '...kkkkkk...'],
+  faceWon: ['...kkkkkk...', '..kyyyyyyk..', '.kyyyyyyyyk.', 'kykkkkkkkkyk', 'kyykkyykkyyk', 'kyyyyyyyyyyk', 'kyyyyyyyyyyk', 'kykyyyyyykyk', 'kyykkkkkkyyk', '.kyyyyyyyyk.', '..kyyyyyyk..', '...kkkkkk...'],
+  flag: ['.rrrrk...', 'rrrrrk...', '.rrrrk...', '.....k...', '.....k...', '...kkkkk.', '..kkkkkkk'],
   undo: [
     '................', '.....kkkkkk.....', '..kkkkkkkkkkkk..', '..kssssssssssk..',
     '...kwsssssssk...', '...kwsbbbsssk...', '...kwbbsssbsk...', '...kbbbbssbsk...',

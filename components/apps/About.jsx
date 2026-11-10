@@ -5,7 +5,7 @@ import { event, about } from '../../content';
 const BASE = process.env.NEXT_PUBLIC_BASE;
 const TBA = <span className="tba">TBA</span>;
 
-function Menu({ label, items }) {
+export function Menu({ label, items }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   useEffect(() => {

@@ -74,7 +74,7 @@ The workflow lives in `.github/workflows/deploy.yml`. It runs the tests, builds 
 | Command | What it does |
 |---|---|
 | `npm run dev` | Dev server at http://localhost:3000 |
-| `npm test` | Runs the logic tests (window manager, countdown, Solitaire, achievements, Terminal completion, Paint) |
+| `npm test` | Runs the logic tests (window manager, countdown, Solitaire, Bug Sweeper, Snake, Defrag, achievements, Terminal completion, Paint) |
 | `npm run build` | Builds the static site into `out/` |
 | `npm start` | Serves the build locally at http://localhost:3000/hackhcc-ctrl-z/ (the same path as GitHub Pages) |
 
@@ -95,10 +95,14 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Bug Hunt:** squash bugs in 30 seconds, with a saved best score.
 - **Ping Pong:** first to 5 against the computer.
 - **Solitaire:** drag cards, or click one to send it to its best spot.
+- **Bug Sweeper:** clear a 9×9 board hiding 10 bugs. Right-click, **F**, or Flag mode marks a bug. **Ctrl+Z** takes back your last click, even the one that hit a bug.
+- **SNAKE.BAS:** a DOS-style snake. Eat the hearts; arrows or WASD, swipe on a phone, **Space** pauses. Best score is saved in the browser.
 - **Doom:** Freedoom, a free first-person shooter in a DOS emulator. Move with WASD, aim with the mouse, click to fire.
 - **Challenge:** the "Can it run Doom?" side challenge, with an idea roller and draft rules.
 - **Don't click me:** plays a certain 1987 music video the moment it opens. Closing the window stops it.
 - **Display:** pick a wallpaper (including animated **Code rain**; the Terminal's `matrix` command toggles it), turn the CRT effect off or on, and pick a screensaver. Choices are saved in the browser.
+- **Ideas.txt:** a notepad for hackathon ideas, saved in the browser as you type. **Ctrl+Z** undoes typing, **Ctrl+S** downloads `IDEAS.TXT`, and Edit > Insert idea template adds an outline.
+- **Defrag:** a pretend DOS disk defragmenter, for the nostalgia. It starts on open (or on Start, with reduced motion).
 - **Paint (Ctrl Z Paint):** pixel drawing with Pencil, Eraser and Fill. **Ctrl+Z** undoes each stroke and **Ctrl+Y** redoes. With nothing left to undo, Ctrl+Z goes back to reopening closed windows. **Save PNG** downloads the drawing. Paint opens by painting the event logo stroke by stroke (about 5.5 s); the **HackHCC** button replays it, and **Clear** pulses afterwards to hint the canvas is yours. One Ctrl+Z removes the logo.
 
 **Extras**
@@ -107,7 +111,7 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Undo Bin:** reopens the last closed window.
 - **TODO note, tip balloons, drifting clouds, right-click menu.**
 - **Screensaver:** starts after 45 seconds idle.
-- **Achievements:** 9 hidden goals (beat the CPU, win Solitaire, shut down…). A balloon pops up on unlock; type `achievements` in the Terminal to list them.
+- **Achievements:** 11 hidden goals (beat the CPU, win Solitaire, shut down…). A balloon pops up on unlock; type `achievements` in the Terminal to list them.
 - **Sound effects:** off by default. Click the speaker in the taskbar tray to turn them on. They're made in code, with no audio files.
 - **CRT effect:** on by default (scanlines and a dark edge, with no flicker). Turn it off in Display. It hides itself for high-contrast users.
 - **Shut Down:** in the Start menu or the right-click menu. Press any key to reboot and replay the intro.

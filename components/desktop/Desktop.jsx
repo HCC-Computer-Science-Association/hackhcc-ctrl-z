@@ -25,6 +25,10 @@ const loaders = {
   dontclick: () => import('../apps/DontClick'),
   display: () => import('../apps/Display'),
   paint: () => import('../apps/Paint'),
+  ideas: () => import('../apps/Ideas'),
+  sweeper: () => import('../apps/BugSweeper'),
+  snake: () => import('../apps/Snake'),
+  defrag: () => import('../apps/Defrag'),
 };
 const Loading = () => <p className="win-loading">Loading…</p>;
 const lazy = (id) => dynamic(loaders[id], { loading: Loading });
@@ -38,10 +42,14 @@ export const APPS = [
   { id: 'team', label: 'Team', title: 'C:\\TEAM', icon: 'team', Body: lazy('team'), w: 600, x: 0.34, y: 0.06 },
   { id: 'terminal', label: 'Terminal', title: 'C:\\> Terminal', icon: 'terminal', Body: lazy('terminal'), w: 600, x: 0.2, y: 0.22 },
   { id: 'bughunt', label: 'Bug Hunt', title: 'Bug Hunt', icon: 'bughunt', Body: lazy('bughunt'), game: true, w: 520, x: 0.26, y: 0.12 },
+  { id: 'sweeper', label: 'Bug Sweeper', title: 'Bug Sweeper', icon: 'sweeper', Body: lazy('sweeper'), w: 340, x: 0.42, y: 0.1 },
+  { id: 'snake', label: 'SNAKE.BAS', title: 'C:\\GAMES\\SNAKE.BAS', icon: 'snake', Body: lazy('snake'), w: 520, x: 0.3, y: 0.12 },
   { id: 'pong', label: 'Ping Pong', title: 'Ping Pong', icon: 'pong', Body: lazy('pong'), game: true, w: 520, x: 0.32, y: 0.16 },
   { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), game: true, w: 800, x: 0.1, y: 0.03 },
   { id: 'challenge', label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.6, y: 0.24 },
   { id: 'dontclick', label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
+  { id: 'ideas', label: 'Ideas.txt', title: 'Ideas.txt — Ctrl Z Edit', icon: 'ideas', Body: lazy('ideas'), w: 520, x: 0.46, y: 0.14 },
+  { id: 'defrag', label: 'Defrag', title: 'Disk Defragmenter', icon: 'defrag', Body: lazy('defrag'), w: 540, x: 0.28, y: 0.1 },
   { id: 'paint', label: 'Paint', title: 'Ctrl Z Paint', icon: 'paint', Body: lazy('paint'), w: 660, x: 0.22, y: 0.08 },
   { id: 'display', label: 'Display', title: 'Display Properties', icon: 'display', Body: lazy('display'), w: 460, x: 0.38, y: 0.14 },
   { id: 'doom', label: 'Doom', title: 'Doom', icon: 'doom', Body: lazy('doom'), game: true, w: 680, x: 0.2, y: 0.06 },
@@ -57,7 +65,7 @@ const STORE = 'ctrlz-windows';
 const INITIAL = ['schedule', 'challenge', 'about'];
 const IDLE_MS = 45000;
 // Deep links: #schedule opens Schedule. A few friendlier names map to app ids.
-const ALIASES = { help: 'faq', rules: 'faq', organizers: 'team', register: 'about', freedoom: 'doom' };
+const ALIASES = { help: 'faq', rules: 'faq', organizers: 'team', minesweeper: 'sweeper', bugsweeper: 'sweeper', notes: 'ideas', notepad: 'ideas', nibbles: 'snake', register: 'about', freedoom: 'doom' };
 // An app id or alias (from a #link or the Terminal) to an app id, or undefined.
 export const resolve = (name) => { const n = (name || '').toLowerCase(); return APPS.some((a) => a.id === n) ? n : ALIASES[n]; };
 const fromHash = () => resolve(decodeURIComponent(location.hash.slice(1)));
