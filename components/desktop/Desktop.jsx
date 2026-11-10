@@ -49,9 +49,11 @@ export default function Desktop() {
   const [saver, setSaver] = useState(false);
   const [refresh, setRefresh] = useState(0);
 
-  // Restore open windows for this tab, then keep them saved.
+  // Restore open windows for this tab. A first visit on a phone opens only About.txt,
+  // since phone windows are full-screen and would just stack.
   useEffect(() => {
-    try { const saved = JSON.parse(sessionStorage.getItem(STORE)); if (saved) dispatch({ type: 'restore', state: saved }); } catch {}
+    try { const saved = JSON.parse(sessionStorage.getItem(STORE)); if (saved) return dispatch({ type: 'restore', state: saved }); } catch {}
+    if (matchMedia('(max-width: 640px)').matches) dispatch({ type: 'restore', state: initState(['about']) });
   }, []);
   useEffect(() => {
     try { sessionStorage.setItem(STORE, JSON.stringify(state)); } catch {}

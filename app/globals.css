@@ -496,3 +496,20 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; transition: none !important; }
   .boot { display: none; }
 }
+
+/* ---------- Phone boot: the same intro at about half length (~1.5s) ---------- */
+@media (max-width: 640px) {
+  .boot { animation-delay: 1.3s; animation-duration: 0.2s; }
+  .boot-bios { animation-delay: 0.85s; }
+  .boot-bios p:nth-child(1) { animation-delay: 0.05s; }
+  .boot-bios p:nth-child(2) { animation-delay: 0.15s; }
+  .boot-bios p:nth-child(3) { animation-delay: 0.25s; }
+  .boot-bios p:nth-child(4) { animation-delay: 0.7s; }
+  .boot-bios p:nth-child(5) { animation-delay: 0.78s; }
+  .boot-year { animation-duration: 0.4s; animation-delay: 0.28s; }
+  .boot-splash { animation-delay: 0.9s; }
+  .boot-bar span { animation-duration: 0.38s; animation-delay: 0.92s; }
+  .icons li { animation-delay: calc(1.3s + var(--i) * 45ms); }
+  .win { animation-delay: calc(1.45s + var(--open-delay, 0ms)); }
+  .win-title::after { animation-delay: calc(1.7s + var(--open-delay, 0ms)); }
+}
