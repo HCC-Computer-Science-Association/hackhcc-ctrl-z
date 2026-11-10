@@ -13,7 +13,7 @@ const BG = KEYS.indexOf('w');
 const TOOLS = [{ id: 'pencil', label: 'Pencil' }, { id: 'eraser', label: 'Eraser' }, { id: 'fill', label: 'Fill' }];
 const HISTORY = 100;
 const LOGO = logo(Object.fromEntries(['n', 'b', 'w', 'y', 'k', 'l', 'G', 'r'].map((k) => [k, KEYS.indexOf(k)])));
-const SPEED = { bg: 64, fg: 12 }; // pixels per frame: a quick background sweep, then slower strokes (~3.5 s at 60 fps)
+const SPEED = { bg: 40, fg: 8 }; // pixels per frame: a quick background sweep, then slower strokes (~5.5 s at 60 fps)
 
 export default function Paint({ active }) {
   const cv = useRef(null);
@@ -27,6 +27,7 @@ export default function Paint({ active }) {
   const [, bump] = useState(0); // re-render so Undo/Redo buttons enable and disable
   const anim = useRef(null); // { i, raf } while the logo is being painted
   const [painting, setPainting] = useState(false);
+  const [hint, setHint] = useState(false); // pulse Clear after the logo, until the visitor does something
 
   const render = () => {
     const ctx = cv.current.getContext('2d');
@@ -34,8 +35,8 @@ export default function Paint({ active }) {
     px.current.forEach((c, i) => { img.data.set(RGB[c], i * 4); img.data[i * 4 + 3] = 255; });
     ctx.putImageData(img, 0, 0);
   };
-  useEffect(render, []);
-  useEffect(() => () => cancelAnimationFrame(anim.current?.raf), []);
+  // Paint the logo on open, so the canvas greets the visitor; one Ctrl+Z or Clear gives a blank page.
+  useEffect(() => { render(); paintLogo(); return () => { cancelAnimationFrame(anim.current?.raf); anim.current = null; }; }, []);
 
   // Jump to the end of the logo animation (any other action does this first).
   const finish = () => {
@@ -43,7 +44,7 @@ export default function Paint({ active }) {
     if (!a) return;
     cancelAnimationFrame(a.raf);
     for (; a.i < LOGO.ops.length; a.i++) px.current[LOGO.ops[a.i][0]] = LOGO.ops[a.i][1];
-    anim.current = null; setPainting(false); render();
+    anim.current = null; setPainting(false); setHint(true); render();
   };
   // Paint the HackHCC Ctrl Z badge stroke by stroke. One Ctrl+Z removes all of it.
   const paintLogo = () => {
@@ -57,7 +58,7 @@ export default function Paint({ active }) {
       const end = Math.min(LOGO.ops.length, a.i + (a.i < LOGO.bg ? SPEED.bg : SPEED.fg));
       for (; a.i < end; a.i++) px.current[LOGO.ops[a.i][0]] = LOGO.ops[a.i][1];
       render();
-      if (a.i >= LOGO.ops.length) { anim.current = null; setPainting(false); return; }
+      if (a.i >= LOGO.ops.length) { anim.current = null; setPainting(false); setHint(true); return; }
       a.raf = requestAnimationFrame(tick);
     };
     anim.current.raf = requestAnimationFrame(tick);
@@ -70,7 +71,7 @@ export default function Paint({ active }) {
     bump((n) => n + 1);
   };
   const step = (from, to) => {
-    finish();
+    finish(); setHint(false);
     if (!from.current.length) return false;
     to.current.push(px.current);
     px.current = from.current.pop();
@@ -102,7 +103,7 @@ export default function Paint({ active }) {
   };
   const down = (e) => {
     if (e.button !== 0) return;
-    finish();
+    finish(); setHint(false);
     e.currentTarget.setPointerCapture(e.pointerId);
     const [x, y] = cell(e);
     snapshot();
@@ -121,7 +122,7 @@ export default function Paint({ active }) {
   };
   const up = () => { last.current = null; };
 
-  const clear = () => { finish(); snapshot(); px.current.fill(BG); render(); };
+  const clear = () => { finish(); setHint(false); snapshot(); px.current.fill(BG); render(); };
   const save = () => {
     const big = document.createElement('canvas');
     big.width = W * 10; big.height = H * 10;
@@ -148,7 +149,7 @@ export default function Paint({ active }) {
         <span className="paint-gap" />
         <button type="button" className="btn" onClick={doUndo} disabled={!undo.current.length} title="Ctrl+Z">Undo</button>
         <button type="button" className="btn" onClick={doRedo} disabled={!redo.current.length} title="Ctrl+Y">Redo</button>
-        <button type="button" className="btn" onClick={clear}>Clear</button>
+        <button type="button" className={`btn${hint ? ' is-hint' : ''}`} onClick={clear}>Clear</button>
         <button type="button" className="btn btn-primary" onClick={save}>Save PNG</button>
       </div>
       <div className="paint-colors" role="radiogroup" aria-label="Colour">

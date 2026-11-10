@@ -576,3 +576,6 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   box-shadow: inset 0 0 90px rgb(0 0 30 / 0.45);
 }
 @media (prefers-contrast: more), print { body::after { display: none; } }
+/* Paint: after the logo is painted, Clear glows gently to say "this canvas is yours". */
+.btn.is-hint { outline: 2px solid var(--royal); outline-offset: 2px; animation: hint-pulse 1.4s ease-in-out infinite; }
+@keyframes hint-pulse { 50% { outline-color: transparent; outline-offset: 4px; } }
