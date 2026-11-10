@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from 'react';
 
 const W = 480, H = 300, PW = 8, PH = 54, BALL = 8, WIN = 5;
+const SERVE = 2.7, MAX = 6.5, SPEEDUP = 1.04, CPU = 2.9; // px per frame
+const PAUSE = 800; // ms between a point and the next serve
 const COL = { bg: '#000067', line: '#1738bb', you: '#f5e7cd', cpu: '#8fb4ff', ball: '#ffe600' };
 
 // Ping Pong: you are the left paddle (mouse, touch, W/S or arrow keys). First to 5.
@@ -15,8 +17,13 @@ export default function Pong({ active }) {
 
   useEffect(() => {
     const ctx = canvas.current.getContext('2d');
-    const s = { you: H / 2 - PH / 2, cpu: H / 2 - PH / 2, bx: W / 2, by: H / 2, vx: 0, vy: 0, pts: [0, 0] };
-    const serve = (dir) => { s.bx = W / 2; s.by = H / 2; s.vx = 3.6 * dir; s.vy = (Math.random() * 2 - 1) * 2.4; };
+    const s = { you: H / 2 - PH / 2, cpu: H / 2 - PH / 2, bx: W / 2, by: H / 2, vx: 0, vy: 0, pts: [0, 0], waitUntil: 0, msg: '' };
+    // A full reset: ball, speed and both paddles back to the middle, then serve after a short pause.
+    const serve = (dir, delay = 0) => {
+      s.bx = W / 2 - BALL / 2; s.by = H / 2 - BALL / 2; s.vx = SERVE * dir; s.vy = (Math.random() * 2 - 1) * 1.8;
+      s.you = s.cpu = H / 2 - PH / 2;
+      s.waitUntil = performance.now() + delay;
+    };
     if (phase === 'play') serve(Math.random() < 0.5 ? -1 : 1);
 
     const draw = () => {
@@ -25,7 +32,10 @@ export default function Pong({ active }) {
       for (let y = 4; y < H; y += 16) ctx.fillRect(W / 2 - 2, y, 4, 8);
       ctx.fillStyle = COL.you; ctx.fillRect(16, Math.round(s.you), PW, PH);
       ctx.fillStyle = COL.cpu; ctx.fillRect(W - 16 - PW, Math.round(s.cpu), PW, PH);
-      if (phase === 'play') { ctx.fillStyle = COL.ball; ctx.fillRect(Math.round(s.bx), Math.round(s.by), BALL, BALL); }
+      if (phase === 'play' && performance.now() >= s.waitUntil) { ctx.fillStyle = COL.ball; ctx.fillRect(Math.round(s.bx), Math.round(s.by), BALL, BALL); }
+      if (phase === 'play' && performance.now() < s.waitUntil && s.msg) {
+        ctx.fillStyle = COL.ball; ctx.font = '28px "Jersey 15", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(s.msg, W / 2, H / 2 + 10);
+      }
     };
 
     const onMove = (e) => {
@@ -42,30 +52,34 @@ export default function Pong({ active }) {
 
     let raf;
     const tick = () => {
-      if (phase === 'play') {
+      if (phase === 'play' && performance.now() >= s.waitUntil) {
         const k = keys.current;
         if (k.arrowup || k.w) s.you = Math.max(0, s.you - 6);
         if (k.arrowdown || k.s) s.you = Math.min(H - PH, s.you + 6);
         // CPU follows the ball with a capped speed, so it can be beaten.
         const target = s.by - PH / 2 + BALL / 2;
-        s.cpu += Math.max(-3.4, Math.min(3.4, target - s.cpu));
+        s.cpu += Math.max(-CPU, Math.min(CPU, target - s.cpu));
         s.cpu = Math.max(0, Math.min(H - PH, s.cpu));
+        const px0 = s.bx;
         s.bx += s.vx; s.by += s.vy;
         if (s.by < 0 || s.by > H - BALL) { s.vy *= -1; s.by = Math.max(0, Math.min(H - BALL, s.by)); }
-        const hit = (py, px, dir) => {
-          if (s.by + BALL < py || s.by > py + PH) return false;
-          if (dir < 0 ? s.bx > px + PW || s.bx < px - 4 : s.bx + BALL < px || s.bx + BALL > px + PW + 4) return false;
+        // A paddle returns the ball only as the ball crosses the paddle's front face this frame,
+        // so a ball that already got past can't bounce back from behind the paddle.
+        const hit = (py, face, dir) => {
+          const crossed = dir < 0 ? px0 >= face && s.bx <= face : px0 + BALL <= face && s.bx + BALL >= face;
+          if (!crossed || s.by + BALL < py || s.by > py + PH) return;
+          s.bx = dir < 0 ? face : face - BALL;
           const off = (s.by + BALL / 2 - (py + PH / 2)) / (PH / 2); // -1..1: where on the paddle it hit
-          const sp = Math.min(Math.hypot(s.vx, s.vy) * 1.06, 9);
+          const sp = Math.min(Math.hypot(s.vx, s.vy) * SPEEDUP, MAX);
           s.vx = -dir * sp * Math.cos(off * 0.9); s.vy = sp * Math.sin(off * 0.9);
-          return true;
         };
-        if (s.vx < 0) hit(s.you, 16, -1); else hit(s.cpu, W - 16 - PW, 1);
+        if (s.vx < 0) hit(s.you, 16 + PW, -1); else hit(s.cpu, W - 16 - PW, 1);
         if (s.bx < -BALL || s.bx > W) {
           const who = s.bx < 0 ? 1 : 0;
           s.pts = s.pts.map((p, i) => (i === who ? p + 1 : p));
           setScore(s.pts);
-          if (s.pts[who] >= WIN) setPhase('over'); else serve(who ? -1 : 1);
+          s.msg = who ? 'Point: CPU' : 'Point: you';
+          if (s.pts[who] >= WIN) setPhase('over'); else serve(who ? -1 : 1, PAUSE);
         }
       }
       draw();

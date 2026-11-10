@@ -22,11 +22,12 @@
 
   --taskbar-h: 44px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --boot-end: 2.6s;
   color-scheme: light;
 }
 /* The desktop is a 90s screen: it stays light in dark mode on purpose. */
-:root[data-booted] { --boot-end: 0s; }
+/* Entrance timing: with no JS, the boot overlay ends at ~2.9s, so entrances wait for it.
+   When JS marks the boot done (or skipped, or a repeat visit), the animation-name switches,
+   which restarts each entrance from that moment instead of cutting it short. */
 
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
@@ -81,8 +82,10 @@ kbd {
 .icon:focus-visible span, .icon:hover span { background: var(--navy); outline: 1px dotted var(--yellow); text-shadow: none; }
 .icon:focus-visible svg { filter: drop-shadow(0 0 0 var(--navy)) brightness(0.75) sepia(1) hue-rotate(190deg) saturate(4); }
 .icon:disabled { cursor: default; opacity: 0.55; }
-.icons li { animation: icon-in 0.35s var(--ease-out) both; animation-delay: calc(var(--boot-end) + var(--i) * 70ms); }
+.icons li { animation: icon-in 0.35s var(--ease-out) both; animation-delay: calc(2.6s + var(--i) * 70ms); }
+:root[data-booted] .icons li { animation-name: icon-in-b; animation-delay: calc(var(--i) * 45ms); }
 @keyframes icon-in { from { opacity: 0; transform: translateY(6px) scale(0.85); } }
+@keyframes icon-in-b { from { opacity: 0; transform: translateY(6px) scale(0.85); } }
 
 /* ---------- Window ---------- */
 .win {
@@ -91,8 +94,31 @@ kbd {
   transform: translate(var(--x, 8px), var(--y, 8px));
   background: var(--silver); box-shadow: var(--raised), 0 10px 28px -8px rgb(0 0 40 / 0.55);
   padding: 3px; outline: none;
-  animation: win-in 0.32s var(--ease-out) both; animation-delay: calc(var(--boot-end) + 0.35s);
+  animation: win-open 0.55s var(--ease-out) both; animation-delay: calc(2.9s + var(--open-delay, 0ms));
 }
+:root[data-booted] .win { animation-name: win-open-b; animation-delay: calc(0.25s + var(--open-delay, 0ms)); }
+/* Open: zoom up from small with a slight overshoot, sharpening out of a bright blur. */
+@keyframes win-open {
+  0% { opacity: 0; scale: 0.55; translate: 0 22px; filter: blur(6px) brightness(1.6); }
+  55% { opacity: 1; scale: 1.025; translate: 0 -2px; filter: blur(0) brightness(1.12); }
+  100% { scale: 1; translate: 0 0; filter: none; }
+}
+@keyframes win-open-b {
+  0% { opacity: 0; scale: 0.55; translate: 0 22px; filter: blur(6px) brightness(1.6); }
+  55% { opacity: 1; scale: 1.025; translate: 0 -2px; filter: blur(0) brightness(1.12); }
+  100% { scale: 1; translate: 0 0; filter: none; }
+}
+/* A light sweeps once across the title bar as the window lands. */
+.win-title { position: relative; overflow: hidden; }
+.win-title::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.45) 50%, transparent 70%);
+  translate: -110% 0; animation: title-sweep 0.7s ease-out both;
+  animation-delay: calc(3.15s + var(--open-delay, 0ms));
+}
+:root[data-booted] .win-title::after { animation-name: title-sweep-b; animation-delay: calc(0.5s + var(--open-delay, 0ms)); }
+@keyframes title-sweep { to { translate: 110% 0; } }
+@keyframes title-sweep-b { to { translate: 110% 0; } }
 .win[hidden] { display: none; }
 .win.is-max { inset: 0; width: auto; max-height: none; transform: none; }
 .win.has-size { height: min(var(--h), calc(100% - 16px)); }
@@ -112,7 +138,7 @@ kbd {
 .win.dragging .win-body { pointer-events: none; }
 @keyframes win-in { from { opacity: 0; scale: 0.94; } }
 /* Signature: Ctrl+Z rewinds the window back into place. */
-.win.is-rewound { animation: win-rewind 0.45s var(--ease-out) both; }
+.win.is-rewound, :root[data-booted] .win.is-rewound { animation: win-rewind 0.45s var(--ease-out) both; }
 @keyframes win-rewind {
   0% { opacity: 0; scale: 0.6; filter: blur(3px) saturate(0); clip-path: inset(0 0 100% 0); }
   60% { opacity: 1; filter: none; clip-path: inset(0 0 0 0); }

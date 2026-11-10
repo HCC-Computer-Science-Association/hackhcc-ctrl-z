@@ -26,24 +26,26 @@ const lazy = (id) => dynamic(loaders[id], { loading: Loading });
 const Screensaver = dynamic(() => import('./Screensaver'));
 
 export const APPS = [
-  { id: 'about', label: 'About.txt', title: 'About.txt — Ctrl Z Edit', icon: 'about', Body: About, w: 620, x: 0.42, y: 0.08 },
-  { id: 'schedule', label: 'Schedule', title: 'Schedule — 24 hours', icon: 'schedule', Body: lazy('schedule'), w: 520, x: 0.18, y: 0.14 },
+  { id: 'about', label: 'About.txt', title: 'About.txt — Ctrl Z Edit', icon: 'about', Body: About, w: 620, x: 0.4, y: 0.06 },
+  { id: 'schedule', label: 'Schedule', title: 'Schedule — 24 hours', icon: 'schedule', Body: lazy('schedule'), w: 520, x: 0.1, y: 0.16 },
   { id: 'faq', label: 'Help', title: 'Help — FAQ and Rules', icon: 'faq', Body: lazy('faq'), w: 560, x: 0.24, y: 0.1 },
   { id: 'sponsors', label: 'Sponsors & Team', title: 'C:\\SPONSORS', icon: 'sponsors', Body: lazy('sponsors'), w: 540, x: 0.3, y: 0.18 },
   { id: 'terminal', label: 'Terminal', title: 'C:\\> Terminal', icon: 'terminal', Body: lazy('terminal'), w: 600, x: 0.2, y: 0.22 },
   { id: 'bughunt', label: 'Bug Hunt', title: 'Bug Hunt', icon: 'bughunt', Body: lazy('bughunt'), w: 520, x: 0.26, y: 0.12 },
   { id: 'pong', label: 'Ping Pong', title: 'Ping Pong', icon: 'pong', Body: lazy('pong'), w: 520, x: 0.32, y: 0.16 },
   { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), w: 800, x: 0.1, y: 0.03 },
-  { id: 'challenge', label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.28, y: 0.06 },
+  { id: 'challenge', label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.6, y: 0.24 },
   { id: 'dontclick', label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
   { id: 'doom', label: 'Freedoom', title: 'Freedoom', icon: 'doom', Body: lazy('doom'), w: 680, x: 0.2, y: 0.06 },
 ];
 
 const STORE = 'ctrlz-windows';
+// Open on first load, back to front; they pop in in this order.
+const INITIAL = ['schedule', 'challenge', 'about'];
 const IDLE_MS = 45000;
 
 export default function Desktop() {
-  const [state, dispatch] = useReducer(reducer, ['about'], initState);
+  const [state, dispatch] = useReducer(reducer, INITIAL, initState);
   const [saver, setSaver] = useState(false);
   const [refresh, setRefresh] = useState(0);
 
@@ -126,7 +128,7 @@ export default function Desktop() {
           if (!win?.open) return null;
           return (
             <Window key={id} id={id} title={title} icon={icon} width={w} win={win} defaultPos={{ x, y }}
-              focused={top === id} rewound={state.rewound === id} dispatch={dispatch}>
+              focused={top === id} rewound={state.rewound === id} dispatch={dispatch} openDelay={Math.max(0, INITIAL.indexOf(id)) * 140}>
               <Body onOpen={open} onUndo={() => dispatch({ type: 'undo' })} canUndo={state.closed.length > 0}
                 onClose={() => dispatch({ type: 'close', id })} onSaver={() => setSaver(true)} active={top === id} />
             </Window>

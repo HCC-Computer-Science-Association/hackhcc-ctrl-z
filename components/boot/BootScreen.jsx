@@ -14,7 +14,7 @@ export default function BootScreen() {
       window.removeEventListener('keydown', done);
     };
     if (root.dataset.booted) return;
-    const t = setTimeout(done, 3000);
+    const t = setTimeout(done, 2900); // matches the CSS boot-out
     window.addEventListener('keydown', done);
     document.getElementById('boot-skip')?.addEventListener('click', done);
     return () => { clearTimeout(t); window.removeEventListener('keydown', done); };

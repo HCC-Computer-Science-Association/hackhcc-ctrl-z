@@ -4,7 +4,7 @@ import Icon from './icons';
 
 const useIso = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
-export default function Window({ id, title, icon, width, win, defaultPos, focused, rewound, dispatch, children }) {
+export default function Window({ id, title, icon, width, win, defaultPos, focused, rewound, dispatch, openDelay = 0, children }) {
   const ref = useRef(null);
   const pos = useRef({ x: win.x, y: win.y });
 
@@ -83,7 +83,7 @@ export default function Window({ id, title, icon, width, win, defaultPos, focuse
   return (
     <section ref={ref} role="dialog" aria-labelledby={`${id}-title`} tabIndex={-1}
       className={`win${focused ? ' is-focused' : ''}${rewound ? ' is-rewound' : ''}${win.max ? ' is-max' : ''}${win.height ? ' has-size' : ''}`}
-      style={{ zIndex: win.z, '--w': `${win.width || width}px`, ...(win.height && { '--h': `${win.height}px` }) }} hidden={win.min}
+      style={{ zIndex: win.z, '--open-delay': `${openDelay}ms`, '--w': `${win.width || width}px`, ...(win.height && { '--h': `${win.height}px` }) }} hidden={win.min}
       onPointerDownCapture={() => dispatch({ type: 'focus', id })}>
       <header className="win-title" onPointerDown={onPointerDown} onDoubleClick={(e) => !e.target.closest('button') && dispatch({ type: 'maximize', id })}>
         <Icon name={icon} size={16} />
