@@ -12,7 +12,7 @@ const HIST_KEY = 'ctrlz-term-history';
 const DOCS = {
   help: 'list commands',
   about: 'open About.txt', schedule: 'open the schedule', faq: 'open FAQ and rules', sponsors: 'open sponsors and team',
-  bughunt: 'play Bug Hunt', pong: 'play Ping Pong', solitaire: 'play Solitaire', doom: 'play Freedoom', freedoom: 'play Freedoom',
+  bughunt: 'play Bug Hunt', pong: 'play Ping Pong', solitaire: 'play Solitaire', doom: 'play Doom', freedoom: 'play Doom',
   challenge: 'can it run Doom?', display: 'wallpaper, CRT and screensaver', paint: 'open Ctrl Z Paint',
   info: 'event facts', register: 'how to sign up', agenda: 'print the schedule', questions: 'print the FAQ questions',
   achievements: 'what you have unlocked', neofetch: 'system info',
@@ -109,7 +109,7 @@ export default function Terminal({ onOpen, onUndo, onClose, onSaver }) {
       case 'clear': case 'cls': setLines([]); break;
       case 'exit': onClose(); break;
       case 'sudo': err('Nice try. This is 1995. There is no sudo.'); break;
-      case 'ls': case 'dir': print(' ABOUT.TXT  SCHEDULE  HELP  SPONSORS  BUGHUNT.EXE  PONG.EXE  SOLITAIR.EXE  FREEDOOM.EXE  DISPLAY.CPL  PAINT.EXE', ''); break;
+      case 'ls': case 'dir': print(' ABOUT.TXT  SCHEDULE  HELP  SPONSORS  BUGHUNT.EXE  PONG.EXE  SOLITAIR.EXE  DOOM.EXE  DISPLAY.CPL  PAINT.EXE', ''); break;
       case 'agenda': print(...schedule.map((s) => `  H+${String(s.hour).padEnd(3)} ${s.title}`), { t: '  (sample schedule, not final)', k: 'dim' }, ''); break;
       case 'questions': print(...faq.map((f) => `  - ${f.q}`), ''); break;
       default: {

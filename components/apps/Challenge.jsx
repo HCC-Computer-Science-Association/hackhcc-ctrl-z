@@ -32,7 +32,7 @@ export default function Challenge({ onOpen }) {
         </p>
         <div className="ch-actions">
           <button type="button" className="btn btn-primary" onClick={roll}>Roll another idea</button>
-          <button type="button" className="btn" onClick={() => onOpen('doom')}>Warm up: play Freedoom here</button>
+          <button type="button" className="btn" onClick={() => onOpen('doom')}>Warm up: play Doom here</button>
         </div>
       </section>
 

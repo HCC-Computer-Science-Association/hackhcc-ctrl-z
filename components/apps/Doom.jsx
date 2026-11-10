@@ -16,17 +16,17 @@ export default function Doom() {
     <div className="game doom">
       <div className="doom-screen sunken">
         {play
-          ? <iframe className="doom-host" src={SRC} title="Freedoom game" allow="autoplay; fullscreen" ref={(el) => { frame.current = el; el?.focus(); }} />
+          ? <iframe className="doom-host" src={SRC} title="Doom game" allow="autoplay; fullscreen" ref={(el) => { frame.current = el; el?.focus(); }} />
           : (
             <div className="game-card doom-card">
               {touch ? (
                 <>
-                  <h3>Freedoom needs a keyboard.</h3>
+                  <h3>Doom needs a keyboard.</h3>
                   <p>Open this window on a laptop or desktop to play.</p>
                 </>
               ) : (
                 <>
-                  <h3>Freedoom</h3>
+                  <h3>Doom</h3>
                   <p>A free first-person shooter on a classic DOS engine. About 11 MB downloads when you press Play.</p>
                   <button type="button" className="btn btn-primary" onClick={() => setPlay(true)}>Play</button>
                 </>

@@ -42,7 +42,7 @@ export const APPS = [
   { id: 'dontclick', label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
   { id: 'paint', label: 'Paint', title: 'Ctrl Z Paint', icon: 'paint', Body: lazy('paint'), w: 660, x: 0.22, y: 0.08 },
   { id: 'display', label: 'Display', title: 'Display Properties', icon: 'display', Body: lazy('display'), w: 460, x: 0.38, y: 0.14 },
-  { id: 'doom', label: 'Freedoom', title: 'Freedoom', icon: 'doom', Body: lazy('doom'), game: true, w: 680, x: 0.2, y: 0.06 },
+  { id: 'doom', label: 'Doom', title: 'Doom', icon: 'doom', Body: lazy('doom'), game: true, w: 680, x: 0.2, y: 0.06 },
 ];
 
 const STORE = 'ctrlz-windows';
@@ -100,7 +100,7 @@ export default function Desktop() {
     return () => window.removeEventListener('keydown', onKey);
   }, [state]);
 
-  // Screensaver after IDLE_MS without input. Never while Freedoom is open (it may be played with no mouse).
+  // Screensaver after IDLE_MS without input. Never while Doom is open (it may be played with no mouse).
   useEffect(() => {
     if (saver || state.wins.doom?.open) return;
     let t = setTimeout(() => setSaver(true), IDLE_MS);
