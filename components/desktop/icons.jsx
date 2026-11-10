@@ -77,6 +77,11 @@ const MAPS = {
     '.kykyyywyyyykyk.', '..kkyyyyyyyykk..', '...kyyyyyyyyk...', '....kyyyyyyk....', '.....kkyykk.....',
     '......kook......', '.....kooook.....', '....kkkkkkkk....', '....kbbbbbbk....', '....kkkkkkkk....',
   ],
+  dontclick: [
+    '................', '.....kkkkkk.....', '...kkrrrrrrkk...', '..krrwwrrrrrrk..', '.krrwrrrrrrrrrk.',
+    '.krrrrrrrrrrrrk.', '.krrrrrrrrrrrrk.', '..krrrrrrrrrrk..', '...kkrrrrrrkk...', '..kgkkkkkkkkgk..',
+    '.kssssssssssssk.', '.kggggggggggggk.', '..kkkkkkkkkkkk..',
+  ],
   spade: ['...k...', '..kkk..', '.kkkkk.', 'kkkkkkk', 'kkkkkkk', '.k.k.k.', '...k...', '..kkk..'],
   diamond: ['...r...', '..rrr..', '.rrrrr.', 'rrrrrrr', '.rrrrr.', '..rrr..', '...r...'],
   club: ['..kkk..', '..kkk..', 'kk.k.kk', 'kkkkkkk', 'kk.k.kk', '...k...', '..kkk..'],

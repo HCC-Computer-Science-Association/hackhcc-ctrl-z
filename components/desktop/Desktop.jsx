@@ -19,6 +19,7 @@ const loaders = {
   solitaire: () => import('../apps/Solitaire'),
   doom: () => import('../apps/Doom'),
   challenge: () => import('../apps/Challenge'),
+  dontclick: () => import('../apps/DontClick'),
 };
 const Loading = () => <p className="win-loading">Loading…</p>;
 const lazy = (id) => dynamic(loaders[id], { loading: Loading });
@@ -34,6 +35,7 @@ export const APPS = [
   { id: 'pong', label: 'Ping Pong', title: 'Ping Pong', icon: 'pong', Body: lazy('pong'), w: 520, x: 0.32, y: 0.16 },
   { id: 'solitaire', label: 'Solitaire', title: 'Solitaire', icon: 'solitaire', Body: lazy('solitaire'), w: 800, x: 0.1, y: 0.03 },
   { id: 'challenge', label: 'Challenge', title: 'Challenge — Can it run Doom?', icon: 'challenge', Body: lazy('challenge'), w: 600, x: 0.28, y: 0.06 },
+  { id: 'dontclick', label: 'Don\'t click me', title: 'Don\'t click me', icon: 'dontclick', Body: lazy('dontclick'), w: 560, x: 0.34, y: 0.12 },
   { id: 'doom', label: 'Freedoom', title: 'Freedoom', icon: 'doom', Body: lazy('doom'), w: 680, x: 0.2, y: 0.06 },
 ];
 

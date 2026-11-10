@@ -95,6 +95,7 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 - **Solitaire:** drag cards, or click one to send it to its best spot.
 - **Freedoom:** a free first-person shooter in a DOS emulator. Move with WASD, aim with the mouse, click to fire.
 - **Challenge:** the "Can it run Doom?" side challenge, with an idea roller and draft rules.
+- **Don't click me:** plays a certain 1987 music video the moment it opens. Closing the window stops it.
 
 **Extras**
 - **Terminal:** type `help` to list the commands.
