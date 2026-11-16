@@ -2,7 +2,7 @@
 
 The website for **HackHCC Ctrl Z**, a 24-hour hackathon at Houston City College in 2027.
 
-**Live site:** https://hcc-computer-science-association.github.io/hackhcc-ctrl-z/
+**Live site:** https://controlz.hackhcc.org
 
 The site boots like a 1995 PC into "Ctrl Z OS". Every section is a window on the desktop, and pressing **Ctrl+Z** reopens the last window you closed.
 
@@ -67,6 +67,16 @@ Every push to `main` deploys to GitHub Pages.
 
 The workflow lives in `.github/workflows/deploy.yml`. It runs the tests, builds the site, and publishes the `out/` folder. If the tests fail, nothing deploys.
 
+### Custom domain
+
+The site is served at **controlz.hackhcc.org**, the same way Code Runners is served at coderunners.hackhcc.org. Three pieces keep it working:
+
+1. **DNS:** a `CNAME` record for `controlz` on hackhcc.org pointing to `hcc-computer-science-association.github.io`.
+2. **Repo setting:** **Settings → Pages → Custom domain** is `controlz.hackhcc.org`, with **Enforce HTTPS** on.
+3. **No base path:** `next.config.mjs` builds for the root of the domain. `public/CNAME` records the domain in the repo (GitHub reads the Settings value for Actions deploys, so the file is documentation, not the switch).
+
+With a custom domain set, the old `hcc-computer-science-association.github.io/hackhcc-ctrl-z/` address redirects to it.
+
 ---
 
 ## Commands
@@ -76,7 +86,7 @@ The workflow lives in `.github/workflows/deploy.yml`. It runs the tests, builds 
 | `npm run dev` | Dev server at http://localhost:3000 |
 | `npm test` | Runs the logic tests (window manager, countdown, Solitaire, Bug Sweeper, Snake, Defrag, achievements, Terminal completion, Paint) |
 | `npm run build` | Builds the static site into `out/` |
-| `npm start` | Serves the build locally at http://localhost:3000/hackhcc-ctrl-z/ (the same path as GitHub Pages) |
+| `npm start` | Serves the build locally at http://localhost:3000 |
 
 To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http://<your-computer's-IP>:3000` on the phone.
 
@@ -118,9 +128,9 @@ To test on your phone over Wi-Fi, run `npx next dev -H 0.0.0.0`. Then open `http
 
 **Share a window with a link**
 Add `#` and the app name to the URL to open that window, for example:
-- `…/hackhcc-ctrl-z/#schedule`
-- `…/hackhcc-ctrl-z/#faq` (or `#help`, `#rules`)
-- `…/hackhcc-ctrl-z/#challenge`
+- `controlz.hackhcc.org/#schedule`
+- `controlz.hackhcc.org/#faq` (or `#help`, `#rules`)
+- `controlz.hackhcc.org/#challenge`
 
 The address bar follows the front window, so copying the URL shares whatever window is on top.
 
@@ -200,7 +210,10 @@ This repo is licensed under GPL-3.0 (see `LICENSE`).
 Cause: the build downloads Google Fonts. Fix: check your internet connection and run it again.
 
 **The site works locally, but on GitHub Pages it has no styles**
-Cause: GitHub Pages isn't set to deploy from Actions. Fix: go to **Settings → Pages → Source** and select **GitHub Actions**.
+Cause: GitHub Pages isn't set to deploy from Actions, or the site is being opened at the old `github.io/hackhcc-ctrl-z/` path without the custom domain set. Fix: go to **Settings → Pages**, select **GitHub Actions** as the source, and make sure **Custom domain** is `controlz.hackhcc.org`.
+
+**controlz.hackhcc.org doesn't load, or shows a certificate warning**
+Cause: the DNS record is missing or still propagating, or GitHub hasn't issued the HTTPS certificate yet. Fix: check that `controlz` is a `CNAME` to `hcc-computer-science-association.github.io`, then wait (usually under an hour) and tick **Enforce HTTPS** in **Settings → Pages** once it's available.
 
 **Freedoom stays black**
 Cause: the emulator loads from cdn.jsdelivr.net. Fix: check that a network filter isn't blocking that domain.
