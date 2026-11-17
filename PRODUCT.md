@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Next.js (React, App Router) with static export (`output: 'export'`), deployed to GitHub Pages under the `/hackhcc-ctrl-z` base path. The user chose React and explicitly declined Vite.
+Next.js (React, App Router) with static export (`output: 'export'`), deployed to GitHub Pages at the custom domain `controlz.hackhcc.org` (served from the root, no base path). The user chose React and explicitly declined Vite.
 
 ## Users
 

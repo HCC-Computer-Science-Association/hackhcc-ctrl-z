@@ -1,6 +1,5 @@
 node_modules/
 .next/
 out/
-.preview/
 next-env.d.ts
 .impeccable/review/
