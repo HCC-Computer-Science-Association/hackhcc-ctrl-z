@@ -21,6 +21,10 @@
   --sunken: inset -1px -1px var(--white), inset 1px 1px var(--shade), inset -2px -2px var(--silver-lt), inset 2px 2px var(--ink);
 
   --taskbar-h: 44px;
+  /* MLH Trust Badge, top right: its width, its height (the artwork is 392.79 x 688), and the strip on the right that windows keep clear of. */
+  --mlh-w: 64px;
+  --mlh-h: calc(var(--mlh-w) * 688 / 392.79);
+  --mlh-reserve: 112px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
 }
@@ -97,7 +101,7 @@ kbd {
 
 /* ---------- Window ---------- */
 .win {
-  position: absolute; left: 0; top: 0; width: min(var(--w), calc(100% - 16px));
+  position: absolute; left: 0; top: 0; width: min(var(--w), calc(100% - 8px - var(--mlh-reserve)));
   max-height: calc(100% - 16px); display: flex; flex-direction: column;
   transform: translate(var(--x, 8px), var(--y, 8px));
   background: var(--silver); box-shadow: var(--raised), 0 10px 28px -8px rgb(0 0 40 / 0.55);
@@ -128,7 +132,8 @@ kbd {
 @keyframes title-sweep { to { translate: 110% 0; } }
 @keyframes title-sweep-b { to { translate: 110% 0; } }
 .win[hidden] { display: none; }
-.win.is-max { inset: 0; width: auto; max-height: none; transform: none; }
+/* Maximized fills the desktop up to the badge strip, so the badge never covers the window buttons. */
+.win.is-max { inset: 0 var(--mlh-reserve) 0 0; width: auto; max-height: none; transform: none; }
 .win.has-size { height: min(var(--h), calc(100% - 16px)); }
 .win.is-max .win-body, .win.has-size .win-body { flex: 1; container-type: size; }
 .win.is-max .game, .win.has-size .game { height: 100%; display: flex; flex-direction: column; }
@@ -220,7 +225,7 @@ h3:first-child { margin-top: 2px; }
 .facts dd { margin: 2px 0 0; font: 400 28px/1.1 var(--f-pixel), sans-serif; color: var(--yellow); }
 .facts .tba { font-size: 24px; }
 /* About is the main window: about 60% of the desktop width, wallpaper showing below. */
-@media (min-width: 641px) { .win:has(> .win-body > .about):not(.is-max):not(.has-size) { width: min(max(640px, 60%), calc(100% - 16px)); max-height: calc(100% - 72px); } }
+@media (min-width: 641px) { .win:has(> .win-body > .about):not(.is-max):not(.has-size) { width: min(max(640px, 60%), calc(100% - 8px - var(--mlh-reserve))); max-height: calc(100% - 72px); } }
 .toc { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 4px 0 6px; font: 400 19px var(--f-pixel), sans-serif; }
 .toc a { color: var(--royal); text-underline-offset: 3px; }
 .doc section { scroll-margin-top: 8px; outline: none; padding-top: 6px; }
@@ -381,8 +386,8 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 .cloud-d { top: 36%; width: 240px; height: 75px; animation-duration: 200s; animation-delay: -150s; opacity: 0.85; }
 @keyframes drift { from { transform: translateX(-360px); } to { transform: translateX(calc(100vw + 40px)); } }
 .icons { position: relative; grid-template-rows: repeat(auto-fill, 78px); grid-auto-columns: 96px; grid-auto-flow: column; height: calc(100% - 8px); align-content: start; row-gap: 4px; padding-top: 10px; }
-/* Apps and games: columns fill from the right edge, stopping above the watermark. */
-.icons-right { position: absolute; top: 0; right: 0; direction: rtl; height: calc(100% - 96px); }
+/* Apps and games: columns fill from the right edge, starting under the MLH badge and stopping above the watermark. */
+.icons-right { position: absolute; top: 0; right: 0; direction: rtl; height: calc(100% - 64px); padding-top: calc(var(--mlh-h) + 8px); }
 .icons-right li { direction: ltr; }
 .icons li { touch-action: none; }
 .icons li.is-dragging { z-index: 2; opacity: 0.85; cursor: grabbing; }
@@ -393,7 +398,7 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
   background: var(--yellow); color: var(--navy); box-shadow: 0 10px 20px -8px rgb(0 0 40 / 0.6);
   font: 400 18px/1.15 var(--f-pixel), sans-serif;
 }
-@media (max-height: 820px) { .sticky { right: 236px; } }
+@media (max-height: 895px) { .sticky { right: 236px; } }
 .sticky h2 { margin: 0 0 8px; font: inherit; font-size: 20px; border-bottom: 2px solid var(--navy); padding-bottom: 4px; }
 .sticky ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .sticky label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; }
@@ -408,6 +413,11 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 }
 .watermark span { font: 400 16px/1.2 var(--f-prose), sans-serif; }
 .watermark:hover { color: var(--white); }
+
+/* MLH Trust Badge: MLH's own artwork (hotlinked, never recoloured), hung from the top right like a sticker on the monitor glass.
+   It sits above everything, the CRT scanlines included, so it stays crisp and always in view; windows and icons keep clear of it. */
+.mlh-badge { position: fixed; top: 0; right: 28px; z-index: 40001; display: block; width: var(--mlh-w); }
+.mlh-badge img { display: block; width: 100%; height: auto; }
 
 .ctx { position: absolute; min-width: 210px; }
 
@@ -551,14 +561,17 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 
 /* ---------- Phone ---------- */
 @media (max-width: 640px) {
-  .icons { grid-template-columns: repeat(auto-fill, 88px); grid-template-rows: none; grid-auto-flow: row; height: auto; width: auto; justify-content: center; padding-top: 24px; }
+  :root { --mlh-w: 60px; }
+  .mlh-badge { right: 12px; }
+  /* Phones: icons and full-screen windows both start under the badge, so it never covers a title bar or text. */
+  .icons { grid-template-columns: repeat(auto-fill, 88px); grid-template-rows: none; grid-auto-flow: row; height: auto; width: auto; justify-content: center; padding-top: calc(var(--mlh-h) + 12px); }
   .icons-right { position: static; direction: ltr; padding-top: 4px; }
   .icons li { translate: none !important; touch-action: auto; } /* phones keep the tidy grid */
   .sticky, .watermark { display: none; }
   .sol-hint { display: none; }
   .balloon { width: min(280px, calc(100vw - 24px)); }
   .icon { width: 88px; }
-  .win { inset: 0; width: auto; max-height: none; transform: none; }
+  .win, .win.is-max { inset: calc(var(--mlh-h) + 6px) 0 0; width: auto; max-height: none; transform: none; }
   .win-body:has(> .term), .win-body:has(> .ideas) { flex: 1; }
   .ideas { height: 100%; } .ideas-text { flex: 1; resize: none; }
   .term { height: 100%; }

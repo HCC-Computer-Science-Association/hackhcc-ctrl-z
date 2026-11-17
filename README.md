@@ -200,7 +200,7 @@ The game runs inside `public/doom/index.html` in an iframe, so the emulator's st
 
 This repo is licensed under GPL-3.0 (see `LICENSE`).
 
-**Brand rule:** the look is *inspired by* 90s desktops. Don't add Microsoft logos, the Windows name, or the Bliss wallpaper. Use only the badge in `public/badge.png`.
+**Brand rule:** the look is *inspired by* 90s desktops. Don't add Microsoft logos, the Windows name, or the Bliss wallpaper. Use only the badge in `public/badge.png`. The one outside mark is the official MLH Trust Badge (`components/MlhBadge.jsx`), hotlinked from MLH; bump its season once a year and never copy or recolour it.
 
 ---
 

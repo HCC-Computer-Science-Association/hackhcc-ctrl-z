@@ -176,6 +176,8 @@ The palette is lifted directly from the badge: two blues, a cream, a pixel yello
 ### Named Rules
 **The Badge Palette Rule.** Every colour on screen comes from the badge or the silver chrome family. New surfaces pick from these tokens; no new hues.
 
+**The MLH Badge Exception.** Ctrl Z is an MLH member event, so the official MLH Trust Badge (`components/MlhBadge.jsx`) hangs from the top right like a sticker on the monitor glass: above every layer, the CRT scanlines and boot screen included, so it stays crisp and always in view. It is MLH's artwork, hotlinked from MLH and linking to mlh.io, so the palette rule does not apply to it: never copy, redraw or recolour it. Windows, maximized windows and the right icon column keep clear of it (`--mlh-reserve`, `--mlh-h`); on phones, icons and full-screen windows start below it.
+
 **The Yellow Means Attention Rule.** Yellow marks focus, the primary action, live or TBA state, and selection. It is never a decorative fill.
 
 ## Typography
