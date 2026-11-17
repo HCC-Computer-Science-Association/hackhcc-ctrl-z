@@ -578,7 +578,7 @@ details p { margin: 0; padding: 0 12px 12px 30px; }
 
 @media (prefers-reduced-motion: reduce) {
   .cloud { animation: none !important; translate: 30vw 0; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; transition: none !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition: none !important; }
   .boot { display: none; }
 }
 

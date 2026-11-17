@@ -8,7 +8,7 @@ const BASE = process.env.NEXT_PUBLIC_BASE;
 const TBA = <span className="tba">TBA</span>;
 const SECTIONS = [['guide', 'How to use'], ['schedule', 'Schedule'], ['faq', 'FAQ'], ['challenge', 'Challenge'], ['team', 'Team']];
 // In-window jump: scroll the section into view without changing the #hash (the hash opens windows).
-const jump = (id) => (e) => { e.preventDefault(); const el = document.getElementById(`about-${id}`); el?.scrollIntoView({ behavior: 'smooth', block: 'start' }); el?.focus({ preventScroll: true }); };
+const jump = (id) => (e) => { e.preventDefault(); const el = document.getElementById(`about-${id}`); el?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); el?.focus({ preventScroll: true }); };
 
 export function Menu({ label, items }) {
   const [open, setOpen] = useState(false);
