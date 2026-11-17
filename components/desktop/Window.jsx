@@ -10,13 +10,14 @@ export default function Window({ id, title, icon, width, win, defaultPos, focuse
   // Opened after the boot ended: open now instead of waiting out the boot delay. Fixed at mount, so it never replays.
   const late = useRef(typeof document !== 'undefined' && !!document.documentElement.dataset.bootDone).current;
 
-  // First placement: fraction of the desktop, clamped so the window fits.
+  // First placement: fraction of the desktop, clamped so the window fits and stays left of the MLH badge strip.
   useIso(() => {
     const el = ref.current;
     const area = el.parentElement.getBoundingClientRect();
     if (pos.current.x == null) {
+      const reserve = parseFloat(getComputedStyle(el).getPropertyValue('--mlh-reserve')) || 8;
       pos.current = {
-        x: Math.max(8, Math.min(defaultPos.x === 'center' ? (area.width - el.offsetWidth) / 2 : area.width * defaultPos.x, area.width - el.offsetWidth - 8)),
+        x: Math.max(8, Math.min(defaultPos.x === 'center' ? (area.width - el.offsetWidth) / 2 : area.width * defaultPos.x, area.width - el.offsetWidth - reserve)),
         y: Math.max(8, Math.min(area.height * defaultPos.y, area.height - el.offsetHeight - 8)),
       };
     } else { // saved on a bigger screen: pull the title bar back into reach (same limits as dragging)
