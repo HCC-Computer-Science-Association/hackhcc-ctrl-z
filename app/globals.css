@@ -211,15 +211,16 @@ h3:first-child { margin-top: 2px; }
 
 /* ---------- About ---------- */
 .doc { background: var(--cream); box-shadow: var(--sunken); padding: 20px 22px 16px; }
-.badge { display: block; width: 100%; image-rendering: pixelated; margin-bottom: 18px; }
+.badge { display: block; width: 100%; max-width: 760px; image-rendering: pixelated; margin-bottom: 18px; }
 .hook { font: 400 clamp(28px, 3.6vw, 36px)/1.05 var(--f-pixel), sans-serif; color: var(--navy); margin: 0 0 12px; text-wrap: balance; }
-.doc .prose { margin: 0 0 10px; color: var(--ink-soft); }
+.doc .prose { margin: 0 0 10px; color: var(--ink-soft); max-width: 78ch; }
 .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 18px 0 14px; background: var(--ink); padding: 2px; }
 .facts div { background: var(--navy); color: var(--white); padding: 10px 12px; }
 .facts dt { font: 400 17px/1 var(--f-pixel), sans-serif; color: var(--sky); text-transform: uppercase; letter-spacing: 0.08em; }
 .facts dd { margin: 2px 0 0; font: 400 28px/1.1 var(--f-pixel), sans-serif; color: var(--yellow); }
 .facts .tba { font-size: 24px; }
-@media (min-width: 641px) { .win:has(> .win-body > .about):not(.is-max):not(.has-size) { max-height: calc(100% - 72px); } } /* leave wallpaper showing below */
+/* About is the main window: about 60% of the desktop width, wallpaper showing below. */
+@media (min-width: 641px) { .win:has(> .win-body > .about):not(.is-max):not(.has-size) { width: min(max(640px, 60%), calc(100% - 16px)); max-height: calc(100% - 72px); } }
 .toc { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 4px 0 6px; font: 400 19px var(--f-pixel), sans-serif; }
 .toc a { color: var(--royal); text-underline-offset: 3px; }
 .doc section { scroll-margin-top: 8px; outline: none; padding-top: 6px; }
