@@ -16,7 +16,7 @@ export default function Window({ id, title, icon, width, win, defaultPos, focuse
     const area = el.parentElement.getBoundingClientRect();
     if (pos.current.x == null) {
       pos.current = {
-        x: Math.max(8, Math.min(area.width * defaultPos.x, area.width - el.offsetWidth - 8)),
+        x: Math.max(8, Math.min(defaultPos.x === 'center' ? (area.width - el.offsetWidth) / 2 : area.width * defaultPos.x, area.width - el.offsetWidth - 8)),
         y: Math.max(8, Math.min(area.height * defaultPos.y, area.height - el.offsetHeight - 8)),
       };
     } else { // saved on a bigger screen: pull the title bar back into reach (same limits as dragging)

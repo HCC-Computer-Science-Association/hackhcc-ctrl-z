@@ -36,7 +36,7 @@ const Screensaver = dynamic(() => import('./Screensaver'));
 
 // left: shown in the left icon column (event basics plus a few tools) and first in Start. Everything else, on the right.
 export const APPS = [
-  { id: 'about', left: true, label: 'About.txt', title: 'About.txt — Ctrl Z Edit', icon: 'about', Body: About, w: 620, x: 0.4, y: 0.06 },
+  { id: 'about', left: true, label: 'About.txt', title: 'About.txt — Ctrl Z Edit', icon: 'about', Body: About, w: 640, x: 'center', y: 0.05 },
   { id: 'schedule', left: true, label: 'Schedule', title: 'Schedule — 24 hours', icon: 'schedule', Body: lazy('schedule'), w: 520, x: 0.1, y: 0.16 },
   { id: 'faq', left: true, label: 'Help', title: 'Help — FAQ and Rules', icon: 'faq', Body: lazy('faq'), w: 560, x: 0.24, y: 0.1 },
   { id: 'sponsors', left: true, label: 'Sponsors', title: 'C:\\SPONSORS', icon: 'sponsors', Body: lazy('sponsors'), w: 540, x: 0.3, y: 0.18 },
@@ -63,8 +63,8 @@ export const LINKS = [
 
 const STORE = 'ctrlz-windows';
 const SPOTS = 'ctrlz-icons'; // { [icon id]: [dx, dy] } offsets from each icon's grid slot, saved per browser
-// Open on first load, back to front; they pop in in this order.
-const INITIAL = ['schedule', 'challenge', 'about'];
+// Open on first load: only About, centered, so the icons on both sides and some wallpaper stay visible.
+const INITIAL = ['about'];
 const IDLE_MS = 45000;
 // Deep links: #schedule opens Schedule. A few friendlier names map to app ids.
 const ALIASES = { help: 'faq', rules: 'faq', organizers: 'team', minesweeper: 'sweeper', bugsweeper: 'sweeper', notes: 'ideas', notepad: 'ideas', nibbles: 'snake', register: 'about', freedoom: 'doom' };
